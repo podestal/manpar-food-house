@@ -15,7 +15,7 @@ const Categories = ({ setSelectedCategory }: Props) => {
 
     if (isSuccess) return (
     <div>
-        <h2>Categories</h2>
+        <h2 className="text-center text-4xl my-6">Categorías</h2>
         <CategoriesList 
             categories={categories}
             setSelectedCategory={setSelectedCategory}

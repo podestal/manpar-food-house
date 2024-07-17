@@ -8,8 +8,8 @@ interface Props {
 
 const CategoriesList = ({ setSelectedCategory, categories }: Props) => {
   return (
-    <Select defaultValue="0" onValueChange={value => setSelectedCategory(value)}>
-        <SelectItem value="0">Todas</SelectItem>
+    <Select className="w-[320px] mx-auto text-center" defaultValue="0" onValueChange={value => setSelectedCategory(value)}>
+        <SelectItem value="0">Toda la Carta</SelectItem>
         {categories.map( category => <SelectItem key={category.id} value={category.id.toString()}>{category.name}</SelectItem>)}
     </Select>
   )
