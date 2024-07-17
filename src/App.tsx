@@ -1,15 +1,20 @@
-import { useEffect } from "react"
-import axios from "axios"
+import useGetDishes from "./hooks/dishes/useGetDishes"
 
 const App = () => {
 
-  useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/dishes/')
-    .then(res => console.log(res.data))
-  }, [])
+  const {data, isLoading, isError, error, isSuccess} = useGetDishes()
+
+  if (isLoading) return <p>Loading ...</p>
+
+  if (isError) return <p>{error.message}</p>
+
+  if (data?.length === 0) return null
 
   return (
-    <h1 className="text-8xl font-bold">Hello World</h1>
+    <div>
+      <h1 className="text-5xl font-bold">Dishes</h1>
+      {data?.map( dish => (<p key={dish.id}>{dish.name}</p>))}
+    </div>
   )
 }
 

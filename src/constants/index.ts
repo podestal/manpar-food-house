@@ -1,0 +1,1 @@
+export const DISH_CACHE_KEY = ['dishes']
