@@ -7,6 +7,9 @@ interface Props {
 }
 
 const CategoriesList = ({ setSelectedCategory, categories }: Props) => {
+
+  
+
   return (
     <Select className="w-[320px] mx-auto text-center" defaultValue="0" onValueChange={value => setSelectedCategory(value)}>
         <SelectItem value="0">Toda la Carta</SelectItem>

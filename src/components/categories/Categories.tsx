@@ -1,5 +1,5 @@
 import useGetCategories from "../../hooks/categories/useGetCategories"
-import CategoriesList from "./CategoriesList"
+import CategoriesSelector from "./CategoriesSelector"
 
 interface Props {
     setSelectedCategory: (cat: string) => void
@@ -16,10 +16,9 @@ const Categories = ({ setSelectedCategory }: Props) => {
     if (isSuccess) return (
     <div>
         <h2 className="text-center text-4xl my-6">Categorías</h2>
-        <CategoriesList 
-            categories={categories}
+        {/* <CategoriesSelector 
             setSelectedCategory={setSelectedCategory}
-        />
+        /> */}
     </div>
   )
 }

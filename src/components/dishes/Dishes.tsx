@@ -14,7 +14,7 @@ const Dishes = ({ selectedCategory }: Props) => {
     if (isError) return <p>{error.message}</p>
 
   return (
-    <div className="my-10">
+    <div className="my-10 w-full">
         <h2 className="my-10 text-6xl text-center">Nuestra Carta</h2>
         <ul className="flex flex-col gap-10">
             {dishes
