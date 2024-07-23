@@ -1,8 +1,9 @@
 import { useState } from "react"
-import Categories from "../components/categories/Categories"
 import Dishes from "../components/dishes/Dishes"
+import CategoriesList from "../components/categories/CategoriesList"
 import useDishImgStore from "../store/dishImgStore"
 import CategoriesSelector from "../components/categories/CategoriesSelector"
+import Categories from "../components/categories/Categories"
 
 const DishesPage = () => {
 
@@ -17,9 +18,12 @@ const DishesPage = () => {
                 setSelectedCategory={setSelectedCategory}
             />
         </div>
-        <Dishes 
+        <Categories 
             selectedCategory={selectedCategory}
         />
+        {/* <Dishes 
+            selectedCategory={selectedCategory}
+        /> */}
     </div>
   )
 }

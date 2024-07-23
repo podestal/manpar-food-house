@@ -1,20 +1,24 @@
 import { Category } from "../../services/api/categoryServices"
-import { SelectItem, Select } from "@tremor/react"
+import CategoryCard from "./CategoryCard"
 
 interface Props {
-    setSelectedCategory: (cat: string) => void
+    selectedCategory: string
     categories: Category[]
 }
 
-const CategoriesList = ({ setSelectedCategory, categories }: Props) => {
-
-  
+const CategoriesList = ({ selectedCategory, categories }: Props) => {
 
   return (
-    <Select className="w-[320px] mx-auto text-center" defaultValue="0" onValueChange={value => setSelectedCategory(value)}>
-        <SelectItem value="0">Toda la Carta</SelectItem>
-        {categories.map( category => <SelectItem key={category.id} value={category.id.toString()}>{category.name}</SelectItem>)}
-    </Select>
+    <ul>
+      <>{console.log('selectedCategory', selectedCategory)}</>
+      {categories
+        .filter( category => selectedCategory === '0' ? category : (category.id).toString() === selectedCategory)
+        .map( category => 
+          <CategoryCard 
+            key={category.id} 
+            category={category}
+          />)}
+    </ul>
   )
 }
 

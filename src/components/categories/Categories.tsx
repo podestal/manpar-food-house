@@ -1,11 +1,11 @@
 import useGetCategories from "../../hooks/categories/useGetCategories"
-import CategoriesSelector from "./CategoriesSelector"
+import CategoriesList from "./CategoriesList"
 
 interface Props {
-    setSelectedCategory: (cat: string) => void
+    selectedCategory: string
 }
 
-const Categories = ({ setSelectedCategory }: Props) => {
+const Categories = ({ selectedCategory }: Props) => {
 
     const {data: categories, isLoading, isError, error, isSuccess} = useGetCategories()
 
@@ -15,10 +15,11 @@ const Categories = ({ setSelectedCategory }: Props) => {
 
     if (isSuccess) return (
     <div>
-        <h2 className="text-center text-4xl my-6">Categorías</h2>
-        {/* <CategoriesSelector 
-            setSelectedCategory={setSelectedCategory}
-        /> */}
+        <h2 className="text-center text-4xl my-6">Nuestra Carta</h2>
+        <CategoriesList 
+            categories={categories}
+            selectedCategory={selectedCategory}
+        />
     </div>
   )
 }

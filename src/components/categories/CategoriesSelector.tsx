@@ -1,5 +1,4 @@
 import useGetCategories from "../../hooks/categories/useGetCategories"
-import { Category } from "../../services/api/categoryServices"
 import Selector from "../../utils/Selector"
 
 interface Props {
