@@ -4,6 +4,7 @@ interface AuthState {
     access: string | null
     refresh: string | null
     setTokens: (access: string, refresh: string) => void
+    clearTokens: () => void
 }
 
 const useUserStore = create<AuthState>(set => ({
@@ -17,6 +18,7 @@ const useUserStore = create<AuthState>(set => ({
     clearTokens: () => {
         localStorage.removeItem('access')
         localStorage.removeItem('refresh')
+        set({ access: '', refresh: '' })
     },
 }))
 
