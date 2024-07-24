@@ -18,9 +18,11 @@ class AuthClient<T> {
         this.endpoint = endpoint
     }
 
-    get = () => {
+    get = (access: string) => {
         return axiosInstance
-            .get<T>(this.endpoint)
+            .get<T>(this.endpoint, {
+                headers: {Authorization: `JWT ${access}`}
+            })
             .then(res => res.data)
     }
 

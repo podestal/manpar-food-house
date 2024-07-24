@@ -12,8 +12,7 @@ const useLogin = (handleSuccess: () => void, handleError: () => void): UseMutati
             setTokens(jwtData.access, jwtData.refresh)
             handleSuccess()
         },
-        onError: (error: Error) => {
-            console.log(error)
+        onError: () => {
             handleError()
         }
     })
