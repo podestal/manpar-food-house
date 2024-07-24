@@ -20,11 +20,14 @@
     "lenis": "^1.1.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.52.1",
     "react-router-dom": "^6.25.0",
     "react-router-hash-link": "^2.4.3",
+    "zod": "^3.23.8",
     "zustand": "^4.5.4"
   },
   "devDependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "@tailwindcss/forms": "^0.5.7",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",

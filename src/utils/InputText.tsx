@@ -1,10 +1,12 @@
 import { TextInput, TextInputProps } from "@tremor/react"
+import { UseFormRegisterReturn } from "react-hook-form"
 
 interface Props extends TextInputProps {
     label: string,
+    register:  UseFormRegisterReturn
 }
 
-const InputText = ({ label, ...TextInputProps }: Props) => {
+const InputText = ({ label, register, ...TextInputProps }: Props) => {
 
   return (
     <div className="flex flex-col justify-center items-center w-[300px] max-lg:w-[200px] gap-6">
@@ -12,6 +14,7 @@ const InputText = ({ label, ...TextInputProps }: Props) => {
         <TextInput 
             placeholder={label}
             {...TextInputProps}
+            {...register}
         />
     </div>
   )

@@ -1,8 +1,8 @@
 import { SelectItem, Select } from "@tremor/react"
 
 interface Props<T> {
-    setSelectItem: (cat: string) => void
-    itemsList: T[]
+    setSelectItem: (cat: string) => void,
+    itemsList: T[],
 }
 
 const Selector = <T extends {id: number | string, name: string}>({ setSelectItem, itemsList }: Props<T>) => {
