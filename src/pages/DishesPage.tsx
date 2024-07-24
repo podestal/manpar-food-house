@@ -1,6 +1,4 @@
 import { useState } from "react"
-import Dishes from "../components/dishes/Dishes"
-import CategoriesList from "../components/categories/CategoriesList"
 import useDishImgStore from "../store/dishImgStore"
 import CategoriesSelector from "../components/categories/CategoriesSelector"
 import Categories from "../components/categories/Categories"
