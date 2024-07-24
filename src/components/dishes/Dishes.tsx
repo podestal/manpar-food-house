@@ -17,7 +17,7 @@ const Dishes = ({ selectedCategory }: Props) => {
     <div className="my-2 w-full">
         <ul className="flex flex-col gap-10">
             {dishes
-                ?.filter( dish => dish.category.toString() === selectedCategory || selectedCategory === '0')
+                ?.filter( dish => dish.category.toString() === selectedCategory)
                 ?.map( dish => <DishCard key={dish.id} dish={dish}/>)}
         </ul>
     </div>

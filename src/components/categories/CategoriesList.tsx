@@ -9,8 +9,7 @@ interface Props {
 const CategoriesList = ({ selectedCategory, categories }: Props) => {
 
   return (
-    <ul>
-      <>{console.log('selectedCategory', selectedCategory)}</>
+    <ul className="w-full">
       {categories
         .filter( category => selectedCategory === '0' ? category : (category.id).toString() === selectedCategory)
         .map( category => 

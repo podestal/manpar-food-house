@@ -14,7 +14,7 @@ const Categories = ({ selectedCategory }: Props) => {
     if (isError) return <p>{error.message}</p>
 
     if (isSuccess) return (
-    <div>
+    <div className="w-full">
         <h2 className="text-center text-4xl my-6">Nuestra Carta</h2>
         <CategoriesList 
             categories={categories}

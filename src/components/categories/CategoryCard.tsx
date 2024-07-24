@@ -7,8 +7,8 @@ interface Props {
 
 const CategoryCard = ({ category }: Props) => {
   return (
-    <div>
-        <h2 className="text-3xl">{category.name}</h2>
+    <div className="w-full">
+        <h2 className=" text-center text-3xl">{category.name}</h2>
         <Dishes 
             selectedCategory={(category.id).toString()}
         />
