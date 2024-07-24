@@ -4,6 +4,7 @@ import LandingPage from "../pages/LandingPage"
 import ErrorPage from "../pages/ErrorPage"
 import DishesPage from "../pages/DishesPage"
 import CategoriesPage from "../pages/CategoriesPage"
+import LoginPage from "../pages/LoginPage"
 
 const router = createBrowserRouter([
     {
@@ -13,7 +14,8 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <LandingPage /> },
             { path: 'dishes', element: <DishesPage /> },
-            { path: 'categories', element: <CategoriesPage /> }
+            { path: 'categories', element: <CategoriesPage /> },
+            { path: 'login', element: <LoginPage /> },
         ]
     }
 ])
