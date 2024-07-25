@@ -7,6 +7,8 @@ import { z } from 'zod'
 import { FieldValues, useForm } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod/src/zod.js"
 import { useState } from "react"
+import useUpdateDish from "../../hooks/dishes/useUpdateDish"
+import useUserStore from "../../store/userStore"
 
 const schema = z.object({
     dish: z.string().min(1, { message: 'Escriba el nombre del plato' }),
@@ -25,6 +27,9 @@ interface Props {
 
 const DishForm = ({ dish, show, setShow }: Props) => {
 
+    // AUTH
+    const access = useUserStore(s => s.access)
+
     // FORM HANDLER
     const {register, handleSubmit, formState, reset} = useForm<FormData>({ 
         resolver: zodResolver(schema), 
@@ -36,7 +41,7 @@ const DishForm = ({ dish, show, setShow }: Props) => {
         }
     })
     const [selectedCategory, setSelectedCategory] = useState('0')
-    const [available, setAvailable] = useState<boolean>(dish?.available || true)
+    const [available, setAvailable] = useState<boolean>(dish ? dish?.available: true)
 
     //ERROR HANDLING
     const [success, setSuccess] = useState(false)
@@ -49,14 +54,14 @@ const DishForm = ({ dish, show, setShow }: Props) => {
         setDisable(true)
     }
 
+    const updateDish = dish && useUpdateDish(dish.id)
+
     const onSubmit = (data: FieldValues) => {
-        console.log('dsfasdfasdfsdfsadf');
-        console.log('ggggggg');
-        console.log('dish', data.dish)
-        console.log('description', data.description)
-        console.log('cost', data.cost)
-        console.log('category', selectedCategory)
-        console.log('available', available)
+        console.log('Submitting ...')
+        
+        if (dish && access) {
+            updateDish?.mutate({ dish: {...dish, name: data.dish, description: data.description, cost: data.cost, category: parseInt(selectedCategory), available}, access })
+        }
     }
 
   return (
@@ -72,13 +77,6 @@ const DishForm = ({ dish, show, setShow }: Props) => {
                 checked={available}
                 onChange={value => setAvailable(value)}
             />
-            {/* <TextInput 
-                placeholder="Plato"
-                {...register('dish')}
-                error={formState?.errors.dish ? true : false}
-                errorMessage={formState.errors.dish?.message}
-                
-            /> */}
             <InputText 
                 label="Nombre del Plato"
                 register={register('dish')}

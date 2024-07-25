@@ -26,6 +26,14 @@ class APIClient<T> {
             })
             .then( res => res.data)
     }
+
+    update = (data: T, access: string) => {
+        return axiosInstance
+            .patch<T>(this.endpoint, data, {
+                headers: { Authorization: `JWT ${access}` }
+            })
+            .then( res => res.data)
+    }
 }
 
 export default APIClient
