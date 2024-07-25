@@ -6,7 +6,7 @@ export interface DeletePostData {
     access: string
 }
 
-const useRemoveDish = (dishId: number): UseMutationResult<Dish, Error, DeletePostData> => {
+const useRemoveDish = (dishId: number | undefined): UseMutationResult<Dish, Error, DeletePostData> => {
     const queryClient = useQueryClient()
     const dishService = getDishService(dishId)
     return useMutation({

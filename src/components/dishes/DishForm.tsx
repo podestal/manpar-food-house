@@ -9,12 +9,14 @@ import { zodResolver } from "@hookform/resolvers/zod/src/zod.js"
 import { useState } from "react"
 import useUpdateDish from "../../hooks/dishes/useUpdateDish"
 import useUserStore from "../../store/userStore"
+import { PostDishData } from "../../hooks/dishes/usePostDish"
+import { UseMutationResult } from "@tanstack/react-query"
 
 const schema = z.object({
     dish: z.string().min(1, { message: 'Escriba el nombre del plato' }),
     description: z.string().min(1, { message: 'Agregue la descripción del plato' }),
     cost: z.string().min(1, { message: 'Agregue el precio del plato' }),
-    category: z.string().min(1, { message: 'Agregue la categoría del plato' })
+    // category: z.string().min(1, { message: 'Agregue la categoría del plato' })
 })
 
 type FormData = z.infer<typeof schema>
@@ -23,9 +25,10 @@ interface Props {
     dish?: Dish
     show: boolean
     setShow: (show: boolean) => void
+    createDish?: UseMutationResult<Dish, Error, PostDishData>
 }
 
-const DishForm = ({ dish, show, setShow }: Props) => {
+const DishForm = ({ dish, show, setShow, createDish }: Props) => {
 
     // AUTH
     const access = useUserStore(s => s.access)
@@ -37,7 +40,7 @@ const DishForm = ({ dish, show, setShow }: Props) => {
             dish: dish?.name || '',
             description: dish?.description || '',
             cost: dish?.cost.toString() || '',
-            category: dish?.category.toString() || ''
+            // category: dish?.category.toString() || ''
         }
     })
     const [selectedCategory, setSelectedCategory] = useState(dish ? dish?.category.toString(): '0')
@@ -63,8 +66,20 @@ const DishForm = ({ dish, show, setShow }: Props) => {
     const updateDish = dish && useUpdateDish(dish.id, handleSuccess, handleError)
 
     const onSubmit = (data: FieldValues) => {
-        if (dish && access) {
-            updateDish?.mutate({ dish: {...dish, name: data.dish, description: data.description, cost: data.cost, category: parseInt(selectedCategory), available}, access })
+        console.log('Submitting form data:', data)
+
+        if (access) {
+            if (dish) {
+                updateDish?.mutate({
+                    dish: { ...dish, name: data.dish, description: data.description, cost: data.cost, category: parseInt(selectedCategory), available },
+                    access
+                })
+            } else if (createDish) {
+                createDish.mutate({
+                    dish: { name: data.dish, description: data.description, cost: data.cost, category: parseInt(selectedCategory), available, picture: 'dfssdfsdf' },
+                    access
+                })
+            }
         }
     }
 

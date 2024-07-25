@@ -11,7 +11,7 @@ const MainPage = () => {
   useEffect(() => {
     if(access) {
       if (isTokenExpired(access)) {
-        clearTokens()
+        // clearTokens()
       }
     }
   }, [])

@@ -19,6 +19,14 @@ class APIClient<T> {
             .then(res => res.data)
     }
 
+    post = (data: T, access: string) => {
+        return axiosInstance
+            .post<T>(this.endpoint, data, {
+                headers: {Authorization: `JWT ${access}`}
+            })
+            .then(res => res.data)
+    }
+
     delete = (access: string) => {
         return axiosInstance
             .delete<T>(this.endpoint, {
