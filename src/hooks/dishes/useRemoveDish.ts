@@ -12,8 +12,7 @@ const useRemoveDish = (dishId: number): UseMutationResult<Dish, Error, DeletePos
     return useMutation({
         mutationFn: (data: DeletePostData) => dishService.delete(data.access),
         onSuccess: () => {
-            console.log('Dish deleted')
-            queryClient.setQueryData<Dish[]>(DISH_CACHE_KEY, prev => prev?.filter(dish => dish.id !== dishId ?? []))
+            queryClient.setQueryData<Dish[]>(DISH_CACHE_KEY, prev => prev?.filter(dish => dish.id !== dishId))
         },
         onError: err => console.log(err)
     })

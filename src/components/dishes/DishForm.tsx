@@ -1,5 +1,6 @@
 import { Dish } from "../../services/api/dishServices"
 import { DialogPanel, Dialog } from "@tremor/react"
+import InputText from "../../utils/InputText"
 
 interface Props {
     dish: Dish
@@ -15,7 +16,7 @@ const DishForm = ({ dish, show, setShow }: Props) => {
             onClose={() => setShow(false)}
         >
             <DialogPanel>
-                Hola
+                <h2>Edita tu Plato</h2>
             </DialogPanel>
         </Dialog>
     </>
