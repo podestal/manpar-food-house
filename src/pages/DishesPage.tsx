@@ -14,6 +14,7 @@ const DishesPage = () => {
             <img className="w-[280px] h-[200px] lg:w-[360px] lg:h-[220px] object-cover mx-auto rounded-3xl" src={dishImg} alt="" />
             <CategoriesSelector 
                 setSelectedCategory={setSelectedCategory}
+                allItems="Toda la carta"
             />
         </div>
         <Categories 

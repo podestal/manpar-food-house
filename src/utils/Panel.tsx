@@ -3,7 +3,7 @@ import { DialogPanel, Dialog } from "@tremor/react"
 interface Props {
     show: boolean
     setShow: (show: boolean) => void
-    children: JSX.Element
+    children: React.ReactNode
 }
 
 const Panel = ({ show, setShow, children }: Props) => {
