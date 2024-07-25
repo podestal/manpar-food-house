@@ -11,4 +11,9 @@ export interface Dish {
     category: number,
 }
 
-export default new APIClient<Dish>('dishes/')
+const getDishService = (dishId?: number) => {
+    const URL = dishId ? `dishes/${dishId}/` : 'dishes/'
+    return new APIClient<Dish>(URL)
+}
+
+export default getDishService

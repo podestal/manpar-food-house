@@ -18,6 +18,14 @@ class APIClient<T> {
             .get<T>(this.endpoint)
             .then(res => res.data)
     }
+
+    delete = (access: string) => {
+        return axiosInstance
+            .delete<T>(this.endpoint, {
+                headers: {Authorization: `JWT ${access}`}
+            })
+            .then( res => res.data)
+    }
 }
 
 export default APIClient

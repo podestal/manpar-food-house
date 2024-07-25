@@ -1,6 +1,6 @@
 const CategoriesPage = () => {
   return (
-    <div>CategoriesPage</div>
+    <div className="min-h-screen">CategoriesPage</div>
   )
 }
 

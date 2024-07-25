@@ -1,6 +1,6 @@
 const LandingPage = () => {
   return (
-    <div>LandingPage</div>
+    <div className="min-h-screen">LandingPage</div>
   )
 }
 
