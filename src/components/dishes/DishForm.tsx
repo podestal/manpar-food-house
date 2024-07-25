@@ -1,7 +1,7 @@
 import { Dish } from "../../services/api/dishServices"
 import InputText from "../../utils/InputText"
 import Panel from "../../utils/Panel"
-import { Button, Switch } from "@tremor/react"
+import { Button, Callout, Switch } from "@tremor/react"
 import CategoriesSelector from "../categories/CategoriesSelector"
 import { z } from 'zod'
 import { FieldValues, useForm } from 'react-hook-form'
@@ -31,7 +31,7 @@ const DishForm = ({ dish, show, setShow }: Props) => {
     const access = useUserStore(s => s.access)
 
     // FORM HANDLER
-    const {register, handleSubmit, formState, reset} = useForm<FormData>({ 
+    const {register, handleSubmit, formState} = useForm<FormData>({ 
         resolver: zodResolver(schema), 
         values: {
             dish: dish?.name || '',
@@ -40,7 +40,7 @@ const DishForm = ({ dish, show, setShow }: Props) => {
             category: dish?.category.toString() || ''
         }
     })
-    const [selectedCategory, setSelectedCategory] = useState('0')
+    const [selectedCategory, setSelectedCategory] = useState(dish ? dish?.category.toString(): '0')
     const [available, setAvailable] = useState<boolean>(dish ? dish?.available: true)
 
     //ERROR HANDLING
@@ -54,11 +54,15 @@ const DishForm = ({ dish, show, setShow }: Props) => {
         setDisable(true)
     }
 
-    const updateDish = dish && useUpdateDish(dish.id)
+    const handleError = () => {
+        setSuccess(false)
+        setError(true)
+        setDisable(true)
+    }
+
+    const updateDish = dish && useUpdateDish(dish.id, handleSuccess, handleError)
 
     const onSubmit = (data: FieldValues) => {
-        console.log('Submitting ...')
-        
         if (dish && access) {
             updateDish?.mutate({ dish: {...dish, name: data.dish, description: data.description, cost: data.cost, category: parseInt(selectedCategory), available}, access })
         }
@@ -71,6 +75,8 @@ const DishForm = ({ dish, show, setShow }: Props) => {
     >
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center items-center gap-6">
             <h2 className="text-3xl text-slate-50">{dish ? 'Actualizar Plato' : 'Crear Plato'}</h2>
+            {success && <Callout color='teal' title="Creado">Plato {dish ? 'Actualizado' : 'Creado'}</Callout>}
+            {error && <Callout color='red' title="Error">Ocurrió un error, inténtelo más tarde</Callout>}
             <p className="text-lg lg:text-xl text-slate-50 text-center">Disponible</p>
             <Switch 
                 color='blue'
@@ -98,8 +104,9 @@ const DishForm = ({ dish, show, setShow }: Props) => {
             <p>Foto</p>
             <CategoriesSelector 
                 setSelectedCategory={setSelectedCategory}
+                defaultCat={dish?.category.toString()}
             />
-            <Button color="blue" >{dish ? 'Actualizar' : 'Crear'}</Button>
+            <Button disabled={disable} color="blue" >{dish ? 'Actualizar' : 'Crear'}</Button>
         </form>
     </Panel>
     

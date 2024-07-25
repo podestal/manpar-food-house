@@ -4,9 +4,10 @@ import Selector from "../../utils/Selector"
 interface Props {
     setSelectedCategory: (cat: string) => void
     allItems?: string
+    defaultCat?: string
 }
 
-const CategoriesSelector = ({ setSelectedCategory, allItems }: Props) => {
+const CategoriesSelector = ({ setSelectedCategory, allItems, defaultCat }: Props) => {
 
     const {data: categories, isLoading, isError, error, isSuccess} = useGetCategories()
 
@@ -20,6 +21,7 @@ const CategoriesSelector = ({ setSelectedCategory, allItems }: Props) => {
         setSelectItem={setSelectedCategory}
         itemsList={categories}
         allItems={allItems}
+        defaultItem={defaultCat}
     />
   )
 }
