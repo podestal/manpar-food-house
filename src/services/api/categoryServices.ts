@@ -6,4 +6,9 @@ export interface Category {
     description: string,
 }
 
-export default new APIClient<Category>('categories/')
+const getCategoryService = (categoryId?: number) => {
+    const URL = categoryId ? `categories/${categoryId}/` : 'categories/'
+    return new APIClient<Category>(URL)
+}
+
+export default getCategoryService

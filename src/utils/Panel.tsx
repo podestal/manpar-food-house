@@ -8,7 +8,7 @@ interface Props {
     show: boolean
     setShow: (show: boolean) => void
     children: React.ReactNode
-    reset: UseFormReset<{dish: string; description: string; cost: string}>
+    reset?: UseFormReset<{dish: string; description: string; cost: string}>
 }
 
 const Panel = ({ show, setShow, children, reset }: Props) => {
@@ -16,9 +16,8 @@ const Panel = ({ show, setShow, children, reset }: Props) => {
     const handleReset = useErrorHandler(s => s.handleReset)
 
     const handleClose = () => {
-        console.log('Closing');
         setShow(false)
-        reset()
+        reset && reset()
         handleReset()
     }
 

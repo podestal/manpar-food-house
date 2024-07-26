@@ -4,7 +4,7 @@ import Panel from "../../utils/Panel"
 import { Button, Callout, Switch } from "@tremor/react"
 import CategoriesSelector from "../categories/CategoriesSelector"
 import { z } from 'zod'
-import { FieldValues, UseFormReset, useForm } from 'react-hook-form'
+import { FieldValues, useForm } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod/src/zod.js"
 import { useState } from "react"
 import useUserStore from "../../store/userStore"
