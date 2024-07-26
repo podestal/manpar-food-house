@@ -55,8 +55,6 @@ const DishForm = ({
     const [available, setAvailable] = useState<boolean>(dish ? dish?.available: true)
 
     const onSubmit = (data: FieldValues) => {
-        console.log('Submitting form data:', data)
-
         if (access) {
             if (dish) {
                 updateDish?.mutate({
@@ -76,6 +74,7 @@ const DishForm = ({
     <Panel
         show={show}
         setShow={setShow}
+        reset={reset}
     >
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center items-center gap-6">
             <h2 className="text-3xl text-slate-50">{dish ? 'Actualizar Plato' : 'Crear Plato'}</h2>
