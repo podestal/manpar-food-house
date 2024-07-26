@@ -2,11 +2,18 @@ import { Button } from "@tremor/react"
 import { useState } from "react"
 import DishForm from "./DishForm"
 import usePostDish from "../../hooks/dishes/usePostDish"
+import useErrorHandler from "../../store/errorHandling"
 
 const CreateDish = () => {
 
     const [show, setShow] = useState(false)
-    const createDish = usePostDish()
+
+    // create a store to handle error
+
+    //ERROR HANDLING
+    const {handleSuccess, handleError} = useErrorHandler()
+
+    const createDish = usePostDish(handleSuccess, handleError)
 
   return (
     <div className="w-full flex justify-center items-center">

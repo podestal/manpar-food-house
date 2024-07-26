@@ -4,19 +4,18 @@ import Panel from "../../utils/Panel"
 import { Button, Callout, Switch } from "@tremor/react"
 import CategoriesSelector from "../categories/CategoriesSelector"
 import { z } from 'zod'
-import { FieldValues, useForm } from 'react-hook-form'
+import { FieldValues, UseFormReset, useForm } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod/src/zod.js"
 import { useState } from "react"
-import useUpdateDish from "../../hooks/dishes/useUpdateDish"
 import useUserStore from "../../store/userStore"
 import { PostDishData } from "../../hooks/dishes/usePostDish"
 import { UseMutationResult } from "@tanstack/react-query"
+import useErrorHandler from "../../store/errorHandling"
 
 const schema = z.object({
     dish: z.string().min(1, { message: 'Escriba el nombre del plato' }),
     description: z.string().min(1, { message: 'Agregue la descripción del plato' }),
     cost: z.string().min(1, { message: 'Agregue el precio del plato' }),
-    // category: z.string().min(1, { message: 'Agregue la categoría del plato' })
 })
 
 type FormData = z.infer<typeof schema>
@@ -26,44 +25,34 @@ interface Props {
     show: boolean
     setShow: (show: boolean) => void
     createDish?: UseMutationResult<Dish, Error, PostDishData>
+    updateDish?: UseMutationResult<Dish, Error, PostDishData>
 }
 
-const DishForm = ({ dish, show, setShow, createDish }: Props) => {
+const DishForm = ({ 
+        dish, 
+        show, 
+        setShow, 
+        createDish, 
+        updateDish,
+    }: Props) => {
 
     // AUTH
     const access = useUserStore(s => s.access)
 
+    // ERROR HANDLER
+    const {success, error, disable} = useErrorHandler()
+
     // FORM HANDLER
-    const {register, handleSubmit, formState} = useForm<FormData>({ 
+    const {register, handleSubmit, formState, reset} = useForm<FormData>({ 
         resolver: zodResolver(schema), 
         values: {
             dish: dish?.name || '',
             description: dish?.description || '',
             cost: dish?.cost.toString() || '',
-            // category: dish?.category.toString() || ''
         }
     })
     const [selectedCategory, setSelectedCategory] = useState(dish ? dish?.category.toString(): '0')
     const [available, setAvailable] = useState<boolean>(dish ? dish?.available: true)
-
-    //ERROR HANDLING
-    const [success, setSuccess] = useState(false)
-    const [error, setError] = useState(false)
-    const [disable, setDisable] = useState(false)
-
-    const handleSuccess = () => {
-        setSuccess(true)
-        setError(false)
-        setDisable(true)
-    }
-
-    const handleError = () => {
-        setSuccess(false)
-        setError(true)
-        setDisable(true)
-    }
-
-    const updateDish = dish && useUpdateDish(dish.id, handleSuccess, handleError)
 
     const onSubmit = (data: FieldValues) => {
         console.log('Submitting form data:', data)
