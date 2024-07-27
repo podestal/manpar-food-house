@@ -2,7 +2,7 @@ import useGetDishes from "../../hooks/dishes/useGetDishes"
 import DishCard from "./DishCard"
 
 interface Props {
-    selectedCategory: string
+    selectedCategory: string | undefined
 }
 
 const Dishes = ({ selectedCategory }: Props) => {

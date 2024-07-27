@@ -11,6 +11,8 @@ interface Props {
 
 const CategoryCard = ({ category }: Props) => {
 
+  if (!category.id) return null
+  
   const access = useUserStore(s => s.access)
 
   return (

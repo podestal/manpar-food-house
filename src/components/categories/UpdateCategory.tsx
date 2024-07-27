@@ -3,6 +3,8 @@ import { Icon } from '@tremor/react'
 import { useState } from 'react'
 import { Category } from '../../services/api/categoryServices'
 import CategoryForm from './CategoryForm'
+import useUpdateCategory from '../../hooks/categories/useUpdateCategory'
+import useErrorHandler from '../../store/errorHandling'
 
 interface Props {
     category: Category
@@ -11,6 +13,9 @@ interface Props {
 const UpdateCategory = ({ category }: Props) => {
 
     const [show, setShow] = useState(false)
+    const {handleSuccess, handleError} = useErrorHandler()
+
+    const updateCategory = useUpdateCategory(category.id, handleSuccess, handleError)
 
   return (
     <>
@@ -19,6 +24,7 @@ const UpdateCategory = ({ category }: Props) => {
             category={category}
             show={show}
             setShow={setShow}
+            updateCategory={updateCategory}
         />
     </>
   )

@@ -3,11 +3,12 @@ import { Category } from "../../services/api/categoryServices"
 import Panel from "../../utils/Panel"
 import { FieldValues, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod/src/zod.js"
-// import useUserStore from "../../store/userStore"
+import useUserStore from "../../store/userStore"
 import useErrorHandler from "../../store/errorHandling"
-import { Button, Callout, Switch } from "@tremor/react"
-import { useState } from "react"
+import { Button, Callout } from "@tremor/react"
 import InputText from "../../utils/InputText"
+import { UpdateCategoryData } from "../../hooks/categories/useUpdateCategory"
+import { UseMutationResult } from "@tanstack/react-query"
 
 const schema = z.object({
     name: z.string().min(1, { message: 'Escriba el nombre de la categoría' }),
@@ -21,10 +22,10 @@ interface Props {
     show: boolean
     setShow: (show: boolean) => void
     // createDish?: UseMutationResult<Dish, Error, PostDishData>
-    // updateDish?: UseMutationResult<Dish, Error, PostDishData>
+    updateCategory?: UseMutationResult<Category, Error, UpdateCategoryData>
 }
 
-const CategoryForm = ({ category, show, setShow }: Props) => {
+const CategoryForm = ({ category, show, setShow, updateCategory }: Props) => {
 
     // FORM HANDLER
     const {register, handleSubmit, formState, reset} = useForm<FormData>({ 
@@ -36,13 +37,15 @@ const CategoryForm = ({ category, show, setShow }: Props) => {
     })
 
     // AUTH
-    // const access = useUserStore(s => s.access)
+    const access = useUserStore(s => s.access)
 
     // ERROR HANDLER
     const {success, error, disable} = useErrorHandler()
 
     const onSubmit = (data: FieldValues) => {
-        console.log(data);
+        if (access) {
+            updateCategory?.mutate({category: {name: data.name, description: data.description}, access})
+        }
         
     }
 

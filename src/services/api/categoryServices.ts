@@ -1,7 +1,7 @@
 import APIClient from "./apiClient"
 
 export interface Category {
-    id: number,
+    id?: number,
     name: string,
     description: string,
 }
