@@ -56,7 +56,7 @@ const CategoryForm = ({ category, show, setShow, updateCategory }: Props) => {
         reset={reset}
     >
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center items-center gap-6">
-            <h2 className="text-3xl text-slate-50">{category ? 'Actualizar Plato' : 'Crear Plato'}</h2>
+            <h2 className="text-3xl text-slate-50">{category ? 'Actualizar Categoría' : 'Crear Categoría'}</h2>
             {success && <Callout color='teal' title="Creado">Plato {category ? 'Actualizado' : 'Creado'}</Callout>}
             {error && <Callout color='red' title="Error">Ocurrió un error, inténtelo más tarde</Callout>}
             <InputText 
