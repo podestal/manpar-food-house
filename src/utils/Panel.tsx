@@ -2,16 +2,16 @@ import { RiCloseCircleLine } from "@remixicon/react"
 import { DialogPanel, Dialog } from "@tremor/react"
 import { Icon } from "@tremor/react"
 import useErrorHandler from "../store/errorHandling"
-import { UseFormReset } from "react-hook-form"
+import { FieldValues, UseFormReset } from "react-hook-form"
 
-interface Props {
+interface Props<T extends FieldValues> {
     show: boolean
     setShow: (show: boolean) => void
     children: React.ReactNode
-    reset?: UseFormReset<{dish: string; description: string; cost: string}>
+    reset?: UseFormReset<T>
 }
 
-const Panel = ({ show, setShow, children, reset }: Props) => {
+const Panel = <T extends FieldValues,>({ show, setShow, children, reset }: Props<T>) => {
 
     const handleReset = useErrorHandler(s => s.handleReset)
 
