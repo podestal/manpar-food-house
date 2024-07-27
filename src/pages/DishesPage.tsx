@@ -3,6 +3,7 @@ import useDishImgStore from "../store/dishImgStore"
 import CategoriesSelector from "../components/categories/CategoriesSelector"
 import Categories from "../components/categories/Categories"
 import CreateDish from "../components/dishes/CreateDish"
+import CreateCategory from "../components/categories/CreateCategory"
 import useUserStore from "../store/userStore"
 
 const DishesPage = () => {
@@ -14,12 +15,15 @@ const DishesPage = () => {
   return (
     <div className="relative min-h-screen w-full justify-evenly items-start flex flex-col">
         <div className="w-full sticky top-0 bg-slate-950 py-6 z-30">
-            <img className="w-[280px] h-[200px] lg:w-[360px] lg:h-[220px] object-cover mx-auto rounded-3xl" src={dishImg} alt="" />
+            {!access && <img className="w-[280px] h-[200px] lg:w-[360px] lg:h-[220px] object-cover mx-auto rounded-3xl" src={dishImg} alt="" />}
             <CategoriesSelector 
                 setSelectedCategory={setSelectedCategory}
                 allItems="Toda la carta"
             />
-            {access && <CreateDish />}
+            <div className="flex justify-center items-center gap-6">
+                {access && <CreateDish />}
+                {access && <CreateCategory />}
+            </div>
         </div>
         <Categories 
             selectedCategory={selectedCategory}

@@ -16,7 +16,7 @@ const CreateDish = () => {
     const createDish = usePostDish(handleSuccess, handleError)
 
   return (
-    <div className="w-full flex justify-center items-center">
+    <div className="flex justify-center items-center">
         <Button onClick={() => setShow(true)} color="blue">Crear Plato</Button>
         <DishForm 
             show={show}

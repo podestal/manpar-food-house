@@ -9,6 +9,7 @@ import { Button, Callout } from "@tremor/react"
 import InputText from "../../utils/InputText"
 import { UpdateCategoryData } from "../../hooks/categories/useUpdateCategory"
 import { UseMutationResult } from "@tanstack/react-query"
+import { CreateCategoryData } from "../../hooks/categories/useCreateCategory"
 
 const schema = z.object({
     name: z.string().min(1, { message: 'Escriba el nombre de la categoría' }),
@@ -21,11 +22,11 @@ interface Props {
     category?: Category
     show: boolean
     setShow: (show: boolean) => void
-    // createDish?: UseMutationResult<Dish, Error, PostDishData>
+    createCategory?: UseMutationResult<Category, Error, CreateCategoryData>
     updateCategory?: UseMutationResult<Category, Error, UpdateCategoryData>
 }
 
-const CategoryForm = ({ category, show, setShow, updateCategory }: Props) => {
+const CategoryForm = ({ category, show, setShow, updateCategory, createCategory }: Props) => {
 
     // FORM HANDLER
     const {register, handleSubmit, formState, reset} = useForm<FormData>({ 
@@ -44,9 +45,17 @@ const CategoryForm = ({ category, show, setShow, updateCategory }: Props) => {
 
     const onSubmit = (data: FieldValues) => {
         if (access) {
-            updateCategory?.mutate({category: {name: data.name, description: data.description}, access})
-        }
-        
+            if (category) {
+                updateCategory?.mutate({
+                    category: {name: data.name, description: data.description}, 
+                    access
+                })
+            } else if (createCategory) {
+                createCategory?.mutate({
+                    category: {name: data.name, description: data.description},
+                    access
+                })
+            }} 
     }
 
   return (

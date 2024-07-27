@@ -11,7 +11,7 @@ const CategoriesList = ({ selectedCategory, categories }: Props) => {
   return (
     <ul className="w-full">
       {categories
-        .filter( category => selectedCategory === '0' ? category : (category.id).toString() === selectedCategory)
+        .filter( category => selectedCategory === '0' ? category : (category.id)?.toString() === selectedCategory)
         .map( category => 
           <CategoryCard 
             key={category.id} 
