@@ -3,9 +3,10 @@ import MainPage from "../pages/MainPage"
 import LandingPage from "../pages/LandingPage"
 import ErrorPage from "../pages/ErrorPage"
 import DishesPage from "../pages/DishesPage"
-import CategoriesPage from "../pages/CategoriesPage"
 import LoginPage from "../pages/LoginPage"
 import PrivateRoutes from "../components/auth/PrivateRoutes"
+import Orders from "../pages/Orders"
+import TablesPage from "../pages/TablesPage"
 
 const router = createBrowserRouter([
     {
@@ -15,7 +16,8 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <LandingPage /> },
             { path: 'dishes', element: <DishesPage /> },
-            { path: 'categories', element: <PrivateRoutes><CategoriesPage /></PrivateRoutes> },
+            { path: 'tables', element: <PrivateRoutes><TablesPage /></PrivateRoutes> },
+            { path: 'orders', element: <PrivateRoutes><Orders /></PrivateRoutes> },
             { path: 'login', element: <LoginPage /> },
         ]
     }
