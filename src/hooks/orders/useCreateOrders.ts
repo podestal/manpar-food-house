@@ -13,9 +13,8 @@ const usePostOrder = (handleSuccess: () => void, handleError: () => void): UseMu
     return useMutation({
         mutationFn: (data: PostOrderData) => orderService.post(data.order, data.access),
         onSuccess: res => {
-            handleSuccess()
             console.log(res)
-            
+            handleSuccess()
         },
         onError: err => {
             console.log(err)
