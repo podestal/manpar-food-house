@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Table } from "../../services/api/tableService"
-import OrderForm from "../orders/OrderForm"
+import CreateOrder from "../orders/CreateOrder"
 
 interface Props {
     table: Table
@@ -17,9 +17,10 @@ const TableItem = ({ table }: Props) => {
         className=" p-14 bg-blue-700 mx-auto rounded-full hover:bg-blue-800 text-slate-50 hover:text-slate-300 cursor-pointer">
             <p className="text-xl font-bold">{table.number}</p>
         </div>
-        <OrderForm 
-            show={show}
+        <CreateOrder 
             setShow={setShow}
+            show={show}
+            tableId={table.id}
         />
     </>
   )

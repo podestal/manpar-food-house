@@ -1,35 +1,43 @@
 import Panel from "../../utils/Panel"
-import InputText from "../../utils/InputText"
-import { Button, NumberInput } from "@tremor/react"
+import { Button } from "@tremor/react"
+import { UseMutationResult } from "@tanstack/react-query"
+import { Order } from "../../services/api/orderService"
+import { PostOrderData } from "../../hooks/orders/useCreateOrders"
+import useUserStore from "../../store/userStore"
 
 interface Props {
     show: boolean
     setShow: (value: boolean) => void
+    createOrder: UseMutationResult<Order, Error, PostOrderData>
+    tableId: number | undefined
 }
 
-const OrderForm = ({ show, setShow }: Props) => {
+const OrderForm = ({ show, setShow, createOrder, tableId }: Props) => {
+
+    const access = useUserStore(s => s.access)
+
+    const handleCreateOrder = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        if (access) {
+            try {
+                await createOrder.mutateAsync({ order: {table: tableId, status: 'P'}, access })
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+    }
+
   return (
     <Panel
         show={show}
         setShow={setShow}
     >
-        <form className="flex flex-col justify-center items-center gap-6">
-            <h2 className="text-3xl text-slate-50">Agregar Plato</h2>
-            <InputText 
-                label="Plato"
-            />
-            <InputText 
-                label="Observaciones"
-            />
-            <div className="flex flex-col justify-center items-center w-[300px] max-lg:w-[200px] gap-6">
-                <p className="text-lg lg:text-xl text-slate-50 text-center">Cantidad</p>
-                <NumberInput 
-                    placeholder="Cantidad"
-                />
-            </div>
+        <form onSubmit={handleCreateOrder} className="flex flex-col justify-center items-center gap-6">
+            <h2 className="text-3xl text-slate-50">Nueva Orden</h2>
             <div className="w-full flex justify-center items-center gap-10 my-6">
-                <Button color="blue">Crear</Button>
-                <Button color="red">Cancelar</Button>
+                <Button color="green">Crear</Button>
+                <Button color="blue">Volver</Button>
             </div>
         </form>
     </Panel>
