@@ -4,15 +4,18 @@ import { UseMutationResult } from "@tanstack/react-query"
 import { Order } from "../../services/api/orderService"
 import { PostOrderData } from "../../hooks/orders/useCreateOrders"
 import useUserStore from "../../store/userStore"
+import { Table } from "../../services/api/tableService"
+import { UpdateTableData } from "../../hooks/tables/useUpdateTable"
 
 interface Props {
     show: boolean
     setShow: (value: boolean) => void
     createOrder: UseMutationResult<Order, Error, PostOrderData>
+    updateTable: UseMutationResult<Table, Error, UpdateTableData>
     tableId: number | undefined
 }
 
-const OrderForm = ({ show, setShow, createOrder, tableId }: Props) => {
+const OrderForm = ({ show, setShow, createOrder, updateTable, tableId }: Props) => {
 
     const access = useUserStore(s => s.access)
 
@@ -21,6 +24,7 @@ const OrderForm = ({ show, setShow, createOrder, tableId }: Props) => {
         if (access) {
             try {
                 await createOrder.mutateAsync({ order: {table: tableId, status: 'P'}, access })
+                await updateTable.mutateAsync({ table: {is_available: false}, access })
             }
             catch (error) {
                 console.log(error)

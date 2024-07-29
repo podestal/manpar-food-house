@@ -14,7 +14,7 @@ const TableItem = ({ table }: Props) => {
     <>
         <div
         onClick={() => setShow(true)}
-        className=" p-14 bg-blue-700 mx-auto rounded-full hover:bg-blue-800 text-slate-50 hover:text-slate-300 cursor-pointer">
+        className={`p-14 ${table.is_available ? 'bg-blue-700' : 'bg-amber-700'} mx-auto rounded-full hover:bg-blue-800 text-slate-50 hover:text-slate-300 cursor-pointer`}>
             <p className="text-xl font-bold">{table.number}</p>
         </div>
         <CreateOrder 
