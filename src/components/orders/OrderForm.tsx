@@ -8,47 +8,31 @@ import { useState } from "react"
 import useErrorHandler from "../../store/errorHandling"
 
 interface Props {
-    show: boolean
-    setShow: (value: boolean) => void
     createOrder: UseMutationResult<Order, Error, PostOrderData>
     tableId: number | undefined
 }
 
-const OrderForm = ({ show, setShow, createOrder, tableId }: Props) => {
+const OrderForm = ({ createOrder, tableId }: Props) => {
 
     const access = useUserStore(s => s.access)
     const {error, success} = useErrorHandler()
     const [loading, setLoading] = useState(false)
 
-    const handleCreateOrder = async () => {
+    const handleCreateOrder = () => {
         setLoading(true)
         if (access) {
-            try {
-                await createOrder.mutateAsync({ order: {table: tableId, status: 'P'}, access })
-            }
-            catch (error) {
-                console.log(error)
-            }
-            finally {
-                setLoading(false)
-            }
+            createOrder.mutate({ order: {table: tableId, status: 'P'}, access })
         }
     }
 
   return (
-    <Panel
-        show={show}
-        setShow={setShow}
-    >
-        <div className="flex flex-col justify-center items-center gap-6">
-            <h2 className="text-3xl text-slate-50">Nueva Orden</h2>
-            {error && <Callout title="Error" color='red'>Ocurrió un error, inténtelo más tarde</Callout>}
-            {loading && <p className="text-slate-50">Loading...</p>}
-            <div className="w-full flex justify-center items-center gap-10 my-6">
-                <Button onClick={handleCreateOrder} color="blue">Crear</Button>
-            </div>
+    <div className="flex flex-col justify-center items-center gap-6">
+        {error && <Callout title="Error" color='red'>Ocurrió un error, inténtelo más tarde</Callout>}
+        {loading && <p className="text-slate-50">Loading...</p>}
+        <div className="w-full flex justify-center items-center gap-10 my-6">
+            <Button onClick={handleCreateOrder} color="blue">Nueva Orden</Button>
         </div>
-    </Panel>
+    </div>
   )
 }
 

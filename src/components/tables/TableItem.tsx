@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Table } from "../../services/api/tableService"
 import CreateOrder from "../orders/CreateOrder"
-import CreateOrderItem from "../orderItems/CreateOrderItem"
+import Orders from "../orders/Orders"
 
 interface Props {
     table: Table
@@ -12,29 +12,25 @@ const TableItem = ({ table }: Props) => {
     if (!table.current_orders) return null
 
     const [show, setShow] = useState(false)
-    const ordersToShow = table.current_orders.length
 
 
   return (
     <>
+        {console.log('table',table)}
+        
         <div
+    
         onClick={() => setShow(true)}
-        className={`p-14 ${ordersToShow === 0 ? 'bg-blue-700 hover:bg-blue-800' : 'bg-amber-700 hover:bg-amber-800'}  mx-auto rounded-full  text-slate-50 hover:text-slate-300 cursor-pointer`}>
+        className={`p-14 ${table.current_orders && table.current_orders.length === 0 ? 'bg-blue-700 hover:bg-blue-800' : 'bg-amber-700 hover:bg-amber-800'}  mx-auto rounded-full  text-slate-50 hover:text-slate-300 cursor-pointer`}>
             <p className="text-xl font-bold">{table.number}</p>
         </div>
-        {ordersToShow === 0 
-        ? 
-        <CreateOrder 
+
+        <Orders 
             setShow={setShow}
             show={show}
+            orders={table.current_orders}
             tableId={table.id}
         />
-        :   
-        <CreateOrderItem 
-            show={show}
-            setShow={setShow}
-            table={table}
-        />}
     </>
   )
 }

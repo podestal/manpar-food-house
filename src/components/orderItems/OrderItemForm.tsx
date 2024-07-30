@@ -37,7 +37,7 @@ const OrderItemForm = ({ show, setShow, table }: Props) => {
                 />
             </div>
             <div className="w-full flex justify-center items-center gap-10 my-6">
-                <Button color="blue">Crear</Button>
+                <Button color="blue">Agregar</Button>
                 <Button color="red">Cancelar</Button>
             </div>
         </form>
