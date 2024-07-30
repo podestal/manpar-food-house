@@ -1,9 +1,7 @@
-import { useEffect } from "react"
 import usePostOrder from "../../hooks/orders/useCreateOrders"
 import { Order } from "../../services/api/orderService"
 import useErrorHandler from "../../store/errorHandling"
 import OrderForm from "./OrderForm"
-import Orders from "./Orders"
 
 interface Props {
     tableId: number | undefined
@@ -18,23 +16,10 @@ const CreateOrder = ({ tableId, setLocalOrders }: Props) => {
 
   return (
     <>
-    <OrderForm 
-        createOrder={createOrder}
-        tableId={tableId}
-    /> 
-
-{/* {orders ? <OrderForm 
-        show={show}
-        setShow={setShow}
-        createOrder={createOrder}
-        tableId={tableId}
-    /> 
-    :
-    <Orders 
-    setShow={setShow}
-    show={show}
-    orders={orders}
-/>} */}
+        <OrderForm 
+            createOrder={createOrder}
+            tableId={tableId}
+        /> 
     </>
   )
 }

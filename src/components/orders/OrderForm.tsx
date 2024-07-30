@@ -1,4 +1,3 @@
-import Panel from "../../utils/Panel"
 import { Button, Callout } from "@tremor/react"
 import { UseMutationResult } from "@tanstack/react-query"
 import { Order } from "../../services/api/orderService"
@@ -15,7 +14,7 @@ interface Props {
 const OrderForm = ({ createOrder, tableId }: Props) => {
 
     const access = useUserStore(s => s.access)
-    const {error, success} = useErrorHandler()
+    const {error} = useErrorHandler()
     const [loading, setLoading] = useState(false)
 
     const handleCreateOrder = () => {

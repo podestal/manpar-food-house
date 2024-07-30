@@ -1,19 +1,14 @@
 import OrderItemForm from "./OrderItemForm"
-import { Table } from "../../services/api/tableService"
+import { Order } from "../../services/api/orderService"
 
 interface Props {
-    show: boolean
-    table: Table
-    setShow: (value: boolean) => void
+    order: Order
 }
 
-const CreateOrderItem = ({ show, setShow, table }: Props) => {
+const CreateOrderItem = ({ order }: Props) => {
   return (
     <OrderItemForm 
-        setShow={setShow}
-        show={show}
-        table={table}
-
+        order={order}
     />
   )
 }

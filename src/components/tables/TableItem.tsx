@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { Table } from "../../services/api/tableService"
-import CreateOrder from "../orders/CreateOrder"
 import Orders from "../orders/Orders"
 
 interface Props {
@@ -15,11 +14,8 @@ const TableItem = ({ table }: Props) => {
 
 
   return (
-    <>
-        {console.log('table',table)}
-        
+    <>  
         <div
-    
         onClick={() => setShow(true)}
         className={`p-14 ${table.current_orders && table.current_orders.length === 0 ? 'bg-blue-700 hover:bg-blue-800' : 'bg-amber-700 hover:bg-amber-800'}  mx-auto rounded-full  text-slate-50 hover:text-slate-300 cursor-pointer`}>
             <p className="text-xl font-bold">{table.number}</p>
