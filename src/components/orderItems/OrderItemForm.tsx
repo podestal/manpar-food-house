@@ -13,14 +13,14 @@ const OrderItemForm = ({ order }: Props) => {
   return (
     <form className="flex flex-col justify-center items-center gap-6">
         <>{console.log('order', order)}</>
-        <TextInput 
-            placeholder="Plato"
-            icon={RiSearch2Line}
-        />
-        <TextInput 
-            placeholder="Observaciones"
-        />
         <div className="flex flex-col justify-center items-center w-[300px] max-lg:w-[200px] gap-6">
+            <TextInput 
+                placeholder="Plato"
+                icon={RiSearch2Line}
+            />
+            <TextInput 
+                placeholder="Observaciones"
+            />
             <NumberInput 
                 placeholder="Cantidad"
             />
