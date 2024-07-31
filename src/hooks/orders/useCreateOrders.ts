@@ -8,7 +8,9 @@ export interface PostOrderData {
 }
 
 const usePostOrder = (tableId: number, handleSuccess: () => void, handleError: () => void): UseMutationResult<Order, Error, PostOrderData> => {
-    const orderService = getOrderService(0)
+    console.log('tableId', tableId)
+    
+    const orderService = getOrderService(tableId)
     const queryClient = useQueryClient()
     const ORDER_CACHE_KEY = getOrderCacheKey(tableId)
     return useMutation({

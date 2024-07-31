@@ -7,7 +7,7 @@ export interface Order {
 }
 
 const getOrderService = ( tableId: number, orderId?: number) => {
-    const URL = tableId === 0 ? `orders/${orderId}/` : `orders/?table=${tableId}&status=`
+    const URL = orderId ? `orders/${orderId}/` : `orders/?table=${tableId}&status=`
     return new APIClient<Order>(URL)
 }
 
