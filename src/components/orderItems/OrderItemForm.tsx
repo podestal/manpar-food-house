@@ -6,7 +6,7 @@ import { CreateOrderItemData } from "../../hooks/orderItem/useCreateOrderItem"
 import { OrderItem } from "../../services/api/orderItemService"
 import useUserStore from "../../store/userStore"
 import { Dish } from "../../services/api/dishServices"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import useErrorHandler from "../../store/errorHandling"
 import {motion, AnimatePresence} from 'framer-motion'
 
@@ -37,7 +37,9 @@ const OrderItemForm = ({ order, createOrderItem, dishes }: Props) => {
     const [quantityError, setQuantityError] = useState(false)
     const [dishError, setDishError] = useState(false)
 
-
+    useEffect(() => {
+        handleReset()
+    }, [])
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
@@ -115,7 +117,11 @@ const OrderItemForm = ({ order, createOrderItem, dishes }: Props) => {
                     }}
                 />
                 {showOptions && searchDish.length > 0 &&
-                <>
+                <motion.div 
+                    initial={{opacity: 0, translateY: -30}}
+                    whileInView={{opacity: 1, translateY: 0}}
+                    transition={{duration: 0.5}}
+                    className="bg-slate-800 rounded-3xl w-full">
                     {filteredDishes.map( filteredDish => (
                         <div key={filteredDish.id} className="my-4 px-6 py-2 hover:bg-blue-700 rounded-3xl">
                             <p onClick={() => {
@@ -125,7 +131,7 @@ const OrderItemForm = ({ order, createOrderItem, dishes }: Props) => {
                         }}>{filteredDish.name}</p>
                         </div>
                     ))}
-                </>
+                </motion.div>
                 }
             </div>
             <div className="w-full flex flex-col justify-center items-center gap-4">

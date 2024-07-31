@@ -6,9 +6,10 @@ import useUserStore from "../../store/userStore"
 interface Props {
     order: Order
     tableId: number
+    canSendToKtichen: boolean
 }
 
-const SendOrderToKitchen = ({ order, tableId }: Props) => {
+const SendOrderToKitchen = ({ order, tableId, canSendToKtichen }: Props) => {
 
     if (!order.id) return null
     const access = useUserStore(s => s.access)
@@ -22,7 +23,7 @@ const SendOrderToKitchen = ({ order, tableId }: Props) => {
 
   return (
     <div>
-        <Button onClick={handleClick} color="green">Enviar a Cocina</Button>
+        <Button disabled={canSendToKtichen} onClick={handleClick} color="green">Enviar a Cocina</Button>
     </div>
   )
 }

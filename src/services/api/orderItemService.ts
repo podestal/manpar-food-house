@@ -1,6 +1,4 @@
 import APIClient from "./apiClient"
-import { Dish } from "./dishServices"
-import { Order } from "./orderService"
 
 export interface OrderItem {
     id?: number

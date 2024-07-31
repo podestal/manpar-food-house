@@ -10,6 +10,8 @@ const TableItem = ({ table }: Props) => {
 
     const [show, setShow] = useState(false)
 
+    console.log('table.current_orders',table.current_orders)
+    
 
   return (
     <>  
@@ -19,7 +21,7 @@ const TableItem = ({ table }: Props) => {
             <p className="text-xl font-bold">{table.number}</p>
         </div>
 
-{ show && <Orders 
+        {show && <Orders
             setShow={setShow}
             show={show}
             tableId={table.id}

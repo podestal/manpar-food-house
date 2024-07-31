@@ -4,6 +4,7 @@ import OrderItems from "../orderItems/OrderItems";
 import CreateOrderItem from "../orderItems/CreateOrderItem";
 import useGetDishes from "../../hooks/dishes/useGetDishes";
 import { Divider } from "@tremor/react";
+import { useState } from "react";
 
 interface Props {
     order: Order
@@ -13,6 +14,8 @@ interface Props {
 const OrderCard = ({ order, tableId }: Props) => {
 
     if (!order.id) return null
+
+    const [canSendToKtichen, setCanSendToKtichen] = useState(true)
 
     const {data: dishes, isLoading, isError, error, isSuccess} = useGetDishes()
 
@@ -28,6 +31,7 @@ const OrderCard = ({ order, tableId }: Props) => {
         <OrderItems 
             order={order}
             dishes={dishes}
+            setCanSendToKtichen={setCanSendToKtichen}
         />
         <Divider />
         {order.status === 'P' && 
@@ -39,6 +43,7 @@ const OrderCard = ({ order, tableId }: Props) => {
             <SendOrderToKitchen 
                 order={order} 
                 tableId={tableId}
+                canSendToKtichen={canSendToKtichen}
         />}
     </div>
   )
