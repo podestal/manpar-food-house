@@ -21,12 +21,12 @@ const TableItem = ({ table }: Props) => {
             <p className="text-xl font-bold">{table.number}</p>
         </div>
 
-        <Orders 
+{ show && <Orders 
             setShow={setShow}
             show={show}
             orders={table.current_orders}
             tableId={table.id}
-        />
+        />}
     </>
   )
 }

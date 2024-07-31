@@ -1,16 +1,21 @@
 import { useMutation, UseMutationResult, useQueryClient } from "@tanstack/react-query"
 import getOrderService, { Order } from "../../services/api/orderService"
+import { getOrderCacheKey } from "../../constants"
 
 export interface UpdateOrderData {
     access: string
     order: Order
 }
 
-const useUpdateOrder = (orderId: number): UseMutationResult<Order, Error, UpdateOrderData> => {
-    const orderService = getOrderService(orderId)
+const useUpdateOrder = (orderId: number, tableId: number): UseMutationResult<Order, Error, UpdateOrderData> => {
+    const queryClient = useQueryClient()
+    const orderService = getOrderService(0,orderId)
+    const ORDER_CACHE_KEY = getOrderCacheKey(tableId)
     return useMutation({
         mutationFn: (data: UpdateOrderData) => orderService.update(data.order, data.access),
-        onSuccess: res => console.log(res),
+        onSuccess: res => {
+            queryClient.setQueryData<Order[]>(ORDER_CACHE_KEY, prev => prev?.map( order => order.id === res.id ? res : order))
+            console.log(res)},
         onError: err => console.log(err),
     })
 }

@@ -1,10 +1,11 @@
-import { Button, Divider, Tab, TabGroup, TabList, TabPanel, TabPanels } from "@tremor/react"
+import { Divider, Tab, TabGroup, TabList, TabPanel, TabPanels } from "@tremor/react"
 import { Order } from "../../services/api/orderService"
 import Panel from "../../utils/Panel"
 import OrderCard from "./OrderCard"
 import CreateOrder from "./CreateOrder"
 import { useState } from "react"
 import CreateOrderItem from "../orderItems/CreateOrderItem"
+import useGetOrders from "../../hooks/orders/useGetOrders"
 
 interface Props {
     orders: Order[]
@@ -15,8 +16,15 @@ interface Props {
 
 const Orders = ({ orders, show, setShow, tableId }: Props) => {
     
-    const [localOrders, setLocalOrders] = useState<Order[]>(orders)
-    const canCreateOrder = localOrders.find(order => order.status === 'P')
+    if (!tableId) return null
+
+    const {data, isLoading, isError, error} = useGetOrders(tableId)
+
+    if (isLoading) return <p>Loading ...</p>
+
+    if (isError) return <p>Error: {error.message}</p>
+
+    // const [localOrders, setLocalOrders] = useState<Order[]>(orders)
 
   return (
     <Panel
@@ -34,29 +42,25 @@ const Orders = ({ orders, show, setShow, tableId }: Props) => {
             <TabPanels>
             <TabPanel>
             <div>
-                {localOrders?.map( order => (
-                    <>
+                {data?.map( order => (
+                    <div
+                        key={order.id} 
+                    >
                     <OrderCard 
                         order={order}
-                        key={order.id} 
+                        tableId={tableId}
                     />
                     {order.status === 'P' && 
                     <CreateOrderItem 
                         order={order}
                     />}
-                    </>
+                    </div>
                 ))}
                 <Divider />
-                {!canCreateOrder ?
                 <CreateOrder 
                     tableId={tableId}
-                    setLocalOrders={setLocalOrders}
+                    orders={orders}
                 />
-                :
-                <div className="w-full flex justify-center items-center">
-                    <Button color="blue" disabled={true}>Nueva Orden</Button>
-                </div>
-                }
             </div>
             </TabPanel>
             <TabPanel>

@@ -5,13 +5,14 @@ import useUserStore from "../../store/userStore"
 
 interface Props {
     order: Order
+    tableId: number
 }
 
-const SendOrderToKitchen = ({ order }: Props) => {
+const SendOrderToKitchen = ({ order, tableId }: Props) => {
 
     if (!order.id) return null
     const access = useUserStore(s => s.access)
-    const sendOrder = useUpdateOrder(order.id) 
+    const sendOrder = useUpdateOrder(order.id, tableId) 
 
     const handleClick = () => {
         if (access) {
