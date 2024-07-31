@@ -2,6 +2,7 @@ import OrderItemForm from "./OrderItemForm"
 import { Order } from "../../services/api/orderService"
 import useCreateOrerItem from "../../hooks/orderItem/useCreateOrderItem"
 import { Dish } from "../../services/api/dishServices"
+import useErrorHandler from "../../store/errorHandling"
 
 interface Props {
     order: Order
@@ -11,7 +12,8 @@ interface Props {
 const CreateOrderItem = ({ order, dishes }: Props) => {
 
     if (!order.id) return null
-    const createOrderItem = useCreateOrerItem(order.id)
+    const {handleSuccess, handleError} = useErrorHandler()
+    const createOrderItem = useCreateOrerItem(order.id, handleSuccess, handleError)
 
   return (
     <OrderItemForm 

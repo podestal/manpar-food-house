@@ -4,7 +4,6 @@ import OrderItems from "../orderItems/OrderItems";
 import CreateOrderItem from "../orderItems/CreateOrderItem";
 import useGetDishes from "../../hooks/dishes/useGetDishes";
 import { Divider } from "@tremor/react";
-import { useState } from "react";
 
 interface Props {
     order: Order
