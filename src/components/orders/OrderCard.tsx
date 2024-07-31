@@ -1,4 +1,3 @@
-import { Button } from "@tremor/react";
 import { Order } from "../../services/api/orderService"
 import SendOrderToKitchen from "./SendOrderToKitchen";
 

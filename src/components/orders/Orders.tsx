@@ -3,18 +3,16 @@ import { Order } from "../../services/api/orderService"
 import Panel from "../../utils/Panel"
 import OrderCard from "./OrderCard"
 import CreateOrder from "./CreateOrder"
-import { useState } from "react"
 import CreateOrderItem from "../orderItems/CreateOrderItem"
 import useGetOrders from "../../hooks/orders/useGetOrders"
 
 interface Props {
-    orders: Order[]
     show: boolean
     setShow: (value: boolean) => void
     tableId: number | undefined
 }
 
-const Orders = ({ orders, show, setShow, tableId }: Props) => {
+const Orders = ({ show, setShow, tableId }: Props) => {
     
     if (!tableId) return null
 

@@ -4,8 +4,9 @@ import { Order } from "./orderService"
 
 export interface OrderItem {
     id?: number
-    dish: Dish
-    order: Order
+    dish: number
+    order: number | undefined
+    observations: string
     quantity: number
 }
 

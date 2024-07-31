@@ -8,8 +8,6 @@ interface Props {
 
 const TableItem = ({ table }: Props) => {
 
-    if (!table.current_orders) return null
-
     const [show, setShow] = useState(false)
 
 
@@ -24,7 +22,6 @@ const TableItem = ({ table }: Props) => {
 { show && <Orders 
             setShow={setShow}
             show={show}
-            orders={table.current_orders}
             tableId={table.id}
         />}
     </>

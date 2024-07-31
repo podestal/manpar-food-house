@@ -3,7 +3,6 @@ import usePostOrder from "../../hooks/orders/useCreateOrders"
 import { Order } from "../../services/api/orderService"
 import useErrorHandler from "../../store/errorHandling"
 import OrderForm from "./OrderForm"
-import { useEffect } from "react"
 
 interface Props {
     tableId: number
