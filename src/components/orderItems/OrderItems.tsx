@@ -22,6 +22,7 @@ const OrderItems = ({ order, dishes }: Props) => {
     <>
         {orderItems?.map( orderItem => (
             <OrderItemCard 
+                key={orderItem.id}
                 orderItem={orderItem}
                 dishes={dishes}
             />

@@ -3,6 +3,8 @@ import SendOrderToKitchen from "./SendOrderToKitchen";
 import OrderItems from "../orderItems/OrderItems";
 import CreateOrderItem from "../orderItems/CreateOrderItem";
 import useGetDishes from "../../hooks/dishes/useGetDishes";
+import { Divider } from "@tremor/react";
+import { useState } from "react";
 
 interface Props {
     order: Order
@@ -28,12 +30,17 @@ const OrderCard = ({ order, tableId }: Props) => {
             order={order}
             dishes={dishes}
         />
+        <Divider />
         {order.status === 'P' && 
         <CreateOrderItem 
             order={order}
             dishes={dishes}
         />}
-        {order.status === 'P' && <SendOrderToKitchen order={order} tableId={tableId}/>}
+        {order.status === 'P' && 
+            <SendOrderToKitchen 
+                order={order} 
+                tableId={tableId}
+        />}
     </div>
   )
 }

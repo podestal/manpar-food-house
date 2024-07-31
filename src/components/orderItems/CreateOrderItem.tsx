@@ -8,7 +8,7 @@ interface Props {
     dishes: Dish[]
 }
 
-const CreateOrderItem = ({ order }: Props) => {
+const CreateOrderItem = ({ order, dishes }: Props) => {
 
     if (!order.id) return null
     const createOrderItem = useCreateOrerItem(order.id)
@@ -17,6 +17,7 @@ const CreateOrderItem = ({ order }: Props) => {
     <OrderItemForm 
         order={order}
         createOrderItem={createOrderItem}
+        dishes={dishes}
     />
   )
 }

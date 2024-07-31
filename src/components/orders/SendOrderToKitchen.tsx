@@ -22,7 +22,7 @@ const SendOrderToKitchen = ({ order, tableId }: Props) => {
 
   return (
     <div>
-        <Button onClick={handleClick} color="green">Enviar</Button>
+        <Button onClick={handleClick} color="green">Enviar a Cocina</Button>
     </div>
   )
 }
