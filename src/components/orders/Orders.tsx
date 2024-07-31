@@ -24,8 +24,6 @@ const Orders = ({ orders, show, setShow, tableId }: Props) => {
 
     if (isError) return <p>Error: {error.message}</p>
 
-    // const [localOrders, setLocalOrders] = useState<Order[]>(orders)
-
   return (
     <Panel
         show={show}
@@ -59,7 +57,7 @@ const Orders = ({ orders, show, setShow, tableId }: Props) => {
                 <Divider />
                 <CreateOrder 
                     tableId={tableId}
-                    orders={orders}
+                    orders={data}
                 />
             </div>
             </TabPanel>

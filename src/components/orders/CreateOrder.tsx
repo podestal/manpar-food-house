@@ -3,23 +3,24 @@ import usePostOrder from "../../hooks/orders/useCreateOrders"
 import { Order } from "../../services/api/orderService"
 import useErrorHandler from "../../store/errorHandling"
 import OrderForm from "./OrderForm"
+import { useEffect } from "react"
 
 interface Props {
     tableId: number
-    orders: Order[]
+    orders: Order[] | undefined
 }
 
 const CreateOrder = ({ tableId, orders }: Props) => {
 
     const {handleError, handleSuccess} = useErrorHandler()
 
-    const isThereAnyPendingOrder= orders.find(order => order.status === 'P')
+    let isThereAnyPendingOrder = orders?.find(order => order.status === 'P')
 
     const createOrder = usePostOrder(tableId, handleSuccess, handleError)
 
   return (
     <>  
-        {isThereAnyPendingOrder 
+        {isThereAnyPendingOrder
         ?
         <div className="w-full flex justify-center items-center">
             <Button color="blue" disabled={true}>Nueva Orden</Button>
