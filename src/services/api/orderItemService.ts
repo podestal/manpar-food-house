@@ -10,8 +10,8 @@ export interface OrderItem {
     quantity: number
 }
 
-const getOrderItemService = (orderItemId?: number) => {
-    const URL = orderItemId ? `order-items/${orderItemId}/` : 'order-items/'
+const getOrderItemService = (orderId: number, orderItemId?: number) => {
+    const URL = orderItemId ? `order-items/${orderItemId}/` : `/order-items/?order=${orderId}`
     return new APIClient<OrderItem>(URL)
 }
 

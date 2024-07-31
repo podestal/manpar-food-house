@@ -8,7 +8,7 @@ export interface CreateOrderItemData {
 }
 
 const useCreateOrerItem = (): UseMutationResult<OrderItem, Error, CreateOrderItemData> => {
-    const orderItemService = getOrderItemService()
+    const orderItemService = getOrderItemService(0)
     // const dishService = getDishService()
     return useMutation({
         mutationFn: (data: CreateOrderItemData) => orderItemService.post(data.orderItem, data.access),

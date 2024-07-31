@@ -4,3 +4,6 @@ export const TABLE_CACHE_KEY = ['tables']
 export const getOrderCacheKey = (tableId: number) => {
     return ['orders', tableId]
 }
+export const getOrderItemCacheKey = (orderId: number) => {
+    return ['orderItems', orderId]
+}
