@@ -42,6 +42,14 @@ class APIClient<T> {
             })
             .then( res => res.data)
     }
+
+    formDataPost = (data: FormData, access: string) => {
+        return axiosInstance
+            .post<any>(this.endpoint, data, {
+                headers: {Authorization: `JWT ${access}`}
+            })
+            .then(res => res.data)
+    }   
 }
 
 export default APIClient

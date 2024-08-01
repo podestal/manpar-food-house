@@ -5,7 +5,7 @@ export interface Table {
     id?: number
     number?: number
     is_available: boolean 
-    current_orders?: Order[]
+    orders: number[]
 }
 
 const getTableService = (tableId?: number) => {

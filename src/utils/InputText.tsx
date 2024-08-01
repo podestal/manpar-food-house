@@ -15,6 +15,7 @@ const InputText = ({ label, register, ...TextInputProps }: Props) => {
             placeholder={label}
             {...TextInputProps}
             {...register}
+            autoComplete='off'
         />
     </div>
   )

@@ -11,6 +11,7 @@ import useUserStore from "../../store/userStore"
 import { PostDishData } from "../../hooks/dishes/usePostDish"
 import { UseMutationResult } from "@tanstack/react-query"
 import useErrorHandler from "../../store/errorHandling"
+import { UpdateDishtData } from "../../hooks/dishes/useUpdateDish"
 
 const schema = z.object({
     dish: z.string().min(1, { message: 'Escriba el nombre del plato' }),
@@ -25,7 +26,7 @@ interface Props {
     show: boolean
     setShow: (show: boolean) => void
     createDish?: UseMutationResult<Dish, Error, PostDishData>
-    updateDish?: UseMutationResult<Dish, Error, PostDishData>
+    updateDish?: UseMutationResult<Dish, Error, UpdateDishtData>
 }
 
 const DishForm = ({ 
@@ -36,8 +37,12 @@ const DishForm = ({
         updateDish,
     }: Props) => {
 
+    // IMG
+    const [img, setImg] = useState<any>()
+
     // AUTH
     const access = useUserStore(s => s.access)
+    const dishImg = dish?.dishImg ?  dish?.dishImg : dish?.picture
 
     // ERROR HANDLER
     const {success, error, disable} = useErrorHandler()
@@ -54,7 +59,23 @@ const DishForm = ({
     const [selectedCategory, setSelectedCategory] = useState(dish ? dish?.category.toString(): '0')
     const [available, setAvailable] = useState<boolean>(dish ? dish?.available: true)
 
+    console.log('dish', dish);
+
     const onSubmit = (data: FieldValues) => {
+
+        const formData = new FormData()
+        formData.append('dishImg', img)
+        formData.append('name', data.dish);
+        formData.append('description', data.description);
+        formData.append('cost', data.cost);
+        formData.append('category', selectedCategory);
+        formData.append('available', String(available));
+        formData.append('picture', 'picture')
+        console.log('formData', formData);
+        console.log('available', available);
+        console.log('dish', dish);
+        
+        
         if (access) {
             if (dish) {
                 updateDish?.mutate({
@@ -63,7 +84,7 @@ const DishForm = ({
                 })
             } else if (createDish) {
                 createDish.mutate({
-                    dish: { name: data.dish, description: data.description, cost: data.cost, category: parseInt(selectedCategory), available, picture: 'dfssdfsdf' },
+                    dish: formData,
                     access
                 })
             }
@@ -86,6 +107,18 @@ const DishForm = ({
                 checked={available}
                 onChange={value => setAvailable(value)}
             />
+            <img className="my-10 w-[280px] h-[200px] lg:w-[360px] lg:h-[220px] rounded-3xl" src={dish?.dishImg} alt={dish?.name} />
+            {createDish && <input 
+                type="file"
+                accept="image/*"
+                onChange={e => {
+                    if (e.target.files) {
+                        console.log(e.target.files[0])
+                        
+                        setImg(e.target.files[0])
+                    }
+                }}
+            />}
             <InputText 
                 label="Nombre del Plato"
                 register={register('dish')}
@@ -104,7 +137,6 @@ const DishForm = ({
                 error={formState?.errors.cost ? true : false}
                 errorMessage={formState.errors.cost?.message}
             />
-            <p>Foto</p>
             <CategoriesSelector 
                 setSelectedCategory={setSelectedCategory}
                 defaultCat={dish?.category.toString()}
