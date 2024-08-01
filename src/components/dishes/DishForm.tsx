@@ -13,6 +13,7 @@ import { UseMutationResult } from "@tanstack/react-query"
 import useErrorHandler from "../../store/errorHandling"
 import { UpdateDishtData } from "../../hooks/dishes/useUpdateDish"
 import Swtich from "../../utils/Swtich"
+import useCreateDishImage from "../../hooks/dishImages/useCreateDishImage"
 
 const schema = z.object({
     dish: z.string().min(1, { message: 'Escriba el nombre del plato' }),
@@ -28,6 +29,7 @@ interface Props {
     setShow: (show: boolean) => void
     createDish?: UseMutationResult<Dish, Error, PostDishData>
     updateDish?: UseMutationResult<Dish, Error, UpdateDishtData>
+    dishId: number
 }
 
 const DishForm = ({ 
@@ -36,10 +38,13 @@ const DishForm = ({
         setShow, 
         createDish, 
         updateDish,
+        dishId
     }: Props) => {
 
     // IMG
-    const [img, setImg] = useState<any>()
+    const [img, setImg] = useState<File>()
+    console.log('dishId in form', dishId);
+    const createDishImage = useCreateDishImage(dishId)
 
     // AUTH
     const access = useUserStore(s => s.access)
@@ -62,6 +67,8 @@ const DishForm = ({
 
     const onSubmit = async (data: FieldValues) => {
         
+        
+
         if (access) {
             if (dish) {
                 updateDish?.mutate({
@@ -87,9 +94,12 @@ const DishForm = ({
                         },
                         access
                     })
-                    if (newDish) {
-                        console.log('New Dish', newDish);
-                        
+                    if (newDish.id && img) {
+                        console.log('img',img)
+                        const formData = new FormData()
+                        formData.append('image', img)
+                        console.log('formData',formData)
+                        await createDishImage.mutateAsync({ dishImage: formData, access})
                     }
                 }
                 catch (error) {
@@ -99,17 +109,13 @@ const DishForm = ({
         }
     }
 
-    const handleToggle = () => {
-        setAvailable(!available);
-    };
-
   return (
     <Panel
         show={show}
         setShow={setShow}
         reset={reset}
     >
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center items-center gap-6">
+        <form encType="multipart/form-data" onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center items-center gap-6">
             <h2 className="text-3xl text-slate-50">{dish ? 'Actualizar Plato' : 'Crear Plato'}</h2>
             {success && <Callout color='teal' title="Creado">Plato {dish ? 'Actualizado' : 'Creado'}</Callout>}
             {error && <Callout color='red' title="Error">Ocurrió un error, inténtelo más tarde</Callout>}
@@ -124,8 +130,6 @@ const DishForm = ({
                 accept="image/*"
                 onChange={e => {
                     if (e.target.files) {
-                        console.log(e.target.files[0])
-                        
                         setImg(e.target.files[0])
                     }
                 }}

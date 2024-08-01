@@ -1,7 +1,6 @@
 import { useMutation, UseMutationResult, useQueryClient } from "@tanstack/react-query";
 import getOrderService, { Order } from "../../services/api/orderService";
 import { getOrderCacheKey, TABLE_CACHE_KEY } from "../../constants";
-import { Table } from "../../services/api/tableService";
 
 export interface PostOrderData {
     access: string

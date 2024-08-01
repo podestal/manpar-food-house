@@ -1,5 +1,4 @@
 import APIClient from "./apiClient"
-import { Order } from "./orderService"
 
 export interface Table {
     id?: number
