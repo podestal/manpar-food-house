@@ -7,3 +7,7 @@ export const getOrderCacheKey = (tableId: number) => {
 export const getOrderItemCacheKey = (orderId: number) => {
     return ['orderItems', orderId]
 }
+
+export const getDishImageCacheKey = (dishId: number) => {
+    return ['dishImage', dishId]
+}

@@ -14,6 +14,7 @@ import useErrorHandler from "../../store/errorHandling"
 import { UpdateDishtData } from "../../hooks/dishes/useUpdateDish"
 import Swtich from "../../utils/Swtich"
 import useCreateDishImage from "../../hooks/dishImages/useCreateDishImage"
+import DishImage from "../dishImg/DishImage"
 
 const schema = z.object({
     dish: z.string().min(1, { message: 'Escriba el nombre del plato' }),
@@ -29,7 +30,6 @@ interface Props {
     setShow: (show: boolean) => void
     createDish?: UseMutationResult<Dish, Error, PostDishData>
     updateDish?: UseMutationResult<Dish, Error, UpdateDishtData>
-    dishId: number
 }
 
 const DishForm = ({ 
@@ -38,13 +38,11 @@ const DishForm = ({
         setShow, 
         createDish, 
         updateDish,
-        dishId
     }: Props) => {
 
     // IMG
     const [img, setImg] = useState<File>()
-    console.log('dishId in form', dishId);
-    const createDishImage = useCreateDishImage(dishId)
+    const createDishImage = useCreateDishImage()
 
     // AUTH
     const access = useUserStore(s => s.access)
@@ -95,10 +93,9 @@ const DishForm = ({
                         access
                     })
                     if (newDish.id && img) {
-                        console.log('img',img)
                         const formData = new FormData()
                         formData.append('image', img)
-                        console.log('formData',formData)
+                        formData.append('dish', (newDish.id).toString())
                         await createDishImage.mutateAsync({ dishImage: formData, access})
                     }
                 }
@@ -124,7 +121,10 @@ const DishForm = ({
                 setter={setAvailable}
                 label="Disponible"
             />
-            <img className="my-10 w-[280px] h-[200px] lg:w-[360px] lg:h-[220px] rounded-3xl" src={dishImg} alt={dish?.name} />
+            <DishImage 
+                dishId={dish?.id}
+                alt={dish?.name}
+            />
             {createDish && <input 
                 type="file"
                 accept="image/*"

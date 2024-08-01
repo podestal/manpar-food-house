@@ -27,7 +27,6 @@ const UpdateDish = ({ dish }: Props) => {
             setShow={setShow}
             dish={dish}
             updateDish={updateDish}
-            dishId={0}
         />
     </>
   )

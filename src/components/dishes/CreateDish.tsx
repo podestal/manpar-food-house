@@ -8,15 +8,12 @@ const CreateDish = () => {
 
     const [show, setShow] = useState(false)
 
-    // DISH ID
-    const [dishId, setDishId] = useState(47)
-
     // create a store to handle error
 
     //ERROR HANDLING
     const {handleSuccess, handleError} = useErrorHandler()
 
-    const createDish = usePostDish(handleSuccess, handleError, setDishId)
+    const createDish = usePostDish(handleSuccess, handleError)
 
   return (
     <div className="flex justify-center items-center">
@@ -25,7 +22,6 @@ const CreateDish = () => {
             show={show}
             setShow={setShow}
             createDish={createDish}
-            dishId={dishId}
         />
     </div>
   )

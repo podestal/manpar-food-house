@@ -7,18 +7,13 @@ export interface PostDishData {
     dish: Dish
 }
 
-const usePostDish = (handleSuccess: () => void, handleError: () => void, setDishId: (value:number) => void): UseMutationResult<Dish, Error, PostDishData> => {
+const usePostDish = (handleSuccess: () => void, handleError: () => void): UseMutationResult<Dish, Error, PostDishData> => {
     const queryClient = useQueryClient()
     const dishService = getDishService()
     return useMutation({
         mutationFn: (data: PostDishData) => dishService.post(data.dish, data.access),
         onSuccess: res => {
             queryClient.setQueryData<Dish[]>(DISH_CACHE_KEY, prev => prev ? [...prev, res] : [res])
-            if (res.id) {
-                console.log('setting dish');
-                
-                setDishId(res.id)
-            }
             handleSuccess()
         },
         onError: err => {

@@ -2,12 +2,20 @@ import APIClient from "./apiClient"
 
 export interface DishImage {
     id?: number
-    image: FormData
+    image: string
+    dish: number
 }
 
-const getDishImageService = (dishId: number, dishImgId?: number) => {
-    const URL = dishImgId ? `/dishes/${dishId}/images/${dishImgId}` : `/dishes/${dishId}/images/`
-    return new APIClient<DishImage>(URL)
+const getDishImageService = (dishId?: number, dishImgId?: number) => {
+    let url
+    if (dishId) {
+        url = `/dish-images/?dish=${dishId}`
+    } else if (dishImgId) {
+        url = `/dish-images/${dishImgId}/`
+    } else {
+        url = '/dish-images/'
+    }
+    return new APIClient<DishImage>(url)
 }
 
 export default getDishImageService
