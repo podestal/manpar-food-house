@@ -14,7 +14,7 @@ const Orders = ({ show, setShow, tableId }: Props) => {
     
     if (!tableId) return null
 
-    const {data, isLoading, isError, error} = useGetOrders(tableId)
+    const {data, isLoading, isError, error} =  useGetOrders(tableId)
 
     if (isLoading) return <p>Loading ...</p>
 

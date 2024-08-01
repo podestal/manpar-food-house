@@ -4,14 +4,14 @@ import { DISH_CACHE_KEY } from "../../constants"
 
 export interface PostDishData {
     access: string
-    dish: FormData
+    dish: Dish
 }
 
 const usePostDish = (handleSuccess: () => void, handleError: () => void): UseMutationResult<Dish, Error, PostDishData> => {
     const queryClient = useQueryClient()
     const dishService = getDishService()
     return useMutation({
-        mutationFn: (data: PostDishData) => dishService.formDataPost(data.dish, data.access),
+        mutationFn: (data: PostDishData) => dishService.post(data.dish, data.access),
         onSuccess: res => {
             queryClient.setQueryData<Dish[]>(DISH_CACHE_KEY, prev => prev ? [...prev, res] : [res])
             handleSuccess()

@@ -1,7 +1,7 @@
 import { Dish } from "../../services/api/dishServices"
 import InputText from "../../utils/InputText"
 import Panel from "../../utils/Panel"
-import { Button, Callout, Switch } from "@tremor/react"
+import { Button, Callout } from "@tremor/react"
 import CategoriesSelector from "../categories/CategoriesSelector"
 import { z } from 'zod'
 import { FieldValues, useForm } from 'react-hook-form'
@@ -12,6 +12,7 @@ import { PostDishData } from "../../hooks/dishes/usePostDish"
 import { UseMutationResult } from "@tanstack/react-query"
 import useErrorHandler from "../../store/errorHandling"
 import { UpdateDishtData } from "../../hooks/dishes/useUpdateDish"
+import Swtich from "../../utils/Swtich"
 
 const schema = z.object({
     dish: z.string().min(1, { message: 'Escriba el nombre del plato' }),
@@ -42,7 +43,7 @@ const DishForm = ({
 
     // AUTH
     const access = useUserStore(s => s.access)
-    const dishImg = dish?.dishImg ?  dish?.dishImg : dish?.picture
+    const dishImg = dish?.picture
 
     // ERROR HANDLER
     const {success, error, disable} = useErrorHandler()
@@ -57,39 +58,50 @@ const DishForm = ({
         }
     })
     const [selectedCategory, setSelectedCategory] = useState(dish ? dish?.category.toString(): '0')
-    const [available, setAvailable] = useState<boolean>(dish ? dish?.available: true)
+    const [available, setAvailable] = useState<boolean>(dish ? dish?.available : true)
 
-    console.log('dish', dish);
-
-    const onSubmit = (data: FieldValues) => {
-
-        const formData = new FormData()
-        formData.append('dishImg', img)
-        formData.append('name', data.dish);
-        formData.append('description', data.description);
-        formData.append('cost', data.cost);
-        formData.append('category', selectedCategory);
-        formData.append('available', String(available));
-        formData.append('picture', 'picture')
-        console.log('formData', formData);
-        console.log('available', available);
-        console.log('dish', dish);
-        
+    const onSubmit = async (data: FieldValues) => {
         
         if (access) {
             if (dish) {
                 updateDish?.mutate({
-                    dish: { ...dish, name: data.dish, description: data.description, cost: data.cost, category: parseInt(selectedCategory), available },
+                    dish: { 
+                        ...dish, 
+                        name: data.dish, 
+                        description: data.description, 
+                        cost: data.cost, 
+                        category: parseInt(selectedCategory), 
+                        available },
                     access
                 })
             } else if (createDish) {
-                createDish.mutate({
-                    dish: formData,
-                    access
-                })
+                try {
+                    const newDish = await createDish.mutateAsync({
+                        dish: { 
+                            name: data.dish, 
+                            description: data.description, 
+                            cost: data.cost, 
+                            category: parseInt(selectedCategory),
+                            available, 
+                            picture:'hhhhh' 
+                        },
+                        access
+                    })
+                    if (newDish) {
+                        console.log('New Dish', newDish);
+                        
+                    }
+                }
+                catch (error) {
+                    console.log(error)
+                }
             }
         }
     }
+
+    const handleToggle = () => {
+        setAvailable(!available);
+    };
 
   return (
     <Panel
@@ -101,13 +113,12 @@ const DishForm = ({
             <h2 className="text-3xl text-slate-50">{dish ? 'Actualizar Plato' : 'Crear Plato'}</h2>
             {success && <Callout color='teal' title="Creado">Plato {dish ? 'Actualizado' : 'Creado'}</Callout>}
             {error && <Callout color='red' title="Error">Ocurrió un error, inténtelo más tarde</Callout>}
-            <p className="text-lg lg:text-xl text-slate-50 text-center">Disponible</p>
-            <Switch 
-                color='blue'
-                checked={available}
-                onChange={value => setAvailable(value)}
+            <Swtich 
+                value={available}
+                setter={setAvailable}
+                label="Disponible"
             />
-            <img className="my-10 w-[280px] h-[200px] lg:w-[360px] lg:h-[220px] rounded-3xl" src={dish?.dishImg} alt={dish?.name} />
+            <img className="my-10 w-[280px] h-[200px] lg:w-[360px] lg:h-[220px] rounded-3xl" src={dishImg} alt={dish?.name} />
             {createDish && <input 
                 type="file"
                 accept="image/*"

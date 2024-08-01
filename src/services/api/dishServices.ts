@@ -9,7 +9,6 @@ export interface Dish {
     picture: string,
     created_at?: Date,
     category: number,
-    dishImg?: string
 }
 
 const getDishService = (dishId?: number) => {
