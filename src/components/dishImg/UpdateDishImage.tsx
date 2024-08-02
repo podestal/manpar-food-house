@@ -22,7 +22,7 @@ const UpdateDishImage = ({ dish, dishImageId, preview, setPreview }: Props) => {
             <img 
                 src={preview} 
                 alt="Selected Image" 
-                className="my-10 w-[280px] h-[200px] lg:w-[360px] lg:h-[220px] rounded-3xl"
+                className="object-cover my-10 w-[280px] h-[200px] lg:w-[360px] lg:h-[220px] rounded-3xl"
             />
         )}
         <input 
