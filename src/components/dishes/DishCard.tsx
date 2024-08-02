@@ -21,7 +21,7 @@ const DishCard = ({ dish }: Props) => {
 
     const handleSelectDish = () => {
         if (!access) {
-            select(dish.picture)
+            dish.id && select(dish.id, dish.name)
             setShowDescription(prev => !prev)
         } else {
             setShow(true)

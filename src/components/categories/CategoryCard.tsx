@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import DeleteCategory from "./DeleteCategory"
 import useUserStore from "../../store/userStore"
 import UpdateCategory from "./UpdateCategory"
+import { useState } from "react"
 
 interface Props {
     category: Category
@@ -12,8 +13,16 @@ interface Props {
 const CategoryCard = ({ category }: Props) => {
 
   if (!category.id) return null
-  
+
   const access = useUserStore(s => s.access)
+
+  const [show, setShow] = useState(false)
+
+  const handleClick = () => {
+    if (access) {
+      setShow(true)
+    }
+  }
 
   return (
     <div className="w-full">
@@ -28,12 +37,15 @@ const CategoryCard = ({ category }: Props) => {
                 category={category}
               />
               <UpdateCategory 
+                show={show}
+                setShow={setShow}
                 category={category}
               />
             </div>
           }
-          <h2 
-              className=" text-center text-3xl my-10">{category.name}
+          <h2
+              onClick={handleClick} 
+              className={`text-center text-3xl my-10 ${access && 'hover:bg-slate-900 px-6 py-4 rounded-3xl cursor-pointer'}`}>{category.name}
           </h2>
         </motion.div>
         <Dishes 

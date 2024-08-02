@@ -18,7 +18,7 @@ const DishImage = ({ dishId, alt }: Props) => {
     if (isSuccess)
 
   return (
-    <div>
+    <div className="flex justify-center items-center">
         <img className="my-10 w-[280px] h-[200px] lg:w-[360px] lg:h-[220px] rounded-3xl" src={img[0]?.image} alt={alt}  />
     </div>
   )
