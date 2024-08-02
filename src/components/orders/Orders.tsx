@@ -16,6 +16,8 @@ const Orders = ({ show, setShow, tableId }: Props) => {
 
     const {data, isLoading, isError, error} =  useGetOrders(tableId)
 
+    
+
     if (isLoading) return <p>Loading ...</p>
 
     if (isError) return <p>Error: {error.message}</p>

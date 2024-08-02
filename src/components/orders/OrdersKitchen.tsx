@@ -12,6 +12,9 @@ const OrdersKitchen = () => {
     if (isSuccess)
 
   return (
+    <>
+    {orders.length > 0 
+    ?
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-10'>
         {orders.map( order => (
             <div key={order.id}>
@@ -20,8 +23,14 @@ const OrdersKitchen = () => {
                 tableId={0}
             />
             </div>
-        ))}
+        ))} 
     </div>
+    :
+    <div className='w-full h-full flex justify-center items-center'>
+        <h2 className='text-5xl'>Aún no tienes órdenes ...</h2>
+    </div>
+    }
+    </>
   )
 }
 

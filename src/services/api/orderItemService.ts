@@ -6,6 +6,7 @@ export interface OrderItem {
     order: number | undefined
     observations: string
     quantity: number
+    table: number
 }
 
 const getOrderItemService = (orderId: number, orderItemId?: number) => {

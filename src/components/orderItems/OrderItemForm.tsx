@@ -58,7 +58,7 @@ const OrderItemForm = ({ order, createOrderItem, dishes }: Props) => {
 
         if (access) {
             try {
-                createOrderItem.mutate({orderItem: {dish: selectedDish, order: order.id, observations, quantity}, access})
+                order.table && createOrderItem.mutate({orderItem: {dish: selectedDish, table:order.table, order: order.id, observations, quantity}, access})
                 setSearchDish('')
                 setSelectedDish(0)
                 setObservations('')
