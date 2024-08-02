@@ -1,4 +1,3 @@
-import { useState } from "react"
 import useUpdateDishImage from "../../hooks/dishImages/useUpdateDishImage"
 import { Dish } from "../../services/api/dishServices"
 import useUserStore from "../../store/userStore"
@@ -7,7 +6,7 @@ interface Props {
     dish: Dish
     dishImageId: number
     preview: string | null
-    setPreview: (img: string) => void
+    setPreview: (img: string | null) => void
 }
 
 const UpdateDishImage = ({ dish, dishImageId, preview, setPreview }: Props) => {

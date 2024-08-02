@@ -1,18 +1,15 @@
-import { RiPencilFill } from "@remixicon/react"
-import { Icon } from "@tremor/react"
 import { Dish } from "../../services/api/dishServices"
 import DishForm from "./DishForm"
-import { useState } from "react"
 import useUpdateDish from "../../hooks/dishes/useUpdateDish"
 import useErrorHandler from "../../store/errorHandling"
 
 interface Props {
     dish?: Dish
+    show: boolean
+    setShow: (value: boolean) => void
 }
 
-const UpdateDish = ({ dish }: Props) => {
-
-    const [show, setShow] = useState(false)
+const UpdateDish = ({ dish, show, setShow }: Props) => {
 
     //ERROR HANDLING
     const {handleSuccess, handleError} = useErrorHandler()
@@ -21,7 +18,6 @@ const UpdateDish = ({ dish }: Props) => {
 
   return (
     <>
-        <Icon onClick={() => setShow(true)} className="hover:text-blue-700" color='blue' icon={RiPencilFill}/>
         <DishForm 
             show={show}
             setShow={setShow}

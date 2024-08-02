@@ -17,10 +17,15 @@ const DishCard = ({ dish }: Props) => {
 
     const select = useDishImgStore(s => s.select)
     const [showDescription, setShowDescription] = useState(false)
+    const [show, setShow] = useState(false)
 
     const handleSelectDish = () => {
-        select(dish.picture)
-        setShowDescription(prev => !prev)
+        if (!access) {
+            select(dish.picture)
+            setShowDescription(prev => !prev)
+        } else {
+            setShow(true)
+        }
     }
 
   return (
@@ -31,7 +36,7 @@ const DishCard = ({ dish }: Props) => {
         className={`mx-auto max-w-[1280px] max-lg:w-[460px] w-full flex flex-col justify-center items-center gap-8 cursor-pointer ${!dish.available && 'line-through decoration-red-500 decoration-4'}`}>
         <div className="flex w-full gap-4">
             {access && <RemoveDish dish={dish} />}
-            {access && <UpdateDish dish={dish} />}
+            {access && <UpdateDish show={show} setShow={setShow} dish={dish} />}
             <div onClick={handleSelectDish}  className="w-full flex justify-between items-center gap-6 hover:bg-slate-900 px-6 py-4 rounded-3xl">
                 <h2 className="text-xl font-bold">{dish.name}</h2>
                 <p className="font-bold">{dish.cost}</p>

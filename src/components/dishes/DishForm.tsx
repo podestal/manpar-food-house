@@ -117,6 +117,8 @@ const DishForm = ({
                     }
                     setSelectedCategory('0')
                     setImg(null)
+                    console.log('created dish', dish);
+                    
                 }
                 catch (error) {
                     console.log(error)

@@ -8,8 +8,6 @@ export interface DishImage {
 
 const getDishImageService = (dishId?: number, dishImgId?: number) => {
     let url
-    console.log('dishImgId', dishImgId)
-    
     if (dishImgId) {
         url = `/dish-images/${dishImgId}/`
     } else if (dishId) {
