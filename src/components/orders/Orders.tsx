@@ -3,6 +3,7 @@ import Panel from "../../utils/Panel"
 import OrderCard from "./OrderCard"
 import CreateOrder from "./CreateOrder"
 import useGetOrders from "../../hooks/orders/useGetOrders"
+import { useState } from "react"
 
 interface Props {
     show: boolean
@@ -16,7 +17,7 @@ const Orders = ({ show, setShow, tableId }: Props) => {
 
     const {data, isLoading, isError, error} =  useGetOrders(tableId)
 
-    
+    const [total, setTotal] = useState([])
 
     if (isLoading) return <p>Loading ...</p>
 

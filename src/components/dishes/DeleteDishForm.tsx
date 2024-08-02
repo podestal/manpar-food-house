@@ -27,7 +27,7 @@ const DeleteDishForm = ({ show, setShow, dish }: Props) => {
         setShow={setShow}
     >
         <>
-            <h1 className="text-3xl text-slate-50">Está seguro de eliminar el plato</h1>
+            <h1 className="text-3xl text-slate-50 w-[60%] text-center">Está seguro de eliminar el plato</h1>
             <div className="w-full flex justify-evenly item\">
                 <Button onClick={handleRemoveDish} color="red">Confirmar</Button>
                 <Button onClick={() => setShow(false)} color="blue">Volver</Button>
