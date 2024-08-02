@@ -50,6 +50,14 @@ class APIClient<T> {
             })
             .then(res => res.data)
     }   
+
+    formDataUpdate = (data: FormData, access: string) => {
+        return axiosInstance
+            .put<any>(this.endpoint, data, {
+                headers: {Authorization: `JWT ${access}`}
+            })
+            .then(res => res.data)
+    }   
 }
 
 export default APIClient

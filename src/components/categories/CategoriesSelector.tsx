@@ -22,6 +22,7 @@ const CategoriesSelector = ({ setSelectedCategory, allItems, defaultCat }: Props
         itemsList={categories}
         allItems={allItems}
         defaultItem={defaultCat}
+        
     />
   )
 }

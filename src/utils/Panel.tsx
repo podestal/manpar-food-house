@@ -9,9 +9,10 @@ interface Props<T extends FieldValues> {
     setShow: (show: boolean) => void
     children: React.ReactNode
     reset?: UseFormReset<T>
+    setPreview?: (value: null) => void
 }
 
-const Panel = <T extends FieldValues,>({ show, setShow, children, reset }: Props<T>) => {
+const Panel = <T extends FieldValues,>({ show, setShow, children, reset, setPreview }: Props<T>) => {
 
     const handleReset = useErrorHandler(s => s.handleReset)
 
@@ -19,6 +20,7 @@ const Panel = <T extends FieldValues,>({ show, setShow, children, reset }: Props
         setShow(false)
         reset && reset()
         handleReset()
+        setPreview && setPreview(null)
     }
 
   return (

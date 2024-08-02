@@ -15,6 +15,7 @@ import { UpdateDishtData } from "../../hooks/dishes/useUpdateDish"
 import Swtich from "../../utils/Swtich"
 import useCreateDishImage from "../../hooks/dishImages/useCreateDishImage"
 import DishImage from "../dishImg/DishImage"
+import UpdateDishImage from "../dishImg/UpdateDishImage"
 
 const schema = z.object({
     dish: z.string().min(1, { message: 'Escriba el nombre del plato' }),
@@ -41,12 +42,12 @@ const DishForm = ({
     }: Props) => {
 
     // IMG
-    const [img, setImg] = useState<File>()
+    const [img, setImg] = useState<File | null>(null)
+    const [preview, setPreview] = useState<string | null>(null)
     const createDishImage = useCreateDishImage()
 
     // AUTH
     const access = useUserStore(s => s.access)
-    const dishImg = dish?.picture
 
     // ERROR HANDLER
     const {success, error, disable} = useErrorHandler()
@@ -61,11 +62,12 @@ const DishForm = ({
         }
     })
     const [selectedCategory, setSelectedCategory] = useState(dish ? dish?.category.toString(): '0')
+    const [categoryError, setCategoryError] = useState(false)
     const [available, setAvailable] = useState<boolean>(dish ? dish?.available : true)
 
     const onSubmit = async (data: FieldValues) => {
         
-        
+        setCategoryError(false)
 
         if (access) {
             if (dish) {
@@ -79,7 +81,22 @@ const DishForm = ({
                         available },
                     access
                 })
+
             } else if (createDish) {
+                console.log('selectedCategory', selectedCategory)
+                console.log('img', img)
+                
+                if (selectedCategory === '0') {
+                    setCategoryError(true)
+                    return
+                }
+
+                if (!img) {
+                    console.log('FALTA IMG');
+                    
+                    return
+                }
+
                 try {
                     const newDish = await createDish.mutateAsync({
                         dish: { 
@@ -98,9 +115,12 @@ const DishForm = ({
                         formData.append('dish', (newDish.id).toString())
                         await createDishImage.mutateAsync({ dishImage: formData, access})
                     }
+                    setSelectedCategory('0')
+                    setImg(null)
                 }
                 catch (error) {
                     console.log(error)
+                    // LETS RESET THOS TWO ATTRS && ALSO ENABLE UPDATE
                 }
             }
         }
@@ -111,6 +131,7 @@ const DishForm = ({
         show={show}
         setShow={setShow}
         reset={reset}
+        setPreview={setPreview}
     >
         <form encType="multipart/form-data" onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center items-center gap-6">
             <h2 className="text-3xl text-slate-50">{dish ? 'Actualizar Plato' : 'Crear Plato'}</h2>
@@ -121,19 +142,51 @@ const DishForm = ({
                 setter={setAvailable}
                 label="Disponible"
             />
+            {!preview &&        
             <DishImage 
                 dishId={dish?.id}
                 alt={dish?.name}
-            />
-            {createDish && <input 
-                type="file"
-                accept="image/*"
-                onChange={e => {
-                    if (e.target.files) {
-                        setImg(e.target.files[0])
-                    }
-                }}
             />}
+            {dish 
+            ? 
+            <>
+            {dish.image &&        
+            <UpdateDishImage 
+                dish={dish}
+                dishImageId={dish.image}
+                preview={preview}
+                setPreview={setPreview}
+            /> }
+            </>
+            : 
+            <div className="flex flex-col items-center">
+                {preview && (
+                    <img 
+                        src={preview} 
+                        alt="Selected Image" 
+                        className="my-10 w-[280px] h-[200px] lg:w-[360px] lg:h-[220px] rounded-3xl"
+                    />
+                )}
+                <input 
+                    id="file-upload" 
+                    type="file" 
+                    accept="image/*" 
+                    className="hidden" 
+                    onChange={e => {
+                        if (e.target.files) {
+                            setImg(e.target.files[0])
+                            setPreview(URL.createObjectURL(e.target.files[0]))
+                        }
+                    }}
+                />
+                <label 
+                    htmlFor="file-upload" 
+                    className="cursor-pointer px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300"
+                >
+                    {dish ? 'Cambia de Imagen' : 'Selecciona un Imagen'}
+                </label>
+            </div>
+            } 
             <InputText 
                 label="Nombre del Plato"
                 register={register('dish')}
