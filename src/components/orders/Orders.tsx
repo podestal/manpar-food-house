@@ -4,6 +4,7 @@ import OrderCard from "./OrderCard"
 import CreateOrder from "./CreateOrder"
 import useGetOrders from "../../hooks/orders/useGetOrders"
 import { useState } from "react"
+import TotalOrderItems from "../orderItems/TotalOrderItems"
 
 interface Props {
     show: boolean
@@ -17,7 +18,7 @@ const Orders = ({ show, setShow, tableId }: Props) => {
 
     const {data, isLoading, isError, error} =  useGetOrders(tableId)
 
-    const [total, setTotal] = useState([])
+
 
     if (isLoading) return <p>Loading ...</p>
 
@@ -58,7 +59,9 @@ const Orders = ({ show, setShow, tableId }: Props) => {
             </div>
             </TabPanel>
             <TabPanel>
-                Total
+                <TotalOrderItems 
+                
+                />
             </TabPanel>
         </TabPanels>
         </TabGroup>

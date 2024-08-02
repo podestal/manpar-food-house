@@ -5,6 +5,7 @@ export interface Table {
     number?: number
     is_available: boolean 
     orders: number[]
+    bill?: number
 }
 
 const getTableService = (tableId?: number) => {

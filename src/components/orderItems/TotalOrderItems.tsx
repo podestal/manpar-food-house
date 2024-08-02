@@ -1,9 +1,11 @@
+
+
 const TotalOrderItems = () => {
 
     
 
   return (
-    <div>TotalOrderItems</div>
+    <div>Total from component</div>
   )
 }
 
