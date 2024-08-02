@@ -1,4 +1,4 @@
-import { Divider, Tab, TabGroup, TabList, TabPanel, TabPanels } from "@tremor/react"
+import { Button, Divider, Tab, TabGroup, TabList, TabPanel, TabPanels } from "@tremor/react"
 import Panel from "../../utils/Panel"
 import OrderCard from "./OrderCard"
 import CreateOrder from "./CreateOrder"
@@ -33,6 +33,7 @@ const Orders = ({ show, setShow, tableId }: Props) => {
                 <Tab>Ordenes</Tab>
                 <Tab>Total</Tab>
             </TabList>
+            <Button className="ml-10 lg:ml-16" color="red">Cerrar Mesa</Button>
             <TabPanels>
             <TabPanel>
             <div>
