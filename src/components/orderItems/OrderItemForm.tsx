@@ -9,14 +9,16 @@ import { Dish } from "../../services/api/dishServices"
 import { useEffect, useState } from "react"
 import useErrorHandler from "../../store/errorHandling"
 import {motion, AnimatePresence} from 'framer-motion'
+import { Table } from "../../services/api/tableService"
 
 interface Props {
     order: Order
     createOrderItem: UseMutationResult<OrderItem, Error, CreateOrderItemData>
     dishes: Dish[]
+    table: Table
 }
 
-const OrderItemForm = ({ order, createOrderItem, dishes }: Props) => {
+const OrderItemForm = ({ order, createOrderItem, dishes, table }: Props) => {
 
     const access = useUserStore(s => s.access)
 
@@ -56,9 +58,9 @@ const OrderItemForm = ({ order, createOrderItem, dishes }: Props) => {
             return
         }
 
-        if (access) {
+        if (access && table.bill) {
             try {
-                order.table && createOrderItem.mutate({orderItem: {dish: selectedDish, table:order.table, order: order.id, observations, quantity}, access})
+                order.table && createOrderItem.mutate({orderItem: {dish: selectedDish, table:order.table, order: order.id, observations, quantity, bill:table.bill}, access})
                 setSearchDish('')
                 setSelectedDish(0)
                 setObservations('')

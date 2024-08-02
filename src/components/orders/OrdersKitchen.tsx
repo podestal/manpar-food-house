@@ -20,7 +20,6 @@ const OrdersKitchen = () => {
             <div key={order.id}>
             <OrderCard 
                 order={order}
-                tableId={0}
             />
             </div>
         ))} 

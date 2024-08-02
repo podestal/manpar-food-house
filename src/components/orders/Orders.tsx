@@ -3,22 +3,20 @@ import Panel from "../../utils/Panel"
 import OrderCard from "./OrderCard"
 import CreateOrder from "./CreateOrder"
 import useGetOrders from "../../hooks/orders/useGetOrders"
-import { useState } from "react"
 import TotalOrderItems from "../orderItems/TotalOrderItems"
+import { Table } from "../../services/api/tableService"
 
 interface Props {
     show: boolean
     setShow: (value: boolean) => void
-    tableId: number | undefined
+    table?: Table
 }
 
-const Orders = ({ show, setShow, tableId }: Props) => {
+const Orders = ({ show, setShow, table }: Props) => {
     
-    if (!tableId) return null
+    if (!table) return null
 
-    const {data, isLoading, isError, error} =  useGetOrders(tableId)
-
-
+    const {data, isLoading, isError, error} =  useGetOrders(table.id)
 
     if (isLoading) return <p>Loading ...</p>
 
@@ -47,21 +45,22 @@ const Orders = ({ show, setShow, tableId }: Props) => {
                     >
                     <OrderCard 
                         order={order}
-                        tableId={tableId}
+                        table={table}
                     />
                     </div>
                 ))}
                 <Divider />
                 <CreateOrder 
-                    tableId={tableId}
+                    tableId={table.id}
                     orders={data}
                 />
             </div>
             </TabPanel>
             <TabPanel>
+                {table.bill && 
                 <TotalOrderItems 
-                
-                />
+                    billId={table.bill}
+                />}
             </TabPanel>
         </TabPanels>
         </TabGroup>

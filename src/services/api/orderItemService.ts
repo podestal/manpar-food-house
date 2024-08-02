@@ -7,11 +7,26 @@ export interface OrderItem {
     observations: string
     quantity: number
     table: number
+    bill: number
 }
 
-const getOrderItemService = (orderId: number, orderItemId?: number) => {
-    const URL = orderItemId ? `order-items/${orderItemId}/` : `/order-items/?order=${orderId}`
-    return new APIClient<OrderItem>(URL)
+interface Props {
+    orderId?: number
+    orderItemId?: number
+    bill?: number
+}
+
+const getOrderItemService = ({orderId, orderItemId, bill} : Props) => {
+
+    let url = 'order-items/'
+    if (orderId) {
+        url = `order-items/?order=${orderId}&table=&bill=`
+    }else if (orderItemId) {
+        url = `order-items/${orderItemId}/`
+    } else if (bill) {
+        url = `order-items/?order=&table=&bill=${bill}`
+    }
+    return new APIClient<OrderItem>(url)
 }
 
 export default getOrderItemService

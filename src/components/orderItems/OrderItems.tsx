@@ -14,7 +14,7 @@ const OrderItems = ({ order, dishes, setCanSendToKtichen }: Props) => {
 
     if (!order.id) return null
 
-    const {data: orderItems, isLoading, isError, error} = useGetOrderItems(order.id)
+    const {data: orderItems, isLoading, isError, error} = useGetOrderItems({orderId: order.id})
 
     useEffect(() => {
         if (orderItems && orderItems.length > 0) {

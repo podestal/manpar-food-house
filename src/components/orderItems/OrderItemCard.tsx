@@ -5,9 +5,10 @@ import { OrderItem } from "../../services/api/orderItemService"
 interface Props {
     orderItem: OrderItem
     dishes: Dish[]
+    hideObs?: boolean
 }
 
-const OrderItemCard = ({ orderItem, dishes }: Props) => {
+const OrderItemCard = ({ orderItem, dishes, hideObs }: Props) => {
 
     const dish = dishes.find(dish => dish.id === orderItem.dish)
 
@@ -35,7 +36,7 @@ const OrderItemCard = ({ orderItem, dishes }: Props) => {
             </div>
             <div className="w-full flex flex-col justify-center items-start">
                 <p className="text-xl">c/u: S/. {dish?.cost}</p>
-                <p className="text-slate-300">{orderItem.observations ? `- ${orderItem.observations}` : ''}</p>
+                {!hideObs && <p className="text-slate-300">{orderItem.observations ? `- ${orderItem.observations}` : ''}</p>}
             </div>
         </div>
         }

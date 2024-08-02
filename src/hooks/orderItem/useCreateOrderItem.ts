@@ -8,9 +8,9 @@ export interface CreateOrderItemData {
 }
 
 const useCreateOrerItem = (orderId: number, handleSuccess: () => void, handleError: () => void): UseMutationResult<OrderItem, Error, CreateOrderItemData> => {
-    const orderItemService = getOrderItemService(0)
+    const orderItemService = getOrderItemService({})
     const queryClient = useQueryClient()
-    const ORDERITEM_CACHE_KEY = getOrderItemCacheKey(orderId)
+    const ORDERITEM_CACHE_KEY = getOrderItemCacheKey({orderId})
     return useMutation({
         mutationFn: (data: CreateOrderItemData) => orderItemService.post(data.orderItem, data.access),
         onSuccess: res => {            

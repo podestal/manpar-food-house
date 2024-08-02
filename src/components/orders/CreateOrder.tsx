@@ -5,11 +5,13 @@ import useErrorHandler from "../../store/errorHandling"
 import OrderForm from "./OrderForm"
 
 interface Props {
-    tableId: number
+    tableId: number | undefined
     orders: Order[] | undefined
 }
 
 const CreateOrder = ({ tableId, orders }: Props) => {
+
+    if (!tableId) return null
 
     const {handleError, handleSuccess} = useErrorHandler()
 

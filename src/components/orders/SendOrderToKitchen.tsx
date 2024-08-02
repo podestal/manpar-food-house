@@ -5,13 +5,13 @@ import useUserStore from "../../store/userStore"
 
 interface Props {
     order: Order
-    tableId: number
+    tableId: number | undefined
     canSendToKtichen: boolean
 }
 
 const SendOrderToKitchen = ({ order, tableId, canSendToKtichen }: Props) => {
 
-    if (!order.id) return null
+    if (!order.id || tableId) return null
     const access = useUserStore(s => s.access)
     const sendOrder = useUpdateOrder(order.id, tableId) 
 

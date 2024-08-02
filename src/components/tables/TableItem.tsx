@@ -40,7 +40,7 @@ const TableItem = ({ table }: Props) => {
         {show && <Orders
             setShow={setShow}
             show={show}
-            tableId={table.id}
+            table={table}
         />}
     </>
   )
