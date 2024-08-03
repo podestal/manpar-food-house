@@ -16,13 +16,13 @@ interface Props {
 
 const OrderItemCard = ({ orderItem, dishes, hideObs, order }: Props) => {
 
-    if (!orderItem.id || !order || !order.id) return null
+    if (!orderItem.id) return null
 
     const dish = dishes.find(dish => dish.id === orderItem.dish)
 
     const access = useUserStore(s => s.access)
 
-    const removeOrderItem = useRemoveOrderItem({orderItemId: orderItem.id, orderId: order.id, billId: orderItem.bill})
+    const removeOrderItem = useRemoveOrderItem({orderItemId: orderItem.id, orderId: order?.id, billId: orderItem.bill})
 
     if (!dish) return null
 

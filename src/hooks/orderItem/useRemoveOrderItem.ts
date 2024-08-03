@@ -7,7 +7,7 @@ export interface DeleteOrderItemData {
 
 interface Props {
     orderItemId: number
-    orderId: number
+    orderId: number | undefined
     billId: number
 }
 

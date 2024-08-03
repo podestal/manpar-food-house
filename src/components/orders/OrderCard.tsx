@@ -3,7 +3,7 @@ import SendOrderToKitchen from "./SendOrderToKitchen";
 import OrderItems from "../orderItems/OrderItems";
 import CreateOrderItem from "../orderItems/CreateOrderItem";
 import useGetDishes from "../../hooks/dishes/useGetDishes";
-import { Divider } from "@tremor/react";
+import { Callout, Divider } from "@tremor/react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import useUserStore from "../../store/userStore";
@@ -23,6 +23,9 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
     if (!order.id) return null
 
     const [canSendToKtichen, setCanSendToKtichen] = useState(true)
+
+    const [success, setSuccess] = useState('')
+    const [ErrorOrder, setErrorOrder] = useState('')
 
     const location = useLocation()
 
@@ -47,6 +50,8 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
 
   return (
     <div onDoubleClick={handleRemoveOrder} className={`w-full ${order.status === 'P' && 'bg-transparent border-2'} ${order.status === 'S' && 'bg-blue-700'} ${order.status === 'C' && 'bg-green-600'} flex flex-col justify-center items-center p-6 gap-6 rounded-3xl my-6 text-slate-200`}>
+        {success && <Callout color='teal' title="Exito">Mesa cerrada</Callout>}
+        {ErrorOrder && <Callout color='red' title="Error">{ErrorOrder}</Callout>}
         <h2 className="text-5xl text-slate-50">Orden {order.id}</h2>
         <OrderItems 
             order={order}
@@ -71,6 +76,8 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
             <RemoveOrder 
                 orderId={order.id}
                 tableId={table?.id}
+                orderItems={orderItems}
+                setErrorOrder={setErrorOrder}
             />
             </div>
         }
