@@ -8,23 +8,27 @@ interface Props {
     billId: number
     table: Table
     orders: Order[]
-    setError: (value:boolean) => void
-    setSuccess: (value:boolean) => void
+    setError: (value:string) => void
+    setSuccess: (value:string) => void
+    setShow: (value:boolean) => void
 }
 
-const CloseTable = ({ billId, table, orders, setError, setSuccess }: Props) => {
+const CloseTable = ({ billId, table, orders, setError, setSuccess, setShow }: Props) => {
 
     if (!table.id) return null
 
     const ordersForTable = orders.filter( order => order.table === table.id)
-    const removeBill = useRemoveBill(billId, table.id, setSuccess, setError)
+    const removeBill = useRemoveBill(billId, table.id, setSuccess, setError, setShow)
     const access = useUserStore(s => s.access)
     
 
     const handleRemoveBill = () => {
 
         if (ordersForTable.length > 0) {
-            setError(true)
+            setError('No se puede cerrar una mesa con órdenes')
+            setTimeout(() => {
+                setError('')
+            },4000)
             return 
         }
 

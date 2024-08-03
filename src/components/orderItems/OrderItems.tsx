@@ -32,6 +32,7 @@ const OrderItems = ({ order, dishes, setCanSendToKtichen, orderItems }: Props) =
                 key={orderItem.id}
                 orderItem={orderItem}
                 dishes={dishes}
+                order={order}
             />
         ))}
     </>

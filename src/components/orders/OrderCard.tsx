@@ -30,9 +30,9 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
 
     const {data: dishes, isLoading, isError, error, isSuccess} = useGetDishes()
 
-    const removeOrder = useRemoveOrder(order.id)
+    const removeOrder = useRemoveOrder(order.id, order.table)
 
-    const handleUpdateOrder = () => {
+    const handleRemoveOrder = () => {
         
         if (location.pathname === '/orders') {
             access && removeOrder.mutate({ access })
@@ -46,7 +46,7 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
     if (isSuccess)
 
   return (
-    <div onDoubleClick={handleUpdateOrder} className={`w-full ${order.status === 'P' && 'bg-transparent border-2'} ${order.status === 'S' && 'bg-blue-700'} ${order.status === 'C' && 'bg-green-600'} flex flex-col justify-center items-center p-6 gap-6 rounded-3xl my-6 text-slate-200`}>
+    <div onDoubleClick={handleRemoveOrder} className={`w-full ${order.status === 'P' && 'bg-transparent border-2'} ${order.status === 'S' && 'bg-blue-700'} ${order.status === 'C' && 'bg-green-600'} flex flex-col justify-center items-center p-6 gap-6 rounded-3xl my-6 text-slate-200`}>
         <h2 className="text-5xl text-slate-50">Orden {order.id}</h2>
         <OrderItems 
             order={order}

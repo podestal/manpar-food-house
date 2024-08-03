@@ -15,6 +15,7 @@ const useRemoveOrder = (orderId: number, tableId?:number): UseMutationResult<Ord
         onSuccess: () => {
             console.log(ORDER_CACHE_KEY)
             queryClient.setQueryData<Order[]>(ORDER_CACHE_KEY, prev => prev?.filter(order => order.id !== orderId))
+            queryClient.setQueryData<Order[]>(['orders'], prev => prev?.filter(order => order.id !== orderId))
         },
         onError: err => console.log(err)
     })

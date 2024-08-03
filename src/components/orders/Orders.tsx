@@ -7,7 +7,7 @@ import TotalOrderItems from "../orderItems/TotalOrderItems"
 import { Table } from "../../services/api/tableService"
 import useGetOrderItems from "../../hooks/orderItem/useGetOrderItem"
 import CloseTable from "./CloseTable"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 interface Props {
     show: boolean
@@ -19,8 +19,8 @@ const Orders = ({ show, setShow, table }: Props) => {
     
     if (!table) return null
 
-    const [success, setSuccess] = useState(false)
-    const [error, setError] = useState(false)
+    const [success, setSuccess] = useState('')
+    const [error, setError] = useState('')
 
     const {data: orderItems, isLoading: orderItemsLoading, isError: orderItemsError, isSuccess: orderItemSuccess} = useGetOrderItems({billId: table.bill})
 
@@ -53,6 +53,7 @@ const Orders = ({ show, setShow, table }: Props) => {
                 orders={orders}
                 setError={setError}
                 setSuccess={setSuccess}
+                setShow={setShow}
             />}
             </>
             <TabPanels>

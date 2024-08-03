@@ -9,7 +9,7 @@ export interface DeleteBillData {
     access: string
 }
 
-const useRemoveBill = (billId: number, tableId: number, setSuccess: (value:boolean) => void, setError: (value:boolean) => void): UseMutationResult<Bill, Error, DeleteBillData> => {
+const useRemoveBill = (billId: number, tableId: number, setSuccess: (value:string) => void, setError: (value:string) => void, setShow: (value:boolean) => void): UseMutationResult<Bill, Error, DeleteBillData> => {
     const ORDERITEM_CACHE_KEY = getOrderItemCacheKey({billId})
     const queryClient = useQueryClient()
     const billService = getBillService(billId)
@@ -23,13 +23,20 @@ const useRemoveBill = (billId: number, tableId: number, setSuccess: (value:boole
                 }
                 return table
             }))
-            setSuccess(true)
-            setError(false)
+            setSuccess('La mesa se ha cerrado')
+            setShow(false)
+            setTimeout(() => {
+                setSuccess('')
+            },4000)
+            setError('')
         },
         onError: err => {
             console.log(err)
-            setError(true)
-            setSuccess(false)
+            setError('Ocurrió un error en el servidor, inténtelo nuevamente')
+            setTimeout(() => {
+                setError('')
+            },4000)
+            setSuccess('')
         }
     })
 }

@@ -1,14 +1,18 @@
 import { useLocation } from "react-router-dom"
 import { Dish } from "../../services/api/dishServices"
 import { OrderItem } from "../../services/api/orderItemService"
+import { Order } from "../../services/api/orderService"
+import { Icon } from "@tremor/react"
+import { RiDeleteBin2Fill } from "@remixicon/react"
 
 interface Props {
     orderItem: OrderItem
     dishes: Dish[]
     hideObs?: boolean
+    order?: Order
 }
 
-const OrderItemCard = ({ orderItem, dishes, hideObs }: Props) => {
+const OrderItemCard = ({ orderItem, dishes, hideObs, order }: Props) => {
 
     const dish = dishes.find(dish => dish.id === orderItem.dish)
 
@@ -17,7 +21,9 @@ const OrderItemCard = ({ orderItem, dishes, hideObs }: Props) => {
     const location = useLocation()
 
   return (
-    <>{location.pathname === '/orders' 
+    <div className="w-full flex gap-4">
+        {order?.status === 'P' && <Icon icon={RiDeleteBin2Fill} color="red"/>}
+        {location.pathname === '/orders' 
         ? 
         <div className="w-full flex flex-col justify-center items-center gap-6">
             <div className="w-full flex items-center justify-between">
@@ -40,7 +46,7 @@ const OrderItemCard = ({ orderItem, dishes, hideObs }: Props) => {
             </div>
         </div>
         }
-    </>
+    </div>
   )
 }
 
