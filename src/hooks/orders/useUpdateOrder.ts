@@ -9,7 +9,7 @@ export interface UpdateOrderData {
 
 const useUpdateOrder = (orderId: number, tableId?: number): UseMutationResult<Order, Error, UpdateOrderData> => {
     const queryClient = useQueryClient()
-    const orderService = getOrderService(0,orderId)
+    const orderService = getOrderService({orderId})
     const ORDER_CACHE_KEY = tableId && getOrderCacheKey(tableId)
     return useMutation({
         mutationFn: (data: UpdateOrderData) => orderService.update(data.order, data.access),

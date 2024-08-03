@@ -10,6 +10,7 @@ import useUpdateOrder from "../../hooks/orders/useUpdateOrder";
 import useUserStore from "../../store/userStore";
 import { Table } from "../../services/api/tableService";
 import { OrderItem } from "../../services/api/orderItemService";
+import useRemoveOrder from "../../hooks/orders/useRemoveOrder";
 
 interface Props {
     order: Order
@@ -31,10 +32,12 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
 
     const updateOrder = useUpdateOrder(order.id)
 
+    const removeOrder = useRemoveOrder(order.id)
+
     const handleUpdateOrder = () => {
         
         if (location.pathname === '/orders') {
-            access && updateOrder.mutate({ order: {...order, status: 'C'}, access })
+            access && removeOrder.mutate({ access })
         }
     }
 

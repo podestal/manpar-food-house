@@ -6,7 +6,12 @@ export interface Order {
     status: string
 }
 
-const getOrderService = ( tableId?: number, orderId?: number) => {
+interface Props {
+    tableId?: number
+    orderId?: number
+}
+
+const getOrderService = ({tableId, orderId}: Props) => {
     let url = 'orders/?table=&status=S'
     if (orderId) {
         url = `orders/${orderId}/`

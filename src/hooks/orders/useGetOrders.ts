@@ -4,7 +4,7 @@ import { getOrderCacheKey } from "../../constants"
 
 const useGetOrders = (tableId?: number): UseQueryResult<Order[], Error> => {
     const ORDER_CACHE_KEY  = tableId ? getOrderCacheKey(tableId) : getOrderCacheKey()
-    const orderService = tableId ? getOrderService(tableId) : getOrderService()
+    const orderService = tableId ? getOrderService({tableId}) : getOrderService({})
     return useQuery({
         queryKey: ORDER_CACHE_KEY,
         queryFn: orderService.get,

@@ -1,4 +1,5 @@
 import APIClient from "./apiClient"
+import moment from "moment"
 
 export interface OrderItem {
     id?: number
@@ -11,20 +12,20 @@ export interface OrderItem {
 }
 
 interface Props {
-    orderId?: number
     orderItemId?: number
-    bill?: number
+    billId?: number
 }
 
-const getOrderItemService = ({orderId, orderItemId, bill} : Props) => {
+const getOrderItemService = ({ orderItemId, billId} : Props) => {
 
-    let url = 'order-items/'
-    if (orderId) {
-        url = `order-items/?order=${orderId}&table=&bill=`
-    }else if (orderItemId) {
+    const today = moment().format('YYYY-MM-DD')
+    const yesterday = moment().subtract(1, 'days').format('YYYY-MM-DD')
+
+    let url = `order-items/?created_at__gte=${yesterday}&created_at__lte=${today}`
+    if (orderItemId) {
         url = `order-items/${orderItemId}/`
-    } else if (bill) {
-        url = `order-items/?order=&table=&bill=${bill}`
+    } else if (billId) {
+        url = `order-items/?order=&table=&bill=${billId}`
     }
     return new APIClient<OrderItem>(url)
 }
