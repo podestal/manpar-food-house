@@ -6,7 +6,6 @@ import useGetDishes from "../../hooks/dishes/useGetDishes";
 import { Divider } from "@tremor/react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import useUpdateOrder from "../../hooks/orders/useUpdateOrder";
 import useUserStore from "../../store/userStore";
 import { Table } from "../../services/api/tableService";
 import { OrderItem } from "../../services/api/orderItemService";
@@ -29,8 +28,6 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
     const access = useUserStore( s => s.access)
 
     const {data: dishes, isLoading, isError, error, isSuccess} = useGetDishes()
-
-    const updateOrder = useUpdateOrder(order.id)
 
     const removeOrder = useRemoveOrder(order.id)
 

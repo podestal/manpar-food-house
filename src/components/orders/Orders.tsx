@@ -1,4 +1,4 @@
-import { Button, Divider, Tab, TabGroup, TabList, TabPanel, TabPanels } from "@tremor/react"
+import { Divider, Tab, TabGroup, TabList, TabPanel, TabPanels } from "@tremor/react"
 import Panel from "../../utils/Panel"
 import OrderCard from "./OrderCard"
 import CreateOrder from "./CreateOrder"
@@ -6,6 +6,7 @@ import useGetOrders from "../../hooks/orders/useGetOrders"
 import TotalOrderItems from "../orderItems/TotalOrderItems"
 import { Table } from "../../services/api/tableService"
 import useGetOrderItems from "../../hooks/orderItem/useGetOrderItem"
+import CloseTable from "./CloseTable"
 
 interface Props {
     show: boolean
@@ -40,7 +41,12 @@ const Orders = ({ show, setShow, table }: Props) => {
                 <Tab>Ordenes</Tab>
                 <Tab>Total</Tab>
             </TabList>
-            <Button className="ml-10 lg:ml-16" color="red">Cerrar Mesa</Button>
+            <>
+            {table?.bill && 
+            <CloseTable 
+                billId={table.bill}
+            />}
+            </>
             <TabPanels>
             <TabPanel>
             <div>
