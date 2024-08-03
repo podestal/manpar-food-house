@@ -2,12 +2,14 @@ import { useMutation, UseMutationResult, useQueryClient } from "@tanstack/react-
 import getBillService, {Bill} from "../../services/api/billService"
 import { getOrderItemCacheKey } from "../../constants"
 import { OrderItem } from "../../services/api/orderItemService"
+import { TABLE_CACHE_KEY } from "../../constants"
+import { Table } from "../../services/api/tableService"
 
 export interface DeleteBillData {
     access: string
 }
 
-const useRemoveBill = (billId: number): UseMutationResult<Bill, Error, DeleteBillData> => {
+const useRemoveBill = (billId: number, tableId: number, setSuccess: (value:boolean) => void, setError: (value:boolean) => void): UseMutationResult<Bill, Error, DeleteBillData> => {
     const ORDERITEM_CACHE_KEY = getOrderItemCacheKey({billId})
     const queryClient = useQueryClient()
     const billService = getBillService(billId)
@@ -15,10 +17,19 @@ const useRemoveBill = (billId: number): UseMutationResult<Bill, Error, DeleteBil
         mutationFn: (data: DeleteBillData) => billService.delete(data.access),
         onSuccess: () => {
             queryClient.setQueryData<OrderItem[]>(ORDERITEM_CACHE_KEY, prev => prev?.filter( orderItem => orderItem.bill !== billId))
+            queryClient.setQueryData<Table[]>(TABLE_CACHE_KEY, prev => prev?.map( table => {
+                if (table.id === tableId) {
+                    table.bill = undefined
+                }
+                return table
+            }))
+            setSuccess(true)
+            setError(false)
         },
         onError: err => {
             console.log(err)
-            
+            setError(true)
+            setSuccess(false)
         }
     })
 }

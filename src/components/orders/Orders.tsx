@@ -1,4 +1,4 @@
-import { Divider, Tab, TabGroup, TabList, TabPanel, TabPanels } from "@tremor/react"
+import { Callout, Divider, Tab, TabGroup, TabList, TabPanel, TabPanels } from "@tremor/react"
 import Panel from "../../utils/Panel"
 import OrderCard from "./OrderCard"
 import CreateOrder from "./CreateOrder"
@@ -7,6 +7,7 @@ import TotalOrderItems from "../orderItems/TotalOrderItems"
 import { Table } from "../../services/api/tableService"
 import useGetOrderItems from "../../hooks/orderItem/useGetOrderItem"
 import CloseTable from "./CloseTable"
+import { useEffect, useState } from "react"
 
 interface Props {
     show: boolean
@@ -18,13 +19,16 @@ const Orders = ({ show, setShow, table }: Props) => {
     
     if (!table) return null
 
+    const [success, setSuccess] = useState(false)
+    const [error, setError] = useState(false)
+
     const {data: orderItems, isLoading: orderItemsLoading, isError: orderItemsError, isSuccess: orderItemSuccess} = useGetOrderItems({billId: table.bill})
 
-    const {data: orders, isLoading: orderLoading, isError: orderError, error, isSuccess: orderSuccess} =  useGetOrders(table.id)
+    const {data: orders, isLoading: orderLoading, isError: orderError, isSuccess: orderSuccess} =  useGetOrders(table.id)
 
     if (orderItemsLoading || orderLoading) return <p>Loading ...</p>
 
-    if (orderItemsError || orderError) return <p>Error: {error?.message}</p>
+    if (orderItemsError || orderError) return <p>Error</p>
 
     if (orderItemSuccess && orderSuccess)
 
@@ -45,11 +49,17 @@ const Orders = ({ show, setShow, table }: Props) => {
             {table?.bill && 
             <CloseTable 
                 billId={table.bill}
+                table={table}
+                orders={orders}
+                setError={setError}
+                setSuccess={setSuccess}
             />}
             </>
             <TabPanels>
             <TabPanel>
             <div>
+                {success && <Callout color='teal' title="Exito">Mesa cerrada</Callout>}
+                {error && <Callout color='red' title="Error">No se pudo cerrar la mesa, revise que no tenga cuentas abiertas</Callout>}
                 {orders?.map( order => (
                     <div
                         key={order.id} 

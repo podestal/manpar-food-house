@@ -10,6 +10,7 @@ import useUserStore from "../../store/userStore";
 import { Table } from "../../services/api/tableService";
 import { OrderItem } from "../../services/api/orderItemService";
 import useRemoveOrder from "../../hooks/orders/useRemoveOrder";
+import RemoveOrder from "./RemoveOrder";
 
 interface Props {
     order: Order
@@ -61,11 +62,18 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
             table={table}
         />}
         {order.status === 'P' && 
+            <div className="w-full flex justify-center items-center gap-6">
             <SendOrderToKitchen 
                 order={order} 
                 tableId={table?.id}
                 canSendToKtichen={canSendToKtichen}
-        />}
+            />
+            <RemoveOrder 
+                orderId={order.id}
+                tableId={table?.id}
+            />
+            </div>
+        }
     </div>
   )
 }
