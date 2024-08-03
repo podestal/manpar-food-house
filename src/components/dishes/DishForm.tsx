@@ -122,7 +122,6 @@ const DishForm = ({
                 }
                 catch (error) {
                     console.log(error)
-                    // LETS RESET THOS TWO ATTRS && ALSO ENABLE UPDATE
                 }
             }
         }

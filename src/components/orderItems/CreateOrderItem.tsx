@@ -13,9 +13,9 @@ interface Props {
 
 const CreateOrderItem = ({ order, dishes, table }: Props) => {
 
-    if (!order.id) return null
+    if (!order.id || !table.bill) return null
     const {handleSuccess, handleError} = useErrorHandler()
-    const createOrderItem = useCreateOrerItem(order.id, handleSuccess, handleError)
+    const createOrderItem = useCreateOrerItem(table.bill, handleSuccess, handleError)
 
   return (
     <OrderItemForm 

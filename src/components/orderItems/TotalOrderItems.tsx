@@ -1,26 +1,25 @@
 import { Divider } from "@tremor/react"
 import useGetDishes from "../../hooks/dishes/useGetDishes"
-import useGetOrderItems from "../../hooks/orderItem/useGetOrderItem"
 import OrderItemCard from "./OrderItemCard"
 import SumTotalOrderItems from "./SumTotalOrderItems"
+import { OrderItem } from "../../services/api/orderItemService"
 
 interface Props {
     billId: number
+    orderItems: OrderItem[]
 }
 
-const TotalOrderItems = ({ billId }: Props) => {
+const TotalOrderItems = ({ billId, orderItems }: Props) => {
 
     if (!billId) return null
 
-    const {data: orderItems, isLoading: billsLoading, isError: billsError, isSuccess: billSuccess} = useGetOrderItems({billId})
-
     const {data: dishes, isLoading: dishesLoading, isError: dishesError, isSuccess: dishSuccess} = useGetDishes()
 
-    if (billsLoading || dishesLoading) return <p>Loading ...</p>
+    if (dishesLoading) return <p>Loading ...</p>
 
-    if (billsError || dishesError) return <p>Error</p>
+    if (dishesError) return <p>Error</p>
 
-    if (billSuccess && dishSuccess)
+    if (dishSuccess)
 
   return (
     <div className="text-slate-50">

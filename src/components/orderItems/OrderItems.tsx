@@ -1,20 +1,19 @@
 import { useEffect } from "react"
-import useGetOrderItems from "../../hooks/orderItem/useGetOrderItem"
 import { Dish } from "../../services/api/dishServices"
 import { Order } from "../../services/api/orderService"
 import OrderItemCard from "./OrderItemCard"
+import { OrderItem } from "../../services/api/orderItemService"
 
 interface Props {
     order: Order
     dishes: Dish[]
     setCanSendToKtichen: (value: boolean) => void
+    orderItems: OrderItem[]
 }
 
-const OrderItems = ({ order, dishes, setCanSendToKtichen }: Props) => {
+const OrderItems = ({ order, dishes, setCanSendToKtichen, orderItems }: Props) => {
 
     if (!order.id) return null
-
-    const {data: orderItems, isLoading, isError, error} = useGetOrderItems({orderId: order.id})
 
     useEffect(() => {
         if (orderItems && orderItems.length > 0) {
@@ -24,13 +23,11 @@ const OrderItems = ({ order, dishes, setCanSendToKtichen }: Props) => {
         }
     }, [orderItems, setCanSendToKtichen])
 
-    if (isLoading) return <p>Loading ...</p>
-
-    if (isError) return <p>Error: {error.message}</p>
-
   return (
     <>
-        {orderItems?.map( orderItem => (
+        {orderItems
+            ?.filter(orderItem => orderItem.order === order.id)
+            ?.map( orderItem => (
             <OrderItemCard 
                 key={orderItem.id}
                 orderItem={orderItem}

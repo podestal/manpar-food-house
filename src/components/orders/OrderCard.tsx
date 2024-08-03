@@ -9,15 +9,17 @@ import { useLocation } from "react-router-dom";
 import useUpdateOrder from "../../hooks/orders/useUpdateOrder";
 import useUserStore from "../../store/userStore";
 import { Table } from "../../services/api/tableService";
+import { OrderItem } from "../../services/api/orderItemService";
 
 interface Props {
     order: Order
     table?: Table
+    orderItems: OrderItem[]
 }
 
-const OrderCard = ({ order, table }: Props) => {
+const OrderCard = ({ order, table, orderItems }: Props) => {
 
-    if (!order.id || !table) return null
+    if (!order.id) return null
 
     const [canSendToKtichen, setCanSendToKtichen] = useState(true)
 
@@ -49,9 +51,10 @@ const OrderCard = ({ order, table }: Props) => {
             order={order}
             dishes={dishes}
             setCanSendToKtichen={setCanSendToKtichen}
+            orderItems={orderItems}
         />
         <Divider />
-        {order.status === 'P' && 
+        {order.status === 'P' && table &&
         <CreateOrderItem 
             order={order}
             dishes={dishes}
@@ -60,7 +63,7 @@ const OrderCard = ({ order, table }: Props) => {
         {order.status === 'P' && 
             <SendOrderToKitchen 
                 order={order} 
-                tableId={table.id}
+                tableId={table?.id}
                 canSendToKtichen={canSendToKtichen}
         />}
     </div>

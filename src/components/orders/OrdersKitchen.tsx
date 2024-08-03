@@ -1,15 +1,18 @@
+import useGetOrderItems from '../../hooks/orderItem/useGetOrderItem'
 import useGetOrders from '../../hooks/orders/useGetOrders'
 import OrderCard from './OrderCard'
 
 const OrdersKitchen = () => {
 
-    const {data: orders, isLoading, isError, error, isSuccess} = useGetOrders()
+    const {data: orderItems, isLoading: orderItemsLoading, isError: orderItemsError, isSuccess: orderItemSuccess} = useGetOrderItems({billId: table.bill})
 
-    if (isLoading) return <p>Loading...</p>
+    const {data: orders, isLoading: orderLoading, isError: orderError, error, isSuccess: orderSuccess} =  useGetOrders(table.id)
 
-    if (isError) return <p>Error: {error.message}</p>
+    if (orderItemsLoading || orderLoading) return <p>Loading ...</p>
 
-    if (isSuccess)
+    if (orderItemsError || orderError) return <p>Error</p>
+
+    if (orderItemSuccess && orderSuccess)
 
   return (
     <>

@@ -10,8 +10,9 @@ interface Props {
 }
 
 const SendOrderToKitchen = ({ order, tableId, canSendToKtichen }: Props) => {
+    
+    if (!order.id || !tableId) return null
 
-    if (!order.id || tableId) return null
     const access = useUserStore(s => s.access)
     const sendOrder = useUpdateOrder(order.id, tableId) 
 

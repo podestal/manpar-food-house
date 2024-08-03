@@ -5,6 +5,7 @@ import CreateOrder from "./CreateOrder"
 import useGetOrders from "../../hooks/orders/useGetOrders"
 import TotalOrderItems from "../orderItems/TotalOrderItems"
 import { Table } from "../../services/api/tableService"
+import useGetOrderItems from "../../hooks/orderItem/useGetOrderItem"
 
 interface Props {
     show: boolean
@@ -16,11 +17,15 @@ const Orders = ({ show, setShow, table }: Props) => {
     
     if (!table) return null
 
-    const {data, isLoading, isError, error} =  useGetOrders(table.id)
+    const {data: orderItems, isLoading: orderItemsLoading, isError: orderItemsError, isSuccess: orderItemSuccess} = useGetOrderItems({billId: table.bill})
 
-    if (isLoading) return <p>Loading ...</p>
+    const {data: orders, isLoading: orderLoading, isError: orderError, error, isSuccess: orderSuccess} =  useGetOrders(table.id)
 
-    if (isError) return <p>Error: {error.message}</p>
+    if (orderItemsLoading || orderLoading) return <p>Loading ...</p>
+
+    if (orderItemsError || orderError) return <p>Error: {error?.message}</p>
+
+    if (orderItemSuccess && orderSuccess)
 
   return (
     <Panel
@@ -39,20 +44,21 @@ const Orders = ({ show, setShow, table }: Props) => {
             <TabPanels>
             <TabPanel>
             <div>
-                {data?.map( order => (
+                {orders?.map( order => (
                     <div
                         key={order.id} 
                     >
                     <OrderCard 
                         order={order}
                         table={table}
+                        orderItems={orderItems}
                     />
                     </div>
                 ))}
                 <Divider />
                 <CreateOrder 
                     tableId={table.id}
-                    orders={data}
+                    orders={orders}
                 />
             </div>
             </TabPanel>
@@ -60,6 +66,7 @@ const Orders = ({ show, setShow, table }: Props) => {
                 {table.bill && 
                 <TotalOrderItems 
                     billId={table.bill}
+                    orderItems={orderItems}
                 />}
             </TabPanel>
         </TabPanels>
