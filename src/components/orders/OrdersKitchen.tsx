@@ -31,7 +31,7 @@ const OrdersKitchen = () => {
     </div>
     :
     <div className='w-full h-full flex justify-center items-center'>
-        <h2 className='text-5xl'>Aún no tienes órdenes ...</h2>
+        <h2 className='text-5xl w-[60%] text-center mt-10'>Aún no tienes órdenes ...</h2>
     </div>
     }
     </>

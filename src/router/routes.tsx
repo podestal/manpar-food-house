@@ -7,6 +7,7 @@ import LoginPage from "../pages/LoginPage"
 import PrivateRoutes from "../components/auth/PrivateRoutes"
 import Orders from "../pages/Orders"
 import TablesPage from "../pages/TablesPage"
+import DashboardPage from "../pages/DashboardPage"
 
 const router = createBrowserRouter([
     {
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
             { path: 'dishes', element: <DishesPage /> },
             { path: 'tables', element: <PrivateRoutes><TablesPage /></PrivateRoutes> },
             { path: 'orders', element: <PrivateRoutes><Orders /></PrivateRoutes> },
+            { path: 'dashboard', element: <PrivateRoutes><DashboardPage /></PrivateRoutes> },
             { path: 'login', element: <LoginPage /> },
         ]
     }

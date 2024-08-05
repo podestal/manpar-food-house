@@ -26,10 +26,11 @@ const Header = () => {
                 transition={{duration: 0.8}}
                 className="text-xl fixed h-screen z-50 w-full flex flex-col justify-center items-center gap-12 bg-transparent backdrop-blur-xl overflow-scroll">
                   <Icon onClick={() => setShow(false)}  className="cursor-pointer hover:text-red-700" icon={RiCloseCircleLine} size="xl" color='red'/>
-                  <Link onClick={() => setShow(false)} to='/'><p className="hover:text-slate-400">Home</p></Link>
+                  {/* <Link onClick={() => setShow(false)} to='/'><p className="hover:text-slate-400">Home</p></Link> */}
                   <Link onClick={() => setShow(false)} to='/dishes'><p className="hover:text-slate-400">Carta</p></Link>
                   <Link onClick={() => setShow(false)} to='/tables'><p className="hover:text-slate-400">Mesas</p></Link>
                   <Link onClick={() => setShow(false)} to='/orders'><p className="hover:text-slate-400">Ordenes</p></Link>
+                  <Link onClick={() => setShow(false)} to='/dashboard'><p className="hover:text-slate-400">Ventas</p></Link>
                   <Logout setShow={setShow}/>
               </motion.div>
             }
