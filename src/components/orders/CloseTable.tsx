@@ -3,6 +3,7 @@ import { Button } from '@tremor/react'
 import useUserStore from '../../store/userStore'
 import { Table } from '../../services/api/tableService'
 import { Order } from '../../services/api/orderService'
+import { useState } from 'react'
 
 interface Props {
     billId: number
@@ -18,7 +19,8 @@ const CloseTable = ({ billId, table, orders, setError, setSuccess, setShow }: Pr
     if (!table.id) return null
 
     const ordersForTable = orders.filter( order => order.table === table.id)
-    const removeBill = useRemoveBill(billId, table.id, setSuccess, setError, setShow)
+    const [loading, setLoading] = useState(false)
+    const removeBill = useRemoveBill(billId, table.id, setSuccess, setError, setShow, setLoading)
     const access = useUserStore(s => s.access)
     
 
@@ -38,7 +40,7 @@ const CloseTable = ({ billId, table, orders, setError, setSuccess, setShow }: Pr
     }
 
   return (
-    <Button onDoubleClick={handleRemoveBill} className="ml-10 lg:ml-16" color="red">Cerrar Mesa</Button>
+    <Button onDoubleClick={handleRemoveBill} className="ml-10 lg:ml-16" color="red">{loading ? 'Cargando ...' : 'Cerrar Mesa'}</Button>
   )
 }
 

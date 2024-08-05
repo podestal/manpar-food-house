@@ -2,6 +2,7 @@ import { Button } from "@tremor/react"
 import useRemoveOrder from "../../hooks/orders/useRemoveOrder"
 import useUserStore from "../../store/userStore"
 import { OrderItem } from "../../services/api/orderItemService"
+import { useState } from "react"
 
 interface Props {
     orderId: number
@@ -12,7 +13,8 @@ interface Props {
 
 const RemoveOrder = ({ orderId, tableId, orderItems, setErrorOrder }: Props) => {
 
-    const removeOrder = useRemoveOrder(orderId, tableId)
+    const [loading, setLoading] = useState(false)
+    const removeOrder = useRemoveOrder({orderId, tableId, setLoading})
     const access = useUserStore(s => s.access)
 
     const filteredOrderItems = orderItems.filter( orderItem => orderItem.order === orderId)
@@ -33,7 +35,7 @@ const RemoveOrder = ({ orderId, tableId, orderItems, setErrorOrder }: Props) => 
     }
 
   return (
-    <Button onDoubleClick={handleRemoveOrder} color="red">Eliminar Orden</Button>
+    <Button onDoubleClick={handleRemoveOrder} color="red">{loading ? 'Cargando ...' : 'Eliminar Orden'}</Button>
   )
 }
 

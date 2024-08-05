@@ -14,7 +14,8 @@ const useRemoveDish = (dishId: number | undefined): UseMutationResult<Dish, Erro
         onSuccess: () => {
             queryClient.setQueryData<Dish[]>(DISH_CACHE_KEY, prev => prev?.filter(dish => dish.id !== dishId))
         },
-        onError: err => console.log(err)
+        onError: err => console.log(err),
+        
     })
 }
 

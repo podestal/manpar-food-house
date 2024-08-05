@@ -112,7 +112,7 @@ const OrderItemForm = ({ order, createOrderItem, dishes, table }: Props) => {
                     onValueChange={value => {
                         setDishError(false)
                         setSearchDish(value)
-                        const filtered = dishes.filter(dish => dish.name.toLocaleLowerCase().startsWith(value.toLocaleLowerCase()))
+                        const filtered = dishes.filter(dish => dish.name.toLocaleLowerCase().includes(value.toLocaleLowerCase()))
                         setFilteredDishes(filtered)
                         setShowOptions(true)
     

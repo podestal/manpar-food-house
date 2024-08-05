@@ -15,8 +15,6 @@ const useCreateOrerItem = (billId: number, handleSuccess: () => void, handleErro
         mutationFn: (data: CreateOrderItemData) => orderItemService.post(data.orderItem, data.access),
         onSuccess: res => {            
             handleSuccess()
-            console.log('ORDERITEM_CACHE_KEY', ORDERITEM_CACHE_KEY);
-            
             queryClient.setQueryData<any[]>(ORDERITEM_CACHE_KEY, prev => prev ? [...prev, res] : [res])
         },
         onError: err => {

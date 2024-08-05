@@ -26,6 +26,7 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
 
     const [success, setSuccess] = useState('')
     const [ErrorOrder, setErrorOrder] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const location = useLocation()
 
@@ -33,7 +34,7 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
 
     const {data: dishes, isLoading, isError, error, isSuccess} = useGetDishes()
 
-    const removeOrder = useRemoveOrder(order.id, order.table)
+    const removeOrder = useRemoveOrder({orderId: order.id, tableId: order.table, setLoading})
 
     const handleRemoveOrder = () => {
         
@@ -49,9 +50,14 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
     if (isSuccess)
 
   return (
-    <div onDoubleClick={handleRemoveOrder} className={`w-full ${order.status === 'P' && 'bg-transparent border-2'} ${order.status === 'S' && 'bg-blue-700'} ${order.status === 'C' && 'bg-green-600'} flex flex-col justify-center items-center p-6 gap-6 rounded-3xl my-6 text-slate-200`}>
+    <div onDoubleClick={handleRemoveOrder} className={`w-full ${order.status === 'P' && 'bg-transparent border-2'} ${order.status === 'S' && 'bg-blue-700 cursor-pointer hover:bg-blue-800'} ${order.status === 'C' && 'bg-green-600'} flex flex-col justify-center items-center p-6 gap-6 rounded-3xl my-6 text-slate-200`}>
         {success && <Callout color='teal' title="Exito">Mesa cerrada</Callout>}
         {ErrorOrder && <Callout color='red' title="Error">{ErrorOrder}</Callout>}
+        {loading 
+        ? 
+        <h2 className="h-[180px] text-4xl text-slate-50 text-center">Un momento ...</h2>
+        : 
+        <>
         <h2 className="text-5xl text-slate-50">Orden {order.id}</h2>
         <OrderItems 
             order={order}
@@ -80,6 +86,8 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
                 setErrorOrder={setErrorOrder}
             />
             </div>
+        }
+        </>
         }
     </div>
   )

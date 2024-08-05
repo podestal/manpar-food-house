@@ -9,12 +9,19 @@ export interface DeleteBillData {
     access: string
 }
 
-const useRemoveBill = (billId: number, tableId: number, setSuccess: (value:string) => void, setError: (value:string) => void, setShow: (value:boolean) => void): UseMutationResult<Bill, Error, DeleteBillData> => {
+const useRemoveBill = (
+        billId: number, 
+        tableId: number, 
+        setSuccess: (value:string) => void, 
+        setError: (value:string) => void, 
+        setShow: (value:boolean) => void, 
+        setLoading: (value:boolean) => void): UseMutationResult<Bill, Error, DeleteBillData> => {
     const ORDERITEM_CACHE_KEY = getOrderItemCacheKey({billId})
     const queryClient = useQueryClient()
     const billService = getBillService(billId)
     return useMutation({
         mutationFn: (data: DeleteBillData) => billService.delete(data.access),
+        onMutate: () => setLoading(true),
         onSuccess: () => {
             queryClient.setQueryData<OrderItem[]>(ORDERITEM_CACHE_KEY, prev => prev?.filter( orderItem => orderItem.bill !== billId))
             queryClient.setQueryData<Table[]>(TABLE_CACHE_KEY, prev => prev?.map( table => {
@@ -37,7 +44,8 @@ const useRemoveBill = (billId: number, tableId: number, setSuccess: (value:strin
                 setError('')
             },4000)
             setSuccess('')
-        }
+        },
+        onSettled: () => setLoading(false)
     })
 }
 
