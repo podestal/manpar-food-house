@@ -16,12 +16,12 @@ interface Props {
     billId?: number
 }
 
-const getOrderItemService = ({ orderItemId, billId} : Props) => {
+const getOrderItemService = ({ orderItemId, billId } : Props) => {
 
     const today = moment().format('YYYY-MM-DD')
-    const yesterday = moment().subtract(1, 'days').format('YYYY-MM-DD')
 
-    let url = `order-items/?created_at__gte=${yesterday}&created_at__lte=${today}`
+    let url = `order-items/?order=&table=&bill=&created_at=${today}`
+    
     if (orderItemId) {
         url = `order-items/${orderItemId}/`
     } else if (billId) {

@@ -5,11 +5,12 @@ import { getOrderItemCacheKey } from "../../constants"
 interface Props {
     orderId?: number
     billId?: number
+    getToday?: boolean
 }
 
-const useGetOrderItems = ({billId}: Props): UseQueryResult<OrderItem[], Error> => {
+const useGetOrderItems = ({billId, getToday}: Props): UseQueryResult<OrderItem[], Error> => {
     const orderItemService = billId ? getOrderItemService({billId}) : getOrderItemService({})
-    const ORDERITEM_CACHE_KEY = getOrderItemCacheKey({billId})
+    const ORDERITEM_CACHE_KEY = billId ? getOrderItemCacheKey({billId}) : getOrderItemCacheKey({getToday})
     return useQuery({
         queryKey: ORDERITEM_CACHE_KEY,
         queryFn: orderItemService.get,

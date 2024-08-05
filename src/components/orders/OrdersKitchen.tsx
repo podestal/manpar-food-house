@@ -4,7 +4,7 @@ import OrderCard from './OrderCard'
 
 const OrdersKitchen = () => {
 
-    const {data: orderItems, isLoading: orderItemsLoading, isError: orderItemsError, isSuccess: orderItemSuccess} = useGetOrderItems({})
+    const {data: orderItems, isLoading: orderItemsLoading, isError: orderItemsError, isSuccess: orderItemSuccess} = useGetOrderItems({getToday: true})
 
     const {data: orders, isLoading: orderLoading, isError: orderError, isSuccess: orderSuccess} =  useGetOrders()
 
