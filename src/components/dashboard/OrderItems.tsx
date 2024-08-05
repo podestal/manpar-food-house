@@ -38,9 +38,9 @@ const OrderItems = ({ orderItems, dishes }: Props) => {
     })
 
   return (
-    <div className="w-[1260px] mx-auto ">
-        <div className="px-10 py-10 grid grid-cols-4 text-3xl  text-center gap-6">
-            <h2 className="text-left col-span-2">Nombre del Plato</h2>
+    <div className="md:max-w-[960px] lg:max-w-[1260px] mx-auto">
+        <div className="max-md:hidden px-10 py-10 grid lg:grid-cols-4 md:grid-cols-3 text-3xl  text-center gap-6 mx-8">
+            <h2 className="text-left lg:col-span-2">Nombre del Plato</h2>
             <p className="">Cantidad</p>
             <p className="text-right">Monto</p>
         </div>
@@ -50,8 +50,9 @@ const OrderItems = ({ orderItems, dishes }: Props) => {
                 formattedDish={formattedDish}
             />
         ))}
+
         <Divider></Divider>
-        <div className="flex justify-end items-center gap-2 py-10 mx-10">
+        <div className="flex justify-center md:justify-end items-center gap-2 py-10 mx-10">
             <p className="text-xl font-bold">Total:</p>
             <p className="text-green-500 font-bold">S/. {(totalSales).toFixed(2)}</p>
         </div>
