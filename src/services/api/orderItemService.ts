@@ -9,6 +9,7 @@ export interface OrderItem {
     quantity: number
     table: number
     bill: number
+    cost: number
 }
 
 interface Props {

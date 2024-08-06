@@ -1,9 +1,10 @@
 import APIClient from "./apiClient"
 
 export interface Category {
-    id?: number,
-    name: string,
-    description: string,
+    id?: number
+    name: string
+    description: string
+    time_period: string
 }
 
 const getCategoryService = (categoryId?: number) => {

@@ -33,7 +33,7 @@ const OrderItemForm = ({ order, createOrderItem, dishes, table }: Props) => {
     const [searchDish, setSearchDish] = useState('')
     const [filteredDishes, setFilteredDishes] = useState(dishes)
     const [showOptions, setShowOptions] = useState(false)
-    const [selectedDish, setSelectedDish] = useState<any>(0)
+    const [selectedDish, setSelectedDish] = useState<Dish>()
 
     //ERROR HANDLER
     const [quantityError, setQuantityError] = useState(false)
@@ -60,14 +60,26 @@ const OrderItemForm = ({ order, createOrderItem, dishes, table }: Props) => {
 
         if (access && table.bill) {
             try {
-                order.table && createOrderItem.mutate({orderItem: {dish: selectedDish, table:order.table, order: order.id, observations, quantity, bill:table.bill}, access})
-                setSearchDish('')
-                setSelectedDish(0)
-                setObservations('')
-                setQuality(0)
-                setTimeout(() => {
-                    handleReset()
-                }, 4000)
+                if (selectedDish && selectedDish.id) {
+                    order.table && createOrderItem.mutate({orderItem: {dish: selectedDish?.id, cost: selectedDish?.cost, table:order.table, order: order.id, observations, quantity, bill:table.bill}, access})
+                    setSearchDish('')
+                    setSelectedDish({
+                        id: 0,
+                        name: '',
+                        description: '',
+                        cost: 0,
+                        available: false,
+                        picture: '',
+                        created_at: new Date,
+                        category: 0,
+                        image: 0
+                    })
+                    setObservations('')
+                    setQuality(0)
+                    setTimeout(() => {
+                        handleReset()
+                    }, 4000)
+                }
             }
             catch (error) {
                 console.log(error)
@@ -129,7 +141,7 @@ const OrderItemForm = ({ order, createOrderItem, dishes, table }: Props) => {
                             <p onClick={() => {
                             setShowOptions(false)
                             setSearchDish(filteredDish.name)
-                            setSelectedDish(filteredDish.id)
+                            setSelectedDish(filteredDish)
                         }}>{filteredDish.name}</p>
                         </div>
                     ))}
