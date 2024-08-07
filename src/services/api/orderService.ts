@@ -4,6 +4,7 @@ export interface Order {
     id?: number
     table: number | undefined
     status: string
+    created_at?: Date
 }
 
 interface Props {
