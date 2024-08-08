@@ -51,10 +51,10 @@ const OrderItemCard = ({ orderItem, dishes, hideObs, order }: Props) => {
             {loading && <p className="text-red-500 my-4 text-center">Un Momento ...</p>}
             <div className="w-full flex items-center justify-between">
                 <p className="text-xl font-bold">{orderItem.quantity} x {dish?.name}</p>
-                <p className="text-xl">S/. {(dish?.cost * orderItem.quantity).toFixed(2)}</p>
+                <p className="text-xl">S/. {(orderItem.cost * orderItem.quantity).toFixed(2)}</p>
             </div>
             <div className="w-full flex flex-col justify-center items-start">
-                <p className="text-xl">c/u: S/. {dish?.cost}</p>
+                <p className="text-xl">c/u: S/. {orderItem.cost}</p>
                 {!hideObs && <p className="text-slate-300">{orderItem.observations ? `- ${orderItem.observations}` : ''}</p>}
             </div>
         </div>
