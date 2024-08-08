@@ -10,6 +10,9 @@ import InputText from "../../utils/InputText"
 import { UpdateCategoryData } from "../../hooks/categories/useUpdateCategory"
 import { UseMutationResult } from "@tanstack/react-query"
 import { CreateCategoryData } from "../../hooks/categories/useCreateCategory"
+import Selector from "../../utils/Selector"
+import timePeriodData from "../../data/getTimePeriod"
+import { useState } from "react"
 
 const schema = z.object({
     name: z.string().min(1, { message: 'Escriba el nombre de la categoría' }),
@@ -43,16 +46,27 @@ const CategoryForm = ({ category, show, setShow, updateCategory, createCategory 
     // ERROR HANDLER
     const {success, error, disable} = useErrorHandler()
 
+    // TIME PERIOD
+    const [selectedTimePeriod, setSelectedTimePeriod] = useState(category?.time_period || '')
+
     const onSubmit = (data: FieldValues) => {
+
+        console.log('selectedTimePeriod', selectedTimePeriod);
+        
+
+        if (!selectedTimePeriod) {
+            return
+        }
+
         if (access) {
             if (category) {
                 updateCategory?.mutate({
-                    category: {name: data.name, description: data.description}, 
+                    category: {name: data.name, description: data.description, time_period: selectedTimePeriod}, 
                     access
                 })
             } else if (createCategory) {
                 createCategory?.mutate({
-                    category: {name: data.name, description: data.description},
+                    category: {name: data.name, description: data.description, time_period: selectedTimePeriod},
                     access
                 })
             }} 
@@ -69,7 +83,7 @@ const CategoryForm = ({ category, show, setShow, updateCategory, createCategory 
             {success && <Callout color='teal' title="Creado">Plato {category ? 'Actualizado' : 'Creado'}</Callout>}
             {error && <Callout color='red' title="Error">Ocurrió un error, inténtelo más tarde</Callout>}
             <InputText 
-                label="Nombre del Plato"
+                label="Título"
                 register={register('name')}
                 error={formState?.errors.name ? true : false}
                 errorMessage={formState.errors.name?.message}
@@ -80,6 +94,14 @@ const CategoryForm = ({ category, show, setShow, updateCategory, createCategory 
                 error={formState?.errors.description ? true : false}
                 errorMessage={formState.errors.description?.message}
             />
+            <div>
+                <p className="text-lg lg:text-xl text-slate-50 text-center">Turno</p>
+                <Selector 
+                    setSelectItem={setSelectedTimePeriod}
+                    itemsList={timePeriodData}
+                    defaultItem={selectedTimePeriod}
+                />
+            </div>
             <Button disabled={disable} color="blue" >{category ? 'Actualizar' : 'Crear'}</Button>
         </form>
     </Panel>
