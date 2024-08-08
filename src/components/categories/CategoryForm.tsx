@@ -48,13 +48,16 @@ const CategoryForm = ({ category, show, setShow, updateCategory, createCategory 
 
     // TIME PERIOD
     const [selectedTimePeriod, setSelectedTimePeriod] = useState(category?.time_period || '')
+    const [timePeriodError, setTimeperiodError] = useState('')
 
     const onSubmit = (data: FieldValues) => {
 
         console.log('selectedTimePeriod', selectedTimePeriod);
+        setTimeperiodError('')
         
 
         if (!selectedTimePeriod) {
+            setTimeperiodError('Indique un turno para la categoría')
             return
         }
 
@@ -100,6 +103,9 @@ const CategoryForm = ({ category, show, setShow, updateCategory, createCategory 
                     setSelectItem={setSelectedTimePeriod}
                     itemsList={timePeriodData}
                     defaultItem={selectedTimePeriod}
+                    error={timePeriodError.length > 0}
+                    errorMessage={timePeriodError}
+                    setError={setTimeperiodError}
                 />
             </div>
             <Button disabled={disable} color="blue" >{category ? 'Actualizar' : 'Crear'}</Button>
