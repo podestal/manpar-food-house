@@ -5,25 +5,32 @@ interface Props {
     setSelectedCategory: (cat: string) => void
     allItems?: string
     defaultCat?: string
+    error?: string
+    errorSetter?: (value: string) => void
 }
 
-const CategoriesSelector = ({ setSelectedCategory, allItems, defaultCat }: Props) => {
+const CategoriesSelector = ({ setSelectedCategory, allItems, defaultCat, error, errorSetter }: Props) => {
 
-    const {data: categories, isLoading, isError, error, isSuccess} = useGetCategories()
+    const {data: categories, isLoading, isError, error: catError, isSuccess} = useGetCategories()
 
     if (isLoading) return <p>Loading ....</p>
 
-    if (isError) return <p>{error.message}</p>
+    if (isError) return <p>{catError.message}</p>
 
     if (isSuccess) 
   return (
-    <Selector 
-        setSelectItem={setSelectedCategory}
-        itemsList={categories}
-        allItems={allItems}
-        defaultItem={defaultCat}
-        
-    />
+    <div>
+      <p className="text-lg lg:text-xl text-slate-50 text-center">Categoría</p>
+      <Selector 
+          setSelectItem={setSelectedCategory}
+          itemsList={categories}
+          allItems={allItems}
+          defaultItem={defaultCat}
+          error={error && error.length > 0 ? true : false}
+          errorMessage={error}
+          setError={errorSetter}
+      />
+    </div>
   )
 }
 

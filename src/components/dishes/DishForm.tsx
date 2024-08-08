@@ -62,12 +62,12 @@ const DishForm = ({
         }
     })
     const [selectedCategory, setSelectedCategory] = useState(dish ? dish?.category.toString(): '0')
-    const [categoryError, setCategoryError] = useState(false)
+    const [categoryError, setCategoryError] = useState('')
     const [available, setAvailable] = useState<boolean>(dish ? dish?.available : true)
 
     const onSubmit = async (data: FieldValues) => {
         
-        setCategoryError(false)
+        setCategoryError('')
 
         if (access) {
             if (dish) {
@@ -87,7 +87,7 @@ const DishForm = ({
                 console.log('img', img)
                 
                 if (selectedCategory === '0') {
-                    setCategoryError(true)
+                    setCategoryError('Seleccione una categoría')
                     return
                 }
 
@@ -209,6 +209,8 @@ const DishForm = ({
             <CategoriesSelector 
                 setSelectedCategory={setSelectedCategory}
                 defaultCat={dish?.category.toString()}
+                error={categoryError}
+                errorSetter={setCategoryError}
             />
             <Button disabled={disable} color="blue" >{dish ? 'Actualizar' : 'Crear'}</Button>
         </form>
