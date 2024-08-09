@@ -1,4 +1,5 @@
 import useGetCategories from "../../hooks/categories/useGetCategories"
+import useUserStore from "../../store/userStore"
 import CategoriesList from "./CategoriesList"
 
 interface Props {
@@ -7,7 +8,11 @@ interface Props {
 
 const Categories = ({ selectedCategory }: Props) => {
 
-    const {data: categories, isLoading, isError, error, isSuccess} = useGetCategories()
+    const access = useUserStore(s => s.access)
+
+    const normalizeAccess = access ?? undefined
+    
+    const {data: categories, isLoading, isError, error, isSuccess} = useGetCategories(normalizeAccess)
 
     if (isLoading) return <p>Loading ....</p>
 

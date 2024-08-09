@@ -8,7 +8,7 @@ const useGetDishes = (): UseQueryResult<Dish[], Error> => {
 
     return useQuery({
         queryKey: DISH_CACHE_KEY,
-        queryFn: dishServices.get,
+        queryFn: () => dishServices.get(),
         staleTime: 1 * 60 * 1000,
     })
 }

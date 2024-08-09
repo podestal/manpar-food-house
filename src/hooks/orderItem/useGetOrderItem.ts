@@ -13,7 +13,7 @@ const useGetOrderItems = ({billId, getToday}: Props): UseQueryResult<OrderItem[]
     const ORDERITEM_CACHE_KEY = billId ? getOrderItemCacheKey({billId}) : getOrderItemCacheKey({getToday})
     return useQuery({
         queryKey: ORDERITEM_CACHE_KEY,
-        queryFn: orderItemService.get,
+        queryFn: () => orderItemService.get(),
         staleTime: 1 * 60 * 1000,
     })
     

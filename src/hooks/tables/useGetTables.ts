@@ -7,7 +7,7 @@ const useGetTables = (): UseQueryResult<Table[], Error> => {
     const tableService = getTableService()
     return useQuery({
         queryKey: TABLE_CACHE_KEY,
-        queryFn: tableService.get,
+        queryFn: () => tableService.get(),
         staleTime: 1 * 60 * 1000,
     })
 }

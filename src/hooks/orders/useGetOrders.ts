@@ -7,7 +7,7 @@ const useGetOrders = (tableId?: number): UseQueryResult<Order[], Error> => {
     const orderService = tableId ? getOrderService({tableId}) : getOrderService({})
     return useQuery({
         queryKey: ORDER_CACHE_KEY,
-        queryFn: orderService.get,
+        queryFn: () => orderService.get(),
         staleTime: 1 * 60 * 1000,
     })
 }

@@ -7,7 +7,7 @@ const useGetDishImage = (dishId: number): UseQueryResult<DishImage[], Error> => 
     const DISH_IMAGE_CACHE_KEY = getDishImageCacheKey(dishId)
     return useQuery({
         queryKey: DISH_IMAGE_CACHE_KEY,
-        queryFn: dishImageService.get,
+        queryFn: () => dishImageService.get(),
         staleTime: 1 * 60 * 1000,
     })
 }

@@ -13,9 +13,14 @@ class APIClient<T> {
         this.endpoint = endpoint
     }
 
-    get = () => {
+    get = (access?: string) => {
+
+        const config = access 
+        ? {headers: {Authorization: `JWT ${access}`}}
+        : {}
+
         return axiosInstance
-            .get<T>(this.endpoint)
+            .get<T>(this.endpoint, config)
             .then(res => res.data)
     }
 
@@ -43,13 +48,21 @@ class APIClient<T> {
             .then( res => res.data)
     }
 
+    authGet = (access: string) => {
+        return axiosInstance
+            .get<T>(this.endpoint, {
+                headers: { Authorization: `JWT ${access}` }
+            })
+    }
+
     formDataPost = (data: FormData, access: string) => {
         return axiosInstance
             .post<any>(this.endpoint, data, {
                 headers: {Authorization: `JWT ${access}`}
             })
             .then(res => res.data)
-    }   
+    }  
+    
 
     formDataUpdate = (data: FormData, access: string) => {
         return axiosInstance

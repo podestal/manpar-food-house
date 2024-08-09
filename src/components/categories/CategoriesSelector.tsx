@@ -1,4 +1,5 @@
 import useGetCategories from "../../hooks/categories/useGetCategories"
+import useUserStore from "../../store/userStore"
 import Selector from "../../utils/Selector"
 
 interface Props {
@@ -11,7 +12,11 @@ interface Props {
 
 const CategoriesSelector = ({ setSelectedCategory, allItems, defaultCat, error, errorSetter }: Props) => {
 
-    const {data: categories, isLoading, isError, error: catError, isSuccess} = useGetCategories()
+    const access = useUserStore(s => s.access)
+
+    const normalizeAccess = access ?? undefined
+
+    const {data: categories, isLoading, isError, error: catError, isSuccess} = useGetCategories(normalizeAccess)
 
     if (isLoading) return <p>Loading ....</p>
 
