@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import useGetCategories from "../../hooks/categories/useGetCategories"
 import useUserStore from "../../store/userStore"
 import Selector from "../../utils/Selector"
@@ -8,15 +9,29 @@ interface Props {
     defaultCat?: string
     error?: string
     errorSetter?: (value: string) => void
+    setNoAttention?: (value: string) => void
 }
 
-const CategoriesSelector = ({ setSelectedCategory, allItems, defaultCat, error, errorSetter }: Props) => {
+const CategoriesSelector = ({ setSelectedCategory, allItems, defaultCat, error, errorSetter, setNoAttention }: Props) => {
 
     const access = useUserStore(s => s.access)
 
     const normalizeAccess = access ?? undefined
 
     const {data: categories, isLoading, isError, error: catError, isSuccess} = useGetCategories(normalizeAccess)
+
+    useEffect(() => {
+      console.log('categories',categories)
+      
+      if (categories) {
+        if (categories.length === 0) {
+          setNoAttention && setNoAttention('Por ahora no Estamos atendiendo')
+        } else {
+          setNoAttention && setNoAttention('')
+        }
+        
+      }
+    }, [categories, setNoAttention])
 
     if (isLoading) return <p>Loading ....</p>
 

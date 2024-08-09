@@ -16,18 +16,12 @@ const OrderItems = ({ order, dishes, setCanSendToKtichen, orderItems }: Props) =
     if (!order.id) return null
 
     useEffect(() => {
-        const items = orderItems?.filter(orderItem => orderItem.order === order.id)
-        console.log(items);
-        console.log('order.id', order.id);
-        
-        
-        
         if (orderItems && orderItems.length > 0) {
             setCanSendToKtichen(false)
         } else {
             setCanSendToKtichen(true)
         }
-    }, [orderItems, setCanSendToKtichen])
+    }, [orderItems])
 
   return (
     <>

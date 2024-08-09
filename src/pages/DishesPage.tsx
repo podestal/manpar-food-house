@@ -6,34 +6,48 @@ import CreateDish from "../components/dishes/CreateDish"
 import CreateCategory from "../components/categories/CreateCategory"
 import useUserStore from "../store/userStore"
 import DishImage from "../components/dishImg/DishImage"
+import NoAttention from "../utils/NoAttention"
 
 const DishesPage = () => {
 
     const [selectedCategory, setSelectedCategory] = useState('0')
+    const [noAttention, setNoAttention] = useState('')
     const dishId = useDishImgStore( s => s.dishId)
     const dishName = useDishImgStore( s => s.dishName)
     const access = useUserStore(s => s.access)
 
   return (
     <div className="relative min-h-screen w-full justify-evenly items-start flex flex-col">
-        <div className="w-full sticky top-0 bg-slate-950 py-6 z-30">
-            <DishImage 
-                dishId={dishId}
-                alt={dishName}
+        <>{console.log('noAttention', noAttention)}</>
+        {
+            noAttention.length > 0 
+            ? 
+            <NoAttention 
+                noAttention={noAttention}   
             />
-            {/* {!access && <img className="w-[280px] h-[200px] lg:w-[360px] lg:h-[220px] object-cover mx-auto rounded-3xl" src={dishImg} alt="" />} */}
-            <CategoriesSelector 
-                setSelectedCategory={setSelectedCategory}
-                allItems="Toda la carta"
-            />
-            <div className="flex justify-center items-center gap-6">
-                {access && <CreateDish />}
-                {access && <CreateCategory />}
+            : 
+            <>
+            <div className="w-full sticky top-0 bg-slate-950 py-6 z-30">
+                <DishImage 
+                    dishId={dishId}
+                    alt={dishName}
+                />
+                {/* {!access && <img className="w-[280px] h-[200px] lg:w-[360px] lg:h-[220px] object-cover mx-auto rounded-3xl" src={dishImg} alt="" />} */}
+                <CategoriesSelector 
+                    setSelectedCategory={setSelectedCategory}
+                    allItems="Toda la carta"
+                    setNoAttention={setNoAttention}
+                />
+                <div className="flex justify-center items-center gap-6">
+                    {access && <CreateDish />}
+                    {access && <CreateCategory />}
+                </div>
             </div>
-        </div>
-        <Categories 
-            selectedCategory={selectedCategory}
-        />
+            <Categories 
+                selectedCategory={selectedCategory}
+            />
+            </>
+        }
     </div>
   )
 }
