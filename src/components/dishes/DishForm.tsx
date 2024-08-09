@@ -168,6 +168,7 @@ const DishForm = ({
                         className="object-cover my-10 w-[280px] h-[200px] lg:w-[360px] lg:h-[220px] rounded-3xl"
                     />
                 )}
+                <p className="text-lg lg:text-xl text-slate-50 text-center mb-6">Imagen del Plato</p>
                 <input 
                     id="file-upload" 
                     type="file" 

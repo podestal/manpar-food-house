@@ -1,3 +1,4 @@
+import { useState } from "react"
 import useUpdateDishImage from "../../hooks/dishImages/useUpdateDishImage"
 import { Dish } from "../../services/api/dishServices"
 import useUserStore from "../../store/userStore"
@@ -13,11 +14,16 @@ const UpdateDishImage = ({ dish, dishImageId, preview, setPreview }: Props) => {
 
     if (!dish.id || !dishImageId) return null
 
+    const [success, setSuccess] = useState('')
+    const [error, setError] = useState('')
+
     const access = useUserStore(s => s.access)
-    const updateDishImage = useUpdateDishImage(dish.id, dishImageId)
+    const updateDishImage = useUpdateDishImage({dishId: dish.id, dishImgId: dishImageId, setSuccess, setError})
 
   return (
     <div className="flex flex-col items-center">
+        {success && <p className="text-green-500 mb-6 text-center">{success}</p>}
+        {error && <p className="text-red-500 mb-6 text-center   ">{error}</p>}
         {preview && (
             <img 
                 src={preview} 
