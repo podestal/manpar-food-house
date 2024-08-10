@@ -25,7 +25,6 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
 
     const [canSendToKtichen, setCanSendToKtichen] = useState(true)
 
-    const [success, setSuccess] = useState('')
     const [ErrorOrder, setErrorOrder] = useState('')
     const [loading, setLoading] = useState(false)
 
@@ -55,7 +54,6 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
 
   return (
     <div onDoubleClick={handleRemoveOrder} className={`w-full ${order.status === 'P' && 'bg-transparent border-2'} ${order.status === 'S' && `bg-${background} cursor-pointer hover:bg-transparent hover:border-4 border-${background}`}  flex flex-col justify-center items-center p-6 gap-6 rounded-3xl my-6 text-slate-200`}>
-        {success && <Callout color='teal' title="Exito">Mesa cerrada</Callout>}
         {ErrorOrder && <Callout color='red' title="Error">{ErrorOrder}</Callout>}
         {loading 
         ? 
