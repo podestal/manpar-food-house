@@ -23,8 +23,8 @@ const AuthForm = () => {
 
     //ERROR HANDLING
     const [success, setSuccess] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
-    const [disable, setDisable] = useState(false)
 
     // FORM HANDLER
     const {register, handleSubmit, formState, reset} = useForm<FormData>({ resolver: zodResolver(schema) })
@@ -33,7 +33,6 @@ const AuthForm = () => {
         reset()
         setSuccess(true)
         setError(false)
-        setDisable(true)
         navigate('/dishes')
     }
 
@@ -42,7 +41,7 @@ const AuthForm = () => {
     }
 
     // Mutation
-    const login = useLogin(handleSuccess, handleError)
+    const login = useLogin(handleSuccess, handleError, setLoading)
 
     const onSubmit = (data: FieldValues) => {
         login.mutate({username: data.username, password:data.password})
@@ -74,7 +73,7 @@ const AuthForm = () => {
             error={formState?.errors.password ? true : false}
             errorMessage={formState.errors.password?.message}
         />
-        <Button disabled={disable} color="blue">Ingresa</Button>
+        <Button disabled={loading} color="blue">{loading ? 'Cargando ...' : 'Ingresa'}</Button>
     </form>
   )
 }

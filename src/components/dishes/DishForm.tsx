@@ -83,8 +83,6 @@ const DishForm = ({
                 })
 
             } else if (createDish) {
-                console.log('selectedCategory', selectedCategory)
-                console.log('img', img)
                 
                 if (selectedCategory === '0') {
                     setCategoryError('Seleccione una categoría')
@@ -201,6 +199,15 @@ const DishForm = ({
                 error={formState?.errors.description ? true : false}
                 errorMessage={formState.errors.description?.message}
             />
+            {/* <div className="w-full flex flex-col justify-center items-center gap-4">
+                <label className="text-xl" htmlFor="observations">Observaciones</label>
+                <Textarea 
+                    id="observations"
+                    value={}
+                    onValueChange={value => setObservations(value)}
+                    placeholder="Observaciones"
+                />
+            </div> */}
             <InputText 
                 label="Precio"
                 register={register('cost')}
