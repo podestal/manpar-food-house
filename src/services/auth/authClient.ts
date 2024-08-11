@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const DEV = 'http://127.0.0.1:8000/auth/'
+// const DEV = 'http://127.0.0.1:8000/auth/'
 const TEST = 'https://manpar-api.vercel.app/auth/'
 
 export interface JWTCredentials {
