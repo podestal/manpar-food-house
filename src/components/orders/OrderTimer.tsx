@@ -33,11 +33,11 @@ const OrderTimer = ({ order, setBackground }: Props) => {
     }, [order.created_at])
 
     useEffect(() => {
-        if (time.minutes <= 10 && time.minutes > 5) {
+        if (time.minutes <= 7 && time.minutes > 5) {
             setBackground('yellow-500')
-        } else if (time.minutes <= 7 && time.minutes > 5) {
+        } else if (time.minutes <= 10 && time.minutes > 7) {
             setBackground('amber-500')
-        } else if (time.minutes > 15) {
+        } else if (time.minutes > 10) {
             setBackground('red-500')
         }
     }, [time.minutes])
