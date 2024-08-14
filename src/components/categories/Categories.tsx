@@ -23,7 +23,7 @@ const Categories = ({ selectedCategory }: Props) => {
 
     if (isSuccess) return (
     <div className="w-full">
-        <div className="flex justify-center items-center gap-6 sticky">
+        <div className="flex justify-center items-center gap-6 ">
             {access && <CreateDish />}
             {access && <CreateCategory />}
         </div>

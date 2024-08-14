@@ -23,7 +23,7 @@ const DishesPage = () => {
             />
             : 
             <>
-            <div className="w-full sticky top-0 bg-slate-950 py-6 z-20">
+            <div className="w-full top-0 bg-slate-950 py-6 z-20 fixed">
                 <DishImage 
                     dishId={dishId}
                     alt={dishName}

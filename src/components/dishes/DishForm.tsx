@@ -198,13 +198,12 @@ const DishForm = ({
                 error={formState?.errors.description ? true : false}
                 errorMessage={formState.errors.description?.message}
             />
-            {/* <div className="w-full flex flex-col justify-center items-center gap-4">
+            {/* <div className="w-[300px] max-lg:w-[200px] flex flex-col justify-center items-center gap-4 text-slate-50">
                 <label className="text-xl" htmlFor="observations">Observaciones</label>
                 <Textarea 
-                    id="observations"
-                    value={}
-                    onValueChange={value => setObservations(value)}
-                    placeholder="Observaciones"
+                    {...register('description')}
+                    placeholder="Description"
+                    className="text-white"
                 />
             </div> */}
             <InputText 
