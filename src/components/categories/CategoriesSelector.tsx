@@ -33,7 +33,7 @@ const CategoriesSelector = ({ setSelectedCategory, allItems, defaultCat, error, 
       }
     }, [categories, setNoAttention])
 
-    if (isLoading) return <p>Loading ....</p>
+    // if (isLoading) return <p>Loading ....</p>
 
     if (isError) return <p>{catError.message}</p>
 

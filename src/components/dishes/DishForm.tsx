@@ -91,7 +91,6 @@ const DishForm = ({
 
                 if (!img) {
                     console.log('FALTA IMG');
-                    
                     return
                 }
 
