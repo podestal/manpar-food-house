@@ -1,7 +1,6 @@
 import useGetDishes from "../../hooks/dishes/useGetDishes"
 import useUserStore from "../../store/userStore"
 import DishCard from "./DishCard"
-import Loading from "../../utils/Loading"
 
 interface Props {
     selectedCategory: string | undefined
@@ -11,9 +10,7 @@ const Dishes = ({ selectedCategory }: Props) => {
 
     const access = useUserStore(s => s.access)
 
-    const {data: dishes, isLoading, isError, error} = useGetDishes()
-
-    if (isLoading) return <Loading />
+    const {data: dishes, isError, error} = useGetDishes()
 
     if (isError) return <p>{error.message}</p>
 

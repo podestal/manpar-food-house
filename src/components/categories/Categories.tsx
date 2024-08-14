@@ -1,7 +1,9 @@
 import useGetCategories from "../../hooks/categories/useGetCategories"
 import useUserStore from "../../store/userStore"
 import Loading from "../../utils/Loading"
+import CreateDish from "../dishes/CreateDish"
 import CategoriesList from "./CategoriesList"
+import CreateCategory from "./CreateCategory"
 
 interface Props {
     selectedCategory: string
@@ -21,6 +23,10 @@ const Categories = ({ selectedCategory }: Props) => {
 
     if (isSuccess) return (
     <div className="w-full">
+        <div className="flex justify-center items-center gap-6 sticky">
+            {access && <CreateDish />}
+            {access && <CreateCategory />}
+        </div>
         <h2 className="text-center text-4xl my-6">Nuestra Carta</h2>
         <CategoriesList 
             categories={categories}

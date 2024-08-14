@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import useGetCategories from "../../hooks/categories/useGetCategories"
 import useUserStore from "../../store/userStore"
 import Selector from "../../utils/Selector"
+import Loading from "../../utils/Loading"
 
 interface Props {
     setSelectedCategory: (cat: string) => void
@@ -33,7 +34,7 @@ const CategoriesSelector = ({ setSelectedCategory, allItems, defaultCat, error, 
       }
     }, [categories, setNoAttention])
 
-    // if (isLoading) return <p>Loading ....</p>
+    if (isLoading) return <Loading />
 
     if (isError) return <p>{catError.message}</p>
 
