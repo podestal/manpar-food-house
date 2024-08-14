@@ -22,11 +22,11 @@ const Orders = ({ show, setShow, table }: Props) => {
     const [success, setSuccess] = useState('')
     const [error, setError] = useState('')
 
-    const {data: orderItems, isLoading: orderItemsLoading, isError: orderItemsError, isSuccess: orderItemSuccess} = useGetOrderItems({billId: table.bill})
+    const {data: orderItems, isError: orderItemsError, isSuccess: orderItemSuccess} = useGetOrderItems({billId: table.bill})
 
-    const {data: orders, isLoading: orderLoading, isError: orderError, isSuccess: orderSuccess} =  useGetOrders(table.id)
+    const {data: orders, isError: orderError, isSuccess: orderSuccess} =  useGetOrders(table.id)
 
-    if (orderItemsLoading || orderLoading) return <p>Loading ...</p>
+    // if (orderItemsLoading || orderLoading) return <p>Loading ...</p>
 
     if (orderItemsError || orderError) return <p>Error</p>
 

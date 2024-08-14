@@ -1,5 +1,6 @@
 import useGetOrderItems from '../../hooks/orderItem/useGetOrderItem'
 import useGetOrders from '../../hooks/orders/useGetOrders'
+import Loading from '../../utils/Loading'
 import OrderCard from './OrderCard'
 
 const OrdersKitchen = () => {
@@ -8,7 +9,7 @@ const OrdersKitchen = () => {
 
     const {data: orders, isLoading: orderLoading, isError: orderError, isSuccess: orderSuccess} =  useGetOrders()
 
-    if (orderItemsLoading || orderLoading) return <p>Loading ...</p>
+    if (orderItemsLoading || orderLoading) return <Loading />
 
     if (orderItemsError || orderError) return <p>Error</p>
 

@@ -1,5 +1,6 @@
 import useGetDishes from '../../hooks/dishes/useGetDishes'
 import useGetOrderItems from '../../hooks/orderItem/useGetOrderItem'
+import Loading from '../../utils/Loading'
 import OrderItems from './OrderItems'
 
 const GetData = () => {
@@ -16,7 +17,7 @@ const GetData = () => {
         isError: dishesDataIsError,
         isSuccess: dishesDataIsSuccess, } = useGetDishes()
     
-    if (orderItemsDataIsLoading || dishesDataIsLoading) return <p>Cargando ...</p>
+    if (orderItemsDataIsLoading || dishesDataIsLoading) return <Loading />
 
     if (orderItemsDataIsError || dishesDataIsError) return <p>Error</p>
 

@@ -15,11 +15,11 @@ const OrderTimer = ({ order, setBackground }: Props) => {
 
 
     useEffect(() => {
-        if (order.created_at) {
-            const orderCreationTime = new Date(order.created_at).getTime()
+        if (order.updated_at) {
+            const orderUpdatedTime = new Date(order.updated_at).getTime()
             const updateTimePassed = () => {
                 const currentTime = Date.now()
-                const timeDifference = currentTime - orderCreationTime
+                const timeDifference = currentTime - orderUpdatedTime
                 setTimePassed(timeDifference)
             }
 

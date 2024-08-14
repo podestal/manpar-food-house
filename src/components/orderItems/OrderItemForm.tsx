@@ -1,4 +1,4 @@
-import { Button, Callout, NumberInput, TextInput, Textarea } from "@tremor/react"
+import { Button, NumberInput, TextInput, Textarea } from "@tremor/react"
 import { RiSearch2Line } from "@remixicon/react"
 import { Order } from "../../services/api/orderService"
 import { UseMutationResult } from "@tanstack/react-query"
@@ -8,7 +8,7 @@ import useUserStore from "../../store/userStore"
 import { Dish } from "../../services/api/dishServices"
 import { useEffect, useState } from "react"
 import useErrorHandler from "../../store/errorHandling"
-import {motion, AnimatePresence} from 'framer-motion'
+import {motion} from 'framer-motion'
 import { Table } from "../../services/api/tableService"
 
 interface Props {
@@ -23,7 +23,7 @@ const OrderItemForm = ({ order, createOrderItem, dishes, table }: Props) => {
     const access = useUserStore(s => s.access)
 
     // ERROR MESSAGES
-    const {success, error, handleReset} = useErrorHandler()
+    const { error, handleReset} = useErrorHandler()
 
     // INPUT STATE
     const [observations, setObservations] = useState('')
@@ -89,27 +89,7 @@ const OrderItemForm = ({ order, createOrderItem, dishes, table }: Props) => {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center gap-6">
-        <AnimatePresence>
-            {success && 
-            <motion.div             
-                initial={{opacity: 0, translateY: -60}}
-                whileInView={{opacity: 1, translateY: 0}}
-                transition={{duration: 0.8}}
-                exit={{opacity: 0, translateY: 200}}
-            >
-                <Callout color="teal" title='Agregado'>Se agregó el plato a la orden</Callout>
-            </motion.div>}
-            {error && 
-            <motion.div             
-                initial={{opacity: 0, translateY: -60}}
-                whileInView={{opacity: 1, translateY: 0}}
-                transition={{duration: 0.8}}
-                exit={{opacity: 0, translateY: 200}}
-            >
-                <Callout color='red' title="Error">Ocurrió un error</Callout>
-            </motion.div>}
-        </AnimatePresence>
-
+        {error && <p className="text-red-500">Ocurrió un error, inténtelo más tarde</p>}
         <div className="flex flex-col justify-center items-center w-[300px] max-lg:w-[200px] gap-6">
             <div className="w-full flex flex-col justify-center items-center gap-4">
                 <label className="text-xl" htmlFor="dish">Plato</label>

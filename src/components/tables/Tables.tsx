@@ -1,4 +1,5 @@
 import useGetTables from "../../hooks/tables/useGetTables"
+import Loading from "../../utils/Loading"
 import TableItem from "./TableItem"
 
 
@@ -6,8 +7,7 @@ const Tables = () => {
 
     const {data: tables, isLoading, isError, error} = useGetTables()
 
-    if (isLoading) return <p>Cargando ...</p>
-
+    if (isLoading) return <Loading />
     if (isError) return <p>Error {error.message}</p>
   return (
     <div className="w-full text-center">

@@ -22,15 +22,12 @@ const CategoriesSelector = ({ setSelectedCategory, allItems, defaultCat, error, 
     const {data: categories, isLoading, isError, error: catError, isSuccess} = useGetCategories(normalizeAccess)
 
     useEffect(() => {
-      console.log('categories',categories)
-      
       if (categories) {
         if (categories.length === 0) {
           setNoAttention && setNoAttention('Por ahora no Estamos atendiendo')
         } else {
           setNoAttention && setNoAttention('')
         }
-        
       }
     }, [categories, setNoAttention])
 
