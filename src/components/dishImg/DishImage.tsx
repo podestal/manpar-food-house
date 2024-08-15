@@ -19,7 +19,7 @@ const DishImage = ({ dishId, alt }: Props) => {
 
   return (
     <div className="flex flex-col justify-center items-center sticky z-30">
-        <img className="sticky z-30 object-cover my-10 w-[280px] h-[200px] lg:w-[360px] lg:h-[220px] rounded-3xl" src={img[0]?.image} alt={alt}  />
+        <img className="sticky z-30 object-cover my-10 max-md:w-full h-[240px] lg:w-[360px] lg:h-[220px] rounded-3xl" src={img[0]?.image} alt={alt}  />
     </div>
   )
 }

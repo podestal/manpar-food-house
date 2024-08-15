@@ -37,8 +37,7 @@ const CategoriesSelector = ({ setSelectedCategory, allItems, defaultCat, error, 
 
     if (isSuccess) 
   return (
-    <div className="mt-6">
-      <p className="text-lg lg:text-xl text-slate-50 text-center">Categoría</p>
+    <div className="">
       <Selector 
           setSelectItem={setSelectedCategory}
           itemsList={categories}
