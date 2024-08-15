@@ -1,7 +1,7 @@
 import { Dish } from "../../services/api/dishServices"
 import InputText from "../../utils/InputText"
 import Panel from "../../utils/Panel"
-import { Button, Callout } from "@tremor/react"
+import { Button, Callout, Textarea } from "@tremor/react"
 import CategoriesSelector from "../categories/CategoriesSelector"
 import { z } from 'zod'
 import { FieldValues, useForm } from 'react-hook-form'
@@ -19,7 +19,6 @@ import UpdateDishImage from "../dishImg/UpdateDishImage"
 
 const schema = z.object({
     dish: z.string().min(1, { message: 'Escriba el nombre del plato' }),
-    description: z.string().min(1, { message: 'Agregue la descripción del plato' }),
     cost: z.string().min(1, { message: 'Agregue el precio del plato' }),
 })
 
@@ -57,17 +56,19 @@ const DishForm = ({
         resolver: zodResolver(schema), 
         values: {
             dish: dish?.name || '',
-            description: dish?.description || '',
             cost: dish?.cost.toString() || '',
         }
     })
     const [selectedCategory, setSelectedCategory] = useState(dish ? dish?.category.toString(): '0')
     const [categoryError, setCategoryError] = useState('')
     const [available, setAvailable] = useState<boolean>(dish ? dish?.available : true)
+    const [description, setDescription] = useState(dish ? dish.description : '')
 
     const onSubmit = async (data: FieldValues) => {
         
         setCategoryError('')
+        console.log('description', description);
+        
 
         if (access) {
             if (dish) {
@@ -75,7 +76,7 @@ const DishForm = ({
                     dish: { 
                         ...dish, 
                         name: data.dish, 
-                        description: data.description, 
+                        description, 
                         cost: data.cost, 
                         category: parseInt(selectedCategory), 
                         available },
@@ -98,7 +99,7 @@ const DishForm = ({
                     const newDish = await createDish.mutateAsync({
                         dish: { 
                             name: data.dish, 
-                            description: data.description, 
+                            description, 
                             cost: data.cost, 
                             category: parseInt(selectedCategory),
                             available, 
@@ -192,18 +193,29 @@ const DishForm = ({
                 error={formState?.errors.dish ? true : false}
                 errorMessage={formState.errors.dish?.message}
             />
-            <InputText 
+            {/* <InputText 
                 label="Descripción"
                 register={register('description')}
                 error={formState?.errors.description ? true : false}
                 errorMessage={formState.errors.description?.message}
-            />
-            {/* <div className="w-[300px] max-lg:w-[200px] flex flex-col justify-center items-center gap-4 text-slate-50">
+            /> */}
+            <div className="w-[300px] max-lg:w-[200px] flex flex-col justify-center items-center gap-4 text-slate-50">
                 <label className="text-xl" htmlFor="observations">Observaciones</label>
                 <Textarea 
-                    {...register('description')}
-                    placeholder="Description"
+                    placeholder="Descripción"
                     className="text-white"
+                    value={description}
+                    onValueChange={value => setDescription(value)}
+                />
+            </div>
+
+            {/* <div className="w-full flex flex-col justify-center items-center gap-4">
+                <label className="text-xl" htmlFor="observations">Observaciones</label>
+                <Textarea 
+                    id="observations"
+                    value={observations}
+                    onValueChange={value => setObservations(value)}
+                    placeholder="Observaciones"
                 />
             </div> */}
             <InputText 

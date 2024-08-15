@@ -17,7 +17,7 @@ const MainPage = () => {
   }, [])
 
   return (
-    <div className="text-slate-50 bg-slate-950 overflow-hidden">
+    <div className="text-slate-50 bg-slate-950 overflow-clip">
         <Header />
         <Outlet />
     </div>
