@@ -1,13 +1,20 @@
 import useGetOrderItems from '../../hooks/orderItem/useGetOrderItem'
 import useGetOrders from '../../hooks/orders/useGetOrders'
+import useUserStore from '../../store/userStore'
 import Loading from '../../utils/Loading'
 import OrderCard from './OrderCard'
 
 const OrdersKitchen = () => {
 
-    const {data: orderItems, isLoading: orderItemsLoading, isError: orderItemsError, isSuccess: orderItemSuccess} = useGetOrderItems({getToday: true})
+    const access = useUserStore(s => s.access)
+    let normalizeAccess = ''
+    if (access !== null) {
+        normalizeAccess = access
+    }
 
-    const {data: orders, isLoading: orderLoading, isError: orderError, isSuccess: orderSuccess} =  useGetOrders()
+    const {data: orderItems, isLoading: orderItemsLoading, isError: orderItemsError, isSuccess: orderItemSuccess} = useGetOrderItems({getToday: true, access: normalizeAccess})
+    
+    const {data: orders, isLoading: orderLoading, isError: orderError, isSuccess: orderSuccess} =  useGetOrders({access: normalizeAccess})
 
     if (orderItemsLoading || orderLoading) return <Loading />
 

@@ -1,11 +1,17 @@
 import useGetTables from "../../hooks/tables/useGetTables"
+import useUserStore from "../../store/userStore"
 import Loading from "../../utils/Loading"
 import TableItem from "./TableItem"
 
 
 const Tables = () => {
 
-    const {data: tables, isLoading, isError, error} = useGetTables()
+    const access = useUserStore(s => s.access)
+    let normalizeAccess = ''
+    if (access !== null) {
+      normalizeAccess = access
+    }
+    const {data: tables, isLoading, isError, error} = useGetTables(normalizeAccess)
 
     if (isLoading) return <Loading />
     if (isError) return <p>Error {error.message}</p>

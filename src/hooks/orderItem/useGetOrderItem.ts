@@ -6,14 +6,15 @@ interface Props {
     orderId?: number
     billId?: number
     getToday?: boolean
+    access: string
 }
 
-const useGetOrderItems = ({billId, getToday}: Props): UseQueryResult<OrderItem[], Error> => {
+const useGetOrderItems = ({billId, getToday, access}: Props): UseQueryResult<OrderItem[], Error> => {
     const orderItemService = billId ? getOrderItemService({billId}) : getOrderItemService({})
     const ORDERITEM_CACHE_KEY = billId ? getOrderItemCacheKey({billId}) : getOrderItemCacheKey({getToday})
     return useQuery({
         queryKey: ORDERITEM_CACHE_KEY,
-        queryFn: () => orderItemService.get(),
+        queryFn: () => orderItemService.get(access),
         staleTime: 1 * 60 * 1000,
     })
     

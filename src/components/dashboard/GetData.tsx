@@ -1,15 +1,22 @@
 import useGetDishes from '../../hooks/dishes/useGetDishes'
 import useGetOrderItems from '../../hooks/orderItem/useGetOrderItem'
+import useUserStore from '../../store/userStore'
 import Loading from '../../utils/Loading'
 import OrderItems from './OrderItems'
 
 const GetData = () => {
 
+    const access = useUserStore(s => s.access)
+    let normalizedAccess = ''
+    if (access !== null) {
+        normalizedAccess = access
+    }
+
     const { 
         data: orderItems, 
         isLoading: orderItemsDataIsLoading,
         isError: orderItemsDataIsError,
-        isSuccess: orderItemsDataIsSuccess, } = useGetOrderItems({getToday: true})
+        isSuccess: orderItemsDataIsSuccess, } = useGetOrderItems({getToday: true, access: normalizedAccess})
 
     const {
         data: dishes,

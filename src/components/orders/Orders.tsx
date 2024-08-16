@@ -8,6 +8,7 @@ import { Table } from "../../services/api/tableService"
 import useGetOrderItems from "../../hooks/orderItem/useGetOrderItem"
 import CloseTable from "./CloseTable"
 import { useState } from "react"
+import useUserStore from "../../store/userStore"
 
 interface Props {
     show: boolean
@@ -22,9 +23,16 @@ const Orders = ({ show, setShow, table }: Props) => {
     const [success, setSuccess] = useState('')
     const [error, setError] = useState('')
 
-    const {data: orderItems, isError: orderItemsError, isSuccess: orderItemSuccess} = useGetOrderItems({billId: table.bill})
+    const access = useUserStore(s => s.access)
+    let normalizeAccess = ''
 
-    const {data: orders, isError: orderError, isSuccess: orderSuccess} =  useGetOrders(table.id)
+    if (access !== null) {
+        normalizeAccess = access
+    }
+
+    const {data: orderItems, isError: orderItemsError, isSuccess: orderItemSuccess} = useGetOrderItems({billId: table.bill, access: normalizeAccess})
+
+    const {data: orders, isError: orderError, isSuccess: orderSuccess} =  useGetOrders({tableId: table.id, access: normalizeAccess})
 
     // if (orderItemsLoading || orderLoading) return <p>Loading ...</p>
 
