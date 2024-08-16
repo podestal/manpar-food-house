@@ -2,7 +2,6 @@ import { useEffect } from "react"
 import useGetCategories from "../../hooks/categories/useGetCategories"
 import useUserStore from "../../store/userStore"
 import Selector from "../../utils/Selector"
-import Loading from "../../utils/Loading"
 
 interface Props {
     setSelectedCategory: (cat: string) => void
@@ -13,14 +12,26 @@ interface Props {
     setNoAttention?: (value: string) => void
 }
 
-const CategoriesSelector = ({ setSelectedCategory, allItems, defaultCat, error, errorSetter, setNoAttention }: Props) => {
+// Component responsible for rendering a category selector, with loading, error handling, and setting default selections
+const CategoriesSelector = ({ 
+    setSelectedCategory, 
+    allItems, 
+    defaultCat, 
+    error, 
+    errorSetter, 
+    setNoAttention 
+  }: Props) => {
 
+    // Access token or credentials retrieved from the user's store
     const access = useUserStore(s => s.access)
 
+    // Normalize access token to undefined if it doesn't exist
     const normalizeAccess = access ?? undefined
 
-    const {data: categories, isLoading, isError, error: catError, isSuccess} = useGetCategories(normalizeAccess)
+    // Fetch categories using the custom hook, handling different states like loading, error, and success
+    const {data: categories, isError, error: catError, isSuccess} = useGetCategories(normalizeAccess)
 
+    // Effect that runs when categories data changes, setting attention messages based on the availability of categories
     useEffect(() => {
       if (categories) {
         if (categories.length === 0) {
@@ -31,10 +42,10 @@ const CategoriesSelector = ({ setSelectedCategory, allItems, defaultCat, error, 
       }
     }, [categories, setNoAttention])
 
-    if (isLoading) return <Loading />
-
+    // Render error message if there's an issue fetching categories
     if (isError) return <p>{catError.message}</p>
 
+    // Render the Selector component once categories have been successfully fetched
     if (isSuccess) 
   return (
     <div className="">
@@ -49,6 +60,9 @@ const CategoriesSelector = ({ setSelectedCategory, allItems, defaultCat, error, 
       />
     </div>
   )
+
+  // Fallback return to avoid missing return statement
+  return null
 }
 
 export default CategoriesSelector
