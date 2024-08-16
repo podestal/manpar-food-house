@@ -33,7 +33,7 @@ const TableItem = ({ table }: Props) => {
     <>  
         <div
             onClick={handleOpenTable}
-            className={`p-14 ${!table.bill ? 'bg-blue-700 hover:bg-blue-800' : 'bg-amber-700 hover:bg-amber-800'}  mx-auto rounded-full  text-slate-50 hover:text-slate-300 cursor-pointer`}>
+            className={`p-14 ${!table.bill ? 'bg-green-500 hover:bg-green-600' : 'bg-yellow-400 hover:bg-amber-800'}  mx-auto rounded-full  text-slate-50 hover:text-slate-300 cursor-pointer`}>
             <p className="text-xl font-bold">{table.number}</p>
         </div>
 
@@ -45,5 +45,5 @@ const TableItem = ({ table }: Props) => {
     </>
   )
 }
-
+        
 export default TableItem
