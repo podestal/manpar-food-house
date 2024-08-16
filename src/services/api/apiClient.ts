@@ -1,7 +1,6 @@
 import axios from 'axios'
 
-const URL = 'http://127.0.0.1:8000/api/'
-// const URL = 'https://manpar-api.vercel.app/api/'
+const URL = import.meta.env.VITE_API_URL
 
 const axiosInstance = axios.create({
     baseURL: URL

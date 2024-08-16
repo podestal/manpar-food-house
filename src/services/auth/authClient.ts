@@ -1,7 +1,6 @@
 import axios from 'axios'
 
-const URL = 'http://127.0.0.1:8000/auth/'
-// const URL = 'https://manpar-api.vercel.app/auth/'
+const URL = import.meta.env.VITE_AUTH_URL
 
 export interface JWTCredentials {
     username: string,
