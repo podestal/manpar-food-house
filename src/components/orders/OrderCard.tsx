@@ -12,6 +12,7 @@ import { OrderItem } from "../../services/api/orderItemService";
 import useRemoveOrder from "../../hooks/orders/useRemoveOrder";
 import RemoveOrder from "./RemoveOrder";
 import OrderTimer from "./OrderTimer";
+import useUpdateOrder from "../../hooks/orders/useUpdateOrder";
 
 interface Props {
     order: Order
@@ -38,11 +39,15 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
     const {data: dishes, isLoading, isError, error, isSuccess} = useGetDishes()
 
     const removeOrder = useRemoveOrder({orderId: order.id, tableId: order.table, setLoading})
+    const updateOrder = useUpdateOrder(order.id, order.table)
 
-    const handleRemoveOrder = () => {
+    const handleClick = () => {
         
         if (location.pathname === '/orders') {
             access && removeOrder.mutate({ access })
+        }
+        if (location.pathname === '/tables') {
+            access && updateOrder.mutate({order: {...order, status: 'P'}, access })
         }
     }
 
@@ -53,20 +58,21 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
     if (isSuccess)
 
   return (
-    <div onDoubleClick={handleRemoveOrder} className={`w-full ${order.status === 'P' && 'bg-transparent border-2'} ${order.status === 'S' && `bg-${background} cursor-pointer hover:bg-transparent hover:border-4 border-${background}`}  flex flex-col justify-center items-center p-6 gap-6 rounded-3xl my-6 text-slate-200`}>
+    <div onDoubleClick={handleClick} className={`w-full ${order.status === 'P' && 'bg-transparent border-2'} ${order.status === 'S' && `bg-${background} cursor-pointer hover:bg-transparent hover:border-4 border-${background}`}  flex flex-col justify-center items-center p-6 gap-6 rounded-3xl my-6 text-slate-200`}>
         {ErrorOrder && <Callout color='red' title="Error">{ErrorOrder}</Callout>}
         {loading 
         ? 
         <h2 className="h-[180px] text-4xl text-slate-50 text-center">Un momento ...</h2>
         : 
         <>
+        {order.status !== 'P' && 
         <div className="flex justify-center items-center gap-4">
             <h2 className="text-3xl text-slate-50 text-center">Orden {order.id}</h2>
             <OrderTimer 
                 order={order}
                 setBackground={setBackground}
             />
-        </div>
+        </div>}
         <OrderItems 
             order={order}
             dishes={dishes}
