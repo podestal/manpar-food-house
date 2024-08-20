@@ -3,7 +3,7 @@ import SendOrderToKitchen from "./SendOrderToKitchen";
 import OrderItems from "../orderItems/OrderItems";
 import CreateOrderItem from "../orderItems/CreateOrderItem";
 import useGetDishes from "../../hooks/dishes/useGetDishes";
-import { Callout, Divider } from "@tremor/react";
+import { Button, Callout, Divider } from "@tremor/react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import useUserStore from "../../store/userStore";
@@ -58,13 +58,18 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
     if (isSuccess)
 
   return (
-    <div onDoubleClick={handleClick} className={`w-full ${order.status === 'P' && 'bg-transparent border-2'} ${order.status === 'S' && `bg-${background} cursor-pointer hover:bg-transparent hover:border-4 border-${background}`}  flex flex-col justify-center items-center p-6 gap-6 rounded-3xl my-6 text-slate-200`}>
+    <>
+    <div className={`w-full ${order.status === 'P' && 'bg-transparent border-2'} ${order.status === 'S' && `bg-${background} cursor-pointer`}  flex flex-col justify-center items-center p-6 gap-6 rounded-3xl my-6 text-slate-200`}>
         {ErrorOrder && <Callout color='red' title="Error">{ErrorOrder}</Callout>}
         {loading 
         ? 
         <h2 className="h-[180px] text-4xl text-slate-50 text-center">Un momento ...</h2>
         : 
         <>
+        {order.status === 'S' && location.pathname === '/tables' &&
+        <div className="w-full flex justify-start">
+            <Button onDoubleClick={handleClick} color="red">Modificar Order</Button>
+        </div> }
         {order.status !== 'P' && 
         <div className="flex justify-center items-center gap-4">
             <h2 className="text-3xl text-slate-50 text-center">Orden {order.id}</h2>
@@ -104,6 +109,7 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
         </>
         }
     </div>
+    </>
   )
 }
 
