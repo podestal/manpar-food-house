@@ -46,9 +46,9 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
         if (location.pathname === '/orders') {
             access && removeOrder.mutate({ access })
         }
-        if (location.pathname === '/tables') {
-            access && updateOrder.mutate({order: {...order, status: 'P'}, access })
-        }
+        // if (location.pathname === '/tables') {
+        //     access && updateOrder.mutate({order: {...order, status: 'P'}, access })
+        // }
     }
 
     if (isLoading) return <p>Loading ...</p>
@@ -59,7 +59,7 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
 
   return (
     <>
-    <div className={`w-full ${order.status === 'P' && 'bg-transparent border-2'} ${order.status === 'S' && `bg-${background} cursor-pointer`}  flex flex-col justify-center items-center p-6 gap-6 rounded-3xl my-6 text-slate-200`}>
+    <div onDoubleClick={handleClick} className={`w-full ${order.status === 'P' && 'bg-transparent border-2'} ${order.status === 'S' && `bg-${background} cursor-pointer`}  flex flex-col justify-center items-center p-6 gap-6 rounded-3xl my-6 text-slate-200`}>
         {ErrorOrder && <Callout color='red' title="Error">{ErrorOrder}</Callout>}
         {loading 
         ? 
@@ -68,7 +68,9 @@ const OrderCard = ({ order, table, orderItems }: Props) => {
         <>
         {order.status === 'S' && location.pathname === '/tables' &&
         <div className="w-full flex justify-start">
-            <Button onDoubleClick={handleClick} color="red">Modificar Order</Button>
+            <Button onDoubleClick={() => {
+                access && updateOrder.mutate({order: {...order, status: 'P'}, access })
+            }} color="red">Modificar Order</Button>
         </div> }
         {order.status !== 'P' && 
         <div className="flex justify-center items-center gap-4">
