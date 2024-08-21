@@ -10,4 +10,4 @@ export default defineConfig({
       'api': 'https://manpar-api.vercel.app/api'
     }
     },
-})
+})  
